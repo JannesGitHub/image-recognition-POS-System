@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassenmanagementLibrary
+namespace Imagerecognition
 {
-    public interface IShoppingBasket
+    public class Clip
     {
-        ShoppingBasket ShoppingBasket { get; }
-
     }
 }

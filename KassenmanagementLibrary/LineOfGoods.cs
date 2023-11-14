@@ -8,5 +8,7 @@ namespace KassenmanagementLibrary
 {
     public class LineOfGoods
     {
+
+
     }
 }

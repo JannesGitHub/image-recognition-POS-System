@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassenmanagementLibrary
+namespace Camera
 {
-    public interface IShoppingBasket
+    internal interface ICamera
     {
-        ShoppingBasket ShoppingBasket { get; }
-
     }
 }
