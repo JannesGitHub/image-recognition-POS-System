@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DetectionLibrary
+namespace Imagerecognition
 {
-    public class CLIPVector
+    public class Clip
     {
     }
 }
