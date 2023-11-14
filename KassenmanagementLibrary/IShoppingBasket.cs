@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KassenmanagementLibrary
 {
-    internal interface IShoppingBasket
+    public interface IShoppingBasket
     {
     }
 }

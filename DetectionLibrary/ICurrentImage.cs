@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KassenmanagementLibrary
+namespace DetectionLibrary
 {
-    internal class Productcs
+    internal interface ICurrentImage
     {
     }
 }

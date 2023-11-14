@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KassenmanagementLibrary
 {
-    public class LineOfGoods
+    public class Product
     {
     }
 }
