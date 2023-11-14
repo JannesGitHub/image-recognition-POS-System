@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IShoppingBasket.cs" />
     <Compile Include="LineOfGoods.cs" />
+    <Compile Include="Productcs.cs" />
     <Compile Include="ShoppingBasket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
