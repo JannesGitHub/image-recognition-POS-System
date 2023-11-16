@@ -23,11 +23,12 @@ namespace GUI
     public partial class MainWindow : Window
     {
 
-        private Product SelectedProduct { get; set; }
+        public Product SelectedProduct;
 
         public MainWindow()
         {
             InitializeComponent();
+            SelectedProduct = new Product();
         }
 
         private void ShoppingBasketViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)

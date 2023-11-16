@@ -54,11 +54,5 @@
     <Compile Include="ShoppingBasket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DetectionLibrary\DetectionLibrary.csproj">
-      <Project>{ad2a16fc-e173-4e03-8f5c-ebb3e59369b3}</Project>
-      <Name>DetectionLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
