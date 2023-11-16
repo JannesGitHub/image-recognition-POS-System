@@ -6,30 +6,23 @@ using System.Threading.Tasks;
 
 namespace KassenmanagementLibrary
 {
-    public class ShoppingBasket : IShoppingBasket
+    public class ShoppingBasket //: IShoppingBasket
     {
-        ShoppingBasket IShoppingBasket.ShoppingBasket => throw new NotImplementedException();
+    public Dictionary<Product, uint> atricleList { get; set; }
 
-        private ShoppingBasket()
+    private double totalPrice { get; set; }
+
+
+
+        public double getTotalPrice(ShoppingBasket basket)
         {
-
-        }
-
-
-        // singleton -> stelllt
-        private static ShoppingBasket instance;
-
-        public static ShoppingBasket Instance
-        {
-            get
+            
+           foreach(var pair in atricleList)
             {
-                if(instance == null)
-                {
-                    instance = new ShoppingBasket();
-                }
-                return instance;
+                this.totalPrice += pair.Key.Price;
             }
+           return totalPrice;
+           
         }
-
     }
 }
