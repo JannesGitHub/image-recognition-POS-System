@@ -9,20 +9,34 @@ namespace KassenmanagementLibrary
 {
     public class Product
     {
-        public string name {  get; set; }
+        public string Name {  get; set; }
 
-        public uint atrikelnummer {  get; set; }
+        public uint Articlenumber {  get; set; }
 
-        public double price { get; set; }
+        public double Price { get; set; }
 
-        public bool quantityarticle {  get; set; }
+        public bool Quantityarticle {get; set;}
 
 
         // Liste von Vektoren für das Produkt
-       // public List<CLIPVector> allproductvectors {  get; set; }
+      //  public List<CLIPVector> allproductvectors { get; set; } //-> using namespace probleme 
 
 
-        
 
+
+
+
+        //konstruktor
+        public Product (string name, uint atriclenumber,double price,  bool quantityarticle)
+        {
+            Name = name;
+            Articlenumber= atriclenumber;
+            Price = price;
+            Quantityarticle = quantityarticle;
+        }
+
+        public Product()
+        {
+        }
     }
 }
