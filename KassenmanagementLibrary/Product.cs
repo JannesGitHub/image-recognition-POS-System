@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-
+using DetectionLibrary;
 
 namespace KassenmanagementLibrary
 {
@@ -20,7 +20,7 @@ namespace KassenmanagementLibrary
 
 
         // Liste von Vektoren für das Produkt
-        public List<CLIPVector> allproductvectors { get; set; } //-> using namespace probleme 
+        public List<CLIPVector> allproductvectors { get; set; } 
 
 
 
