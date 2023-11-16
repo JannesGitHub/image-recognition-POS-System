@@ -16,8 +16,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-
-
         <!--Hier soll immer CurrentImage geladen werden-->
         <Grid Grid.Row="0" Grid.Column="0">
             <Image/>
@@ -32,7 +30,17 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock FontSize ="23" Text="Shopping Basket" Grid.Row="0" FontWeight="Bold"/>
-     
+
+                <ListView Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness = "1"
+                          SelectionChanged="ShoppingBasketViewList_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding}" Header="quantity" Width="50"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding}" Header = "product" Width="240"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding}" Header = "price" Width="60"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </Grid>
           
         </Grid>
