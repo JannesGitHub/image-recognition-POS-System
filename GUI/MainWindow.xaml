@@ -32,11 +32,9 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock FontSize ="23" Text="Shopping Basket" Grid.Row="0" FontWeight="Bold"/>
-                
-                
-                
+     
             </Grid>
-                
+          
         </Grid>
 
         <!--Sonstige Funktionen-->
