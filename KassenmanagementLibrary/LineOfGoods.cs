@@ -10,22 +10,26 @@ namespace KassenmanagementLibrary
     {
         private static LineOfGoods instance;
 
-        public static LineOfGoods Instance { get
-            { if (instance == null)
+        public static LineOfGoods Instance
+        {
+            get
+            {
+                if (instance == null)
                 {
                     instance = new LineOfGoods();
                 }
                 return instance;
             }
         }
-       public List<Product> lineOfGoods {  get; set; }
-       
+        public List<Product> lineOfGoods { get; set; }
+
         // prüft ob atrikel im sortiment existiert anhand des namens
         public bool Containsname(string name)
         {
             bool exists = false;
             foreach (Product p in lineOfGoods)
-            {if(p.Name == name)
+            {
+                if (p.Name == name)
                 {
                     exists = true;
                 }
@@ -37,15 +41,15 @@ namespace KassenmanagementLibrary
         public bool Containsn(uint atriclenumber)
         {
             bool exists = false;
-            foreach(Product p in lineOfGoods)
+            foreach (Product p in lineOfGoods)
             {
-                if (atriclenumber== p.Articlenumber)
+                if (atriclenumber == p.Articlenumber)
                 {
                     exists = true;
                 }
             }
             return exists;
-            }
+        }
 
         //fügt akritel dem sortiment hinzu
         public void Add(Product p)
@@ -67,10 +71,10 @@ namespace KassenmanagementLibrary
         }
 
 
-       
 
-       
 
-       
+
+
+
     }
 }

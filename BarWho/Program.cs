@@ -1,5 +1,4 @@
-﻿using KassenmanagementLibrary;
-
+﻿
 Product produkt = new Product();
 produkt.Name = "apfel";
 produkt.Articlenumber = 1;

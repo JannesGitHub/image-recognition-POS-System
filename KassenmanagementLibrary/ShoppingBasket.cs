@@ -8,21 +8,37 @@ namespace KassenmanagementLibrary
 {
     public class ShoppingBasket //: IShoppingBasket
     {
-    public Dictionary<Product, uint> atricleList { get; set; }
+        public Dictionary<Product, uint> _articleList { get; set; }
 
-    private double totalPrice { get; set; }
+        private double _totalPrice { get; set; }
 
 
 
-        public double getTotalPrice(ShoppingBasket basket)
+        public double getTotalPrice()
         {
-            
-           foreach(var pair in atricleList)
+
+
+            foreach (var pair in _articleList)
             {
-                this.totalPrice += pair.Key.Price;
+                this._totalPrice += pair.Key.Price * pair.Value;
             }
-           return totalPrice;
-           
+            return this._totalPrice;
+
         }
+
+        //fügt einen artikel mit der jeweiligen menge dem Dictionary(artikelliste) hinzu
+        public void addArticle(Product product, uint amount)
+        {
+            _articleList.Add(product, amount);
+        }
+        public void ChangeArticleAmount(uint menge, Product key)
+        {
+            if (_articleList.ContainsKey(key))
+            {
+                _articleList[key] = menge;
+            }
+
+        }
+
     }
 }
