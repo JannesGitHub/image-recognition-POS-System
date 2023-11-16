@@ -8,5 +8,6 @@ namespace DetectionLibrary
 {
     internal interface ICurrentImage
     {
+        
     }
 }
