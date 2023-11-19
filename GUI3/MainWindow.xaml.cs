@@ -30,6 +30,7 @@ namespace GUI
         private void AddItem(object sender, RoutedEventArgs e)
         {
             ShoppingBasketViewList.Items.Add(textBoxName.Text);
+            textBoxName.Clear();
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
