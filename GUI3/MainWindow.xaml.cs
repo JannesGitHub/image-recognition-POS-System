@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using KassenmanagementLibrary;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,17 +22,25 @@ namespace GUI
     public partial class MainWindow : Window
     {
 
-        public Product SelectedProduct;
-
         public MainWindow()
         {
             InitializeComponent();
-            SelectedProduct = new Product();
         }
 
-        private void ShoppingBasketViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AddItem(object sender, RoutedEventArgs e)
         {
+            ShoppingBasketViewList.Items.Add(textBoxName.Text);
+        }
 
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            object item = ShoppingBasketViewList.SelectedItem;
+            ShoppingBasketViewList.Items.Remove(item);
+        }
+
+        private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShoppingBasketViewList.Items.Clear();
         }
     }
 }
