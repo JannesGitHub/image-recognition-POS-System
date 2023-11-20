@@ -40,7 +40,8 @@ namespace GUI
             set { entries = value; }
         }
 
-        public void UpdateTotalPrice()
+        
+        public void UpdateTotalPrice()//Aktualisiert die Gesamtpreisausgabe
         {
             double price = 0;
             foreach (Article ar in Entries)
@@ -50,9 +51,14 @@ namespace GUI
             priceTextBlock.Text = price.ToString();
         }
 
-        private void addButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Wird gerade noch manuell getriggert werden (über Textboxen für Name und Preis)
+        /// Hier soll später die Bilderkennung nur ein Produkt übergeben, welches dann in der Warenkorb hzugefügt wird
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addButton_Click(object sender, RoutedEventArgs e) 
         {
-
             //check if Article exists in ShoppingBasket
             bool exists = false;
             foreach (Article ar in Entries)
@@ -82,7 +88,7 @@ namespace GUI
             UpdateTotalPrice();
         }
 
-        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        private void deleteButton_Click(object sender, RoutedEventArgs e) //nur zu testzwecken, später in der Minusfunktion inbegriffen
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             Entries.Remove(item);
@@ -90,31 +96,32 @@ namespace GUI
             UpdateTotalPrice();
         }
 
-        private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e)
+        private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e) //löscht den gesamten ShoppingBasket
         {
             Entries.Clear();
 
             UpdateTotalPrice();
         }
 
-        private void plusButton_Click(object sender, RoutedEventArgs e)
+        //Vorerst nur für Stück Produkte
+        private void plusButton_Click(object sender, RoutedEventArgs e) //erhöht Stückzahl und automatisch Preis Update
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             Entries[Entries.IndexOf(item)].Quantity++;
-            Entries[Entries.IndexOf(item)].TotalPrice += Entries[Entries.IndexOf(item)].Price; //Preis updaten
+            Entries[Entries.IndexOf(item)].TotalPrice += Entries[Entries.IndexOf(item)].Price; 
 
             UpdateTotalPrice();
         }
 
-        private void minusButton_Click(object sender, RoutedEventArgs e)
+        private void minusButton_Click(object sender, RoutedEventArgs e) //vermindert Stückzahl und Preis
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             Entries[Entries.IndexOf(item)].Quantity--;
-            Entries[Entries.IndexOf(item)].TotalPrice -= Entries[Entries.IndexOf(item)].Price; //Preis updaten
+            Entries[Entries.IndexOf(item)].TotalPrice -= Entries[Entries.IndexOf(item)].Price; 
 
-            if (Entries[Entries.IndexOf(item)].Quantity == 0)
-                deleteButton_Click(this, e);
-
+            if (Entries[Entries.IndexOf(item)].Quantity == 0) //Wenn 0 dann löschen
+                Entries.Remove(item);
+         
             UpdateTotalPrice();
         }
     }
