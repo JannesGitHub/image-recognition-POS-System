@@ -24,12 +24,10 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBox Grid.Row="0" Name="textBoxQuantity"/>
                 <TextBox Grid.Row="1" Name="textBoxName"/>
-                <TextBox Grid.Row="2" Name="textBoxPrice"/>
+                <TextBox Grid.Row="0" Name="textBoxPrice"/>
 
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
@@ -55,8 +53,14 @@
                 <TextBlock FontSize ="23" Text="Shopping Basket" Grid.Row="0" FontWeight="Bold" Margin="0,0,32,0"/>
                 <Button Name="deleteShoppingBasketButton" Width="30" Height="30" HorizontalAlignment="Right" Click="deleteShoppingBasketButton_Click"/>
 
-                <ListView Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness = "1">
-
+                <ListView ItemsSource="{Binding Entries}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness = "1" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Quantity}" Header="X" Width="50"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="200"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Preis" Width="100"/>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </Grid>
 
@@ -87,7 +91,7 @@
 
             <Button FontSize="80" Content="-" Name="minusButton" Grid.Column="0"/>
             <Button FontSize="80" Content="+" Name="plusButton" Grid.Column="1"/>
-            <TextBlock Text="PREIS" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
+            <TextBlock Name="priceTextBlock" Text="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
 
         </Grid>
     </Grid>

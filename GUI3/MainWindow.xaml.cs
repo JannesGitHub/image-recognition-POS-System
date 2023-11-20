@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -22,26 +23,64 @@ namespace GUI
     public partial class MainWindow : Window
     {
 
+        
         public MainWindow()
         {
+            DataContext = this;
+
+            entries = new ObservableCollection<Article>();
+
             InitializeComponent();
+        }
+
+        private ObservableCollection<Article> entries;
+
+        public ObservableCollection<Article> Entries
+        {
+            get { return entries; }
+            set { entries = value; }
+        }
+
+        public void UpdateTotalPrice()
+        {
+            double price = 0;
+            foreach (Article ar in Entries)
+            {
+                price += ar.Price;
+            }
+            priceTextBlock.Text = price.ToString();
         }
 
         private void AddItem(object sender, RoutedEventArgs e)
         {
-            ShoppingBasketViewList.Items.Add(textBoxName.Text);
+            Article newItem = new Article
+            {
+                Quantity = 1,
+                Name = textBoxName.Text,
+                Price = double.Parse(textBoxPrice.Text)
+            };
+
+            Entries.Add(newItem);
+
             textBoxName.Clear();
+            textBoxPrice.Clear();
+
+            UpdateTotalPrice();
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            object item = ShoppingBasketViewList.SelectedItem;
-            ShoppingBasketViewList.Items.Remove(item);
+            Article item = (Article)ShoppingBasketViewList.SelectedItem;
+            Entries.Remove(item);
+
+            UpdateTotalPrice();
         }
 
         private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e)
         {
-            ShoppingBasketViewList.Items.Clear();
+            Entries.Clear();
+
+            UpdateTotalPrice();
         }
     }
 }
