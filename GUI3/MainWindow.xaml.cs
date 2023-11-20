@@ -21,9 +21,8 @@ namespace GUI
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {  
 
-        
         public MainWindow()
         {
             DataContext = this;
@@ -46,21 +45,36 @@ namespace GUI
             double price = 0;
             foreach (Article ar in Entries)
             {
-                price += ar.Price;
+                price += ar.TotalPrice;
             }
             priceTextBlock.Text = price.ToString();
         }
 
-        private void AddItem(object sender, RoutedEventArgs e)
+        private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            Article newItem = new Article
-            {
-                Quantity = 1,
-                Name = textBoxName.Text,
-                Price = double.Parse(textBoxPrice.Text)
-            };
 
-            Entries.Add(newItem);
+            //check if Article exists in ShoppingBasket
+            bool exists = false;
+            foreach (Article ar in Entries)
+                if(ar.Name == textBoxName.Text)
+                {
+                    exists = true;
+                    ar.Quantity++;
+                    ar.TotalPrice += ar.Price; 
+                }
+
+            if (!exists)
+            {
+                Article newItem = new Article
+                {
+                    Quantity = 1,
+                    Name = textBoxName.Text,
+                    Price = double.Parse(textBoxPrice.Text),
+                    TotalPrice = double.Parse(textBoxPrice.Text)
+                };
+
+                Entries.Add(newItem);
+            }
 
             textBoxName.Clear();
             textBoxPrice.Clear();
@@ -79,6 +93,27 @@ namespace GUI
         private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e)
         {
             Entries.Clear();
+
+            UpdateTotalPrice();
+        }
+
+        private void plusButton_Click(object sender, RoutedEventArgs e)
+        {
+            Article item = (Article)ShoppingBasketViewList.SelectedItem;
+            Entries[Entries.IndexOf(item)].Quantity++;
+            Entries[Entries.IndexOf(item)].TotalPrice += Entries[Entries.IndexOf(item)].Price; //Preis updaten
+
+            UpdateTotalPrice();
+        }
+
+        private void minusButton_Click(object sender, RoutedEventArgs e)
+        {
+            Article item = (Article)ShoppingBasketViewList.SelectedItem;
+            Entries[Entries.IndexOf(item)].Quantity--;
+            Entries[Entries.IndexOf(item)].TotalPrice -= Entries[Entries.IndexOf(item)].Price; //Preis updaten
+
+            if (Entries[Entries.IndexOf(item)].Quantity == 0)
+                deleteButton_Click(this, e);
 
             UpdateTotalPrice();
         }

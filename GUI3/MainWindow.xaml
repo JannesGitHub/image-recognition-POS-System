@@ -34,7 +34,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                <Button Name="addButton" Content="ADD" Click="AddItem"/>
+                <Button Name="addButton" Content="ADD" Click="addButton_Click"/>
                     <Button Name="deleteButton" Content="DELTETE" Grid.Column="1" Click="deleteButton_Click"/>
                 </Grid>
             </Grid>
@@ -58,7 +58,7 @@
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Quantity}" Header="X" Width="50"/>
                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="200"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Preis" Width="100"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="Preis" Width="100"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -89,8 +89,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button FontSize="80" Content="-" Name="minusButton" Grid.Column="0"/>
-            <Button FontSize="80" Content="+" Name="plusButton" Grid.Column="1"/>
+            <Button FontSize="80" Content="-" Name="minusButton" Grid.Column="0" Click="minusButton_Click"/>
+            <Button FontSize="80" Content="+" Name="plusButton" Grid.Column="1" Click="plusButton_Click"/>
             <TextBlock Name="priceTextBlock" Text="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
 
         </Grid>
