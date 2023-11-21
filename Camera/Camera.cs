@@ -5,12 +5,12 @@ using Accord.Video.DirectShow;
 
 namespace Camera
 {
-    public class Camera : ICamera
+    public class Cam : ICamera
     {
         private VideoCaptureDevice videoSource;
         private Bitmap currentBitmap;
 
-        public Camera()
+        public Cam()
         {
             // Initialisiere die Kamera
             FilterInfoCollection videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -26,7 +26,7 @@ namespace Camera
             }
         }
 
-        private void VideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        public void VideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             // Überprüfe, ob das Frame-Objekt nicht null ist
             if (eventArgs.Frame != null)

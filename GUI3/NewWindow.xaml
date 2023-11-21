@@ -7,8 +7,6 @@
         mc:Ignorable="d"
         Title="NewWindow" Height="450" Width="800">
     <Grid>
-        <Image >
-
-        </Image>
+        <Image x:Name="testBild"/>
     </Grid>
 </Window>
