@@ -32,7 +32,6 @@ namespace GUI
             InitializeComponent();
         }
 
-        //
         public void CheckConstant()
         {
             //getBitmap -> Ralf
@@ -48,6 +47,8 @@ namespace GUI
             //Produkte bearbeiten 
             //Sortiment 
             //Sortiment speichern
+
+
         }
 
         private ObservableCollection<Article> entries; 
@@ -158,6 +159,12 @@ namespace GUI
         {
             NewWindow newWindow = new NewWindow();
             newWindow.Show();
+        }
+
+        private void payButton_Click(object sender, RoutedEventArgs e)
+        {
+            PayWindow payWindow = new PayWindow();
+            payWindow.Show();
         }
     }
 }
