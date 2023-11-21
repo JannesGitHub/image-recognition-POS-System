@@ -10,5 +10,7 @@ namespace DetectionLibrary
     internal interface IDetection
     {
         Dictionary<Product, double> getValuedLineOfGoods();
+
+
     }
 }

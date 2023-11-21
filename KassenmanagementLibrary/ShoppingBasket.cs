@@ -12,8 +12,6 @@ namespace KassenmanagementLibrary
 
         private double _totalPrice { get; set; }
 
-
-
         public double getTotalPrice()
         {
 

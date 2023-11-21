@@ -1,64 +1,54 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Accord.Video;
 using Accord.Video.DirectShow;
-using Accord.Imaging;
 
-namespace program
+namespace Camera
 {
-    class program
+    public class Camera : ICamera
     {
-        static void Main()
+        private VideoCaptureDevice videoSource;
+        private Bitmap currentBitmap;
+
+        public Camera()
         {
-            // Erstelle eine Instanz deiner Kamera
-            Camera camera = new Camera();
-
-            // Rufe GetCurrentFrame auf
-            Bitmap frame = camera.GetCurrentFrame();
-
-            // Überprüfe, ob ein Bild empfangen wurde
-            if (frame != null)
+            // Initialisiere die Kamera
+            FilterInfoCollection videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            if (videoDevices.Count > 0)
             {
-                // Speichere das Bild oder zeige es an, wie du möchtest
-                frame.Save("captured_frame.jpg");
-                Console.WriteLine("Bild erfolgreich gespeichert.");
+                videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
+                videoSource.NewFrame += VideoSource_NewFrame;
+                videoSource.Start();
             }
             else
             {
-                Console.WriteLine("Fehler beim Empfangen des Bildes.");
+                Console.WriteLine("Keine Kamera gefunden.");
             }
         }
-    }
-}
 
-public interface ICamera
-{
-    Bitmap GetCurrentFrame();
-}
-
-public class Camera : ICamera
-{
-    private FilterInfoCollection videoDevices;
-    private VideoCaptureDevice Webcam;
-
-    public Camera()
-    {
-        this.videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-        this.Webcam = new VideoCaptureDevice(videoDevices[0].MonikerString);
-    }
-
-    public Bitmap GetCurrentFrame()
-    {
-        Webcam.Start();
-
-        Bitmap currentFrame = new Bitmap(0,0);
-        using (var g = Graphics.FromImage(currentFrame))
+        private void VideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            g.CopyFromScreen(0, 0, 0, 0, currentFrame.Size);
+            // Überprüfe, ob das Frame-Objekt nicht null ist
+            if (eventArgs.Frame != null)
+            {
+                // Aktualisiere das aktuelle Bitmap bei jedem neuen Frame
+                currentBitmap = (Bitmap)eventArgs.Frame.Clone();
+            }
         }
 
-        Webcam.SignalToStop();
-        Webcam.WaitForStop();
+        public Bitmap GetCurrentBitmap()
+        {
+            return currentBitmap;
+        }
 
-        return currentFrame;
+        public void StopCapture()
+        {
+            // Stoppe die Kameraaufnahme
+            if (videoSource != null && videoSource.IsRunning)
+            {
+                videoSource.SignalToStop();
+                videoSource.WaitForStop();
+            }
+        }
     }
 }
