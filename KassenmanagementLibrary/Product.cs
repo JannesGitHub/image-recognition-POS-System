@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-using DetectionLibrary;
+
 
 namespace KassenmanagementLibrary
 {
@@ -33,7 +33,7 @@ namespace KassenmanagementLibrary
             this.Name = name;
             this.Articlenumber = atriclenumber;
             this.Price = price;
-           this.Quantityarticle = quantityarticle;
+            this.Quantityarticle = quantityarticle;
             this.Allproductvectors = allproductvectors;
 
         }

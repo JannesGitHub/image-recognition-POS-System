@@ -30,9 +30,6 @@ namespace GUI
             Quantityarticle = quantityarticle;
         }
 
-        public Product()
-        {
-
-        }
+        
     }
 }

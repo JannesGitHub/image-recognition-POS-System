@@ -5,7 +5,7 @@ namespace DetectionLibrary
 {
     public class Detection : IDetection
     {
-        private Dictionary<Product, double> ValuedLineOfGoods
+        private Dictionary<Product, double> ValuedLineOfGoods;
         
 
         public LineOfGoods LineOfGoods

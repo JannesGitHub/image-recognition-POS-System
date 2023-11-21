@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace KassenmanagementLibrary
 {
-    public class LineOfGoods //: ILineOfGoods
+    public class LineOfGoods : ILineOfGoods
     {
         private static LineOfGoods instance;
+
+        public LineOfGoods GetLineOfGoods()
+        {
+            return instance;
+        }
 
         public static LineOfGoods Instance
         {
@@ -74,14 +79,15 @@ namespace KassenmanagementLibrary
         }
 
 
-        // nicht sicher wie die methode genau funktionieren soll, interaktiv? sprich: es wird gefrafgt was geändert werden soll
+        // nicht sicher wie die methode genau funktionieren soll, interaktiv? sprich: es wird gefragt was geändert werden soll
         public void editproduct()
         {
-        
+            
         }
 
         public void safe()
         { 
+
         }
 
 
