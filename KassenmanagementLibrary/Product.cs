@@ -20,7 +20,7 @@ namespace KassenmanagementLibrary
 
 
         // Liste von Vektoren für das Produkt
-        public List<CLIPVector> allproductvectors { get; set; } 
+        public List<CLIPVector> Allproductvectors { get; set; } 
 
 
 
@@ -28,16 +28,16 @@ namespace KassenmanagementLibrary
 
 
         //konstruktor
-        public Product(string name, uint atriclenumber, double price, bool quantityarticle)
+        public Product(string name, uint atriclenumber, double price, bool quantityarticle,List<CLIPVector> allproductvectors)
         {
-            Name = name;
-            Articlenumber = atriclenumber;
-            Price = price;
-            Quantityarticle = quantityarticle;
+            this.Name = name;
+            this.Articlenumber = atriclenumber;
+            this.Price = price;
+           this.Quantityarticle = quantityarticle;
+            this.Allproductvectors = allproductvectors;
+
         }
 
-        public Product()
-        {
-        }
+        
     }
 }
