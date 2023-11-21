@@ -21,8 +21,17 @@ namespace KassenmanagementLibrary
                 return instance;
             }
         }
+        private LineOfGoods()
+        {
+            // Initialisiere die Liste, wenn noch nicht geschehen
+            if (lineOfGoods == null)
+            {
+                lineOfGoods = new List<Product>();
+            }
+        }
         public List<Product> lineOfGoods { get; set; }
 
+       
         // prüft ob atrikel im sortiment existiert anhand des namens
         public bool Containsname(string name)
         {
@@ -36,14 +45,15 @@ namespace KassenmanagementLibrary
             }
             return exists;
         }
+        
 
         // überladung der containsmethode, sucht anhand der atrikelnummer
-        public bool Containsn(uint atriclenumber)
+        public bool Contains(uint articlenumber)
         {
             bool exists = false;
             foreach (Product p in lineOfGoods)
             {
-                if (atriclenumber == p.Articlenumber)
+                if (articlenumber == p.Articlenumber)
                 {
                     exists = true;
                 }
@@ -64,11 +74,17 @@ namespace KassenmanagementLibrary
         }
 
 
-        // 
-        public void editproduct(Product product)
+        // nicht sicher wie die methode genau funktionieren soll, interaktiv? sprich: es wird gefrafgt was geändert werden soll
+        public void editproduct()
         {
-
+        
         }
+
+        public void safe()
+        { 
+        }
+
+
 
 
 

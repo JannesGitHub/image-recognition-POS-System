@@ -12,6 +12,13 @@ namespace KassenmanagementLibrary
 
         private double _totalPrice { get; set; }
 
+        public ShoppingBasket (Dictionary<Product,uint> articlelist,double totalprice) 
+        {
+            _articleList = articlelist;
+            _totalPrice = totalprice;
+            
+        }
+
 
 
         public double getTotalPrice()
@@ -38,6 +45,17 @@ namespace KassenmanagementLibrary
                 _articleList[key] = menge;
             }
 
+        }
+
+        public void deleteArticle(Product product)
+        {
+            foreach(var pair in _articleList)
+            {
+                if (pair.Key == product)
+                {
+                    _articleList.Remove(pair.Key);
+                }
+            }
         }
 
     }
