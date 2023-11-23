@@ -24,9 +24,12 @@ namespace KassenmanagementLibrary
         {
             this.ArticleList = articlelist;
             this.TotalPrice = getTotalPrice(articlelist);
-            
         }
 
+        public ShoppingBasket()
+        {
+
+        }
 
 
         public double getTotalPrice(Dictionary<Product,uint> articlelist)
