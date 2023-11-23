@@ -1,81 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KassenmanagementLibrary
 {
-    
     public class ShoppingBasket : IShoppingBasket
     {
-        public Dictionary<Product, uint> ArticleList { get; set; }
+        private ObservableCollection<Article> shoppingBasket = new ObservableCollection<Article>();  //ShoppingBasket
 
-        private double TotalPrice { get ; set; }
-
-        public ShoppingBasket getShoppingBasket()
+        public ObservableCollection<Article> _ShoppingBasket
         {
-            return new ShoppingBasket(ArticleList);
+            get {if(shoppingBasket != null) { return shoppingBasket; } 
+                else{ return new ObservableCollection<Article>();}
+            }
+            set { shoppingBasket = value; }
         }
 
-
-        //konstruktor
-        public ShoppingBasket (Dictionary<Product,uint> articlelist) 
+        public ShoppingBasket getShoppingBasket() //Interface
         {
-            this.ArticleList = articlelist;
-            this.TotalPrice = getTotalPrice(articlelist);
+            return this;
         }
 
-        public ShoppingBasket()
-        {
+        private double sumPrice;
 
-        }
-
-
-        public double getTotalPrice(Dictionary<Product,uint> articlelist)
-        {
-
-
-            foreach (var pair in articlelist)
+        public double SumPrice { 
+            get { return sumPrice; } 
+            set
             {
-                if (pair.Key.Quantityarticle == true)
+                double price = 0;
+                foreach (Article ar in _ShoppingBasket)
                 {
-                    this.TotalPrice += pair.Key.Price * pair.Value;
+                    price += ar.TotalPrice;
                 }
-                else this.TotalPrice += pair.Key.Price;
-            }
-            return this.TotalPrice;
+                value = price;
+            } }
 
-        }
+        public void Add(Product product)
+        {
+            Article article = new Article(product);
 
-        //fügt einen artikel mit der jeweiligen menge dem Dictionary(Artikelliste) hinzu
-        public void addArticle(Product product, uint amount)
-        {
-            ArticleList.Add(product, amount);
-        }
-        public void ChangeArticleAmount(uint menge, Product key)
-        {
-            if (ArticleList.ContainsKey(key))
+            if(_ShoppingBasket.Contains(article))
             {
-                ArticleList[key] = menge;
+                _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity += 1;
+                _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice += _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
             }
-
-        }
-
-        public void deleteArticle(Product product)
-        {
-            foreach(var pair in ArticleList)
+            else
             {
-                if (pair.Key == product)
-                {
-                    ArticleList.Remove(pair.Key);
-                }
+                _ShoppingBasket.Add(article);
             }
         }
 
+        public void Clear()
+        {
+            _ShoppingBasket.Clear();
+        }
 
-        //benutzt die stringbuilder methode um aus verschiedenen eingaben einen einzigen String zu erstellen.
-       public  string generateReciept(ShoppingBasket shoppingBasket) 
+        public void UpQuantity(Article article)
+        {
+            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity += 1;
+        }
+
+        public void DownQuantity(Article article)
+        {
+            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity -= 1;
+        }
+
+        public void NewQuantity(Article article, double quantity) //for change in wheigths
+        {
+            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity = quantity; 
+        }
+
+
+
+
+        /*public  string generateReciept(ShoppingBasket shoppingBasket) 
        {
            StringBuilder receiptBuilder = new StringBuilder();
             receiptBuilder.AppendLine("Kassenbeleg");
@@ -108,9 +109,7 @@ namespace KassenmanagementLibrary
             Console.WriteLine(receiptBuilder.ToString());
             
             return receiptBuilder.ToString();
-       }
-        
-
+       }*/
 
     }
 }

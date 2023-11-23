@@ -18,14 +18,8 @@ namespace KassenmanagementLibrary
 
         public bool Quantityarticle { get; set; }
 
-
         // Liste von Vektoren für das Produkt
         public List<CLIPVector> Allproductvectors { get; set; } 
-
-
-
-
-
 
         //konstruktor
         public Product(string name, uint atriclenumber, double price, bool quantityarticle,List<CLIPVector> allproductvectors)
@@ -35,9 +29,7 @@ namespace KassenmanagementLibrary
             this.Price = price;
             this.Quantityarticle = quantityarticle;
             this.Allproductvectors = allproductvectors;
-
         }
-
         
     }
 }

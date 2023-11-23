@@ -53,7 +53,7 @@
                 <TextBlock FontSize ="23" Text="Shopping Basket" Grid.Row="0" FontWeight="Bold" Margin="0,0,32,0"/>
                 <Button Name="deleteShoppingBasketButton" Width="30" Height="30" HorizontalAlignment="Right" Click="deleteShoppingBasketButton_Click"/>
 
-                <ListView ItemsSource="{Binding Entries}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness = "1" >
+                <ListView ItemsSource="{Binding ShoppingBasket}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness = "1">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Quantity}" Header="X" Width="50"/>

@@ -12,7 +12,7 @@ namespace Camera
 
         public Cam()
         {
-            // Initialisiere die Kamera
+            // 
             FilterInfoCollection videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             if (videoDevices.Count > 0)
             {
@@ -28,11 +28,10 @@ namespace Camera
 
         public void VideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            // Überprüfe, ob das Frame-Objekt nicht null ist
+            // 
             if (eventArgs.Frame != null)
             {
-                // Aktualisiere das aktuelle Bitmap bei jedem neuen Frame
-                currentBitmap = (Bitmap)eventArgs.Frame.Clone();
+                currentBitmap = (Bitmap)eventArgs.Frame.Clone(); //geschützten Thread einbauen
             }
         }
 
@@ -43,7 +42,7 @@ namespace Camera
 
         public void StopCapture()
         {
-            // Stoppe die Kameraaufnahme
+            // 
             if (videoSource != null && videoSource.IsRunning)
             {
                 videoSource.SignalToStop();

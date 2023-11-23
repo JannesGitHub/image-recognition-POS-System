@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GUI
+namespace KassenmanagementLibrary
 {
     public class Article : INotifyPropertyChanged
     {
-        private int quantity;
+        public Product Source;
+
+        private double quantity;
 
         private double price;
         public string Name { get; set; }
@@ -18,12 +20,12 @@ namespace GUI
 
         public Article() { }
 
-
-        public Article(Product _product, int _quantity)
+        public Article(Product _product)
         {
             Name = _product.Name;
             Price = _product.Price;
-            Quantity = _quantity;
+            Quantity = 1;
+            Source = _product;
         }
 
         public double TotalPrice
@@ -39,7 +41,7 @@ namespace GUI
             }
         }
 
-        public int Quantity
+        public double Quantity
         {
             get { return quantity; }
             set
