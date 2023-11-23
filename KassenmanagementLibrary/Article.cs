@@ -24,6 +24,7 @@ namespace KassenmanagementLibrary
         {
             Name = _product.Name;
             Price = _product.Price;
+            totalPrice = _product.Price;
             Quantity = 1;
             Source = _product;
         }

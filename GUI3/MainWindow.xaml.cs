@@ -66,8 +66,9 @@ namespace GUI
         public Product scanned { get; set; }
 
         //METHODEN
-        private void addButton_Click(object sender, RoutedEventArgs e)
+        private void addButton_Click(object sender, RoutedEventArgs e) 
         {
+            /*
             //check if Article exists in ShoppingBasket
             bool exists = false;
             foreach (Article ar in ShoppingBasket)
@@ -90,11 +91,13 @@ namespace GUI
 
                 ShoppingBasket.Add(newItem);
             }
+            */
+            Product test = new Product("Banane", 123, 2, true, null);
 
-            //shoppingBasketObject.Add(scanned); -> soll so funktionieren
+            shoppingBasketObject.Add(test); 
         }
 
-        private void deleteButton_Click(object sender, RoutedEventArgs e) //Wird gecallt wenn Minusfunktion 0 erreicht
+        private void deleteButton_Click(object sender, RoutedEventArgs e) //Wird gecallt wenn Minusfunktion 0 erreicht //bzw. gelöscht später
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             ShoppingBasket.Remove(item);

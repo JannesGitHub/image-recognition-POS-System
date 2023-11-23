@@ -44,8 +44,7 @@ namespace KassenmanagementLibrary
 
             if(_ShoppingBasket.Contains(article))
             {
-                _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity += 1;
-                _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice += _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
+                UpQuantity(article);
             }
             else
             {
@@ -61,11 +60,13 @@ namespace KassenmanagementLibrary
         public void UpQuantity(Article article)
         {
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity += 1;
+            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice += _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
         }
 
         public void DownQuantity(Article article)
         {
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity -= 1;
+            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice -= _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
         }
 
         public void NewQuantity(Article article, double quantity) //for change in wheigths
