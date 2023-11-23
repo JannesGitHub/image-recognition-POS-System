@@ -63,35 +63,11 @@ namespace GUI
             set { shoppingBasket = value; }
         }
 
-        public Product scanned { get; set; }
+        public Product scanned { get; set; } //Hier wird das gescannte Produkt übergeben für die Add-Funktion
 
         //METHODEN
         private void addButton_Click(object sender, RoutedEventArgs e) 
         {
-            /*
-            //check if Article exists in ShoppingBasket
-            bool exists = false;
-            foreach (Article ar in ShoppingBasket)
-                if (ar.Name == textBoxName.Text)
-                {
-                    exists = true;
-                    ar.Quantity++;
-                    ar.TotalPrice += ar.Price;
-                }
-
-            if (!exists)
-            {
-                Article newItem = new Article
-                {
-                    Quantity = 1,
-                    Name = textBoxName.Text,
-                    Price = double.Parse(textBoxPrice.Text),
-                    TotalPrice = double.Parse(textBoxPrice.Text)
-                };
-
-                ShoppingBasket.Add(newItem);
-            }
-            */
             Product test = new Product("Banane", 123, 2, true, null);
 
             shoppingBasketObject.Add(test); 
