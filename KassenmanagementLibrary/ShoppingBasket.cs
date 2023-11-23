@@ -11,7 +11,11 @@ namespace KassenmanagementLibrary
     {
         public Dictionary<Product, uint> ArticleList { get; set; }
 
-        private double TotalPrice { get ; set; }
+        private double TotalPrice { get
+            {
+                return getTotalPrice(this.ArticleList);
+            } 
+        }
 
         public ShoppingBasket getShoppingBasket()
         {
@@ -23,7 +27,6 @@ namespace KassenmanagementLibrary
         public ShoppingBasket (Dictionary<Product,uint> articlelist) 
         {
             this.ArticleList = articlelist;
-            this.TotalPrice = getTotalPrice(articlelist);
         }
 
         public ShoppingBasket()
@@ -34,17 +37,17 @@ namespace KassenmanagementLibrary
 
         public double getTotalPrice(Dictionary<Product,uint> articlelist)
         {
-
+            double totalPrice = 0;
 
             foreach (var pair in articlelist)
             {
                 if (pair.Key.Quantityarticle == true)
                 {
-                    this.TotalPrice += pair.Key.Price * pair.Value;
+                    totalPrice += pair.Key.Price * pair.Value;
                 }
-                else this.TotalPrice += pair.Key.Price;
+                else totalPrice += pair.Key.Price;
             }
-            return this.TotalPrice;
+            return totalPrice;
 
         }
 
