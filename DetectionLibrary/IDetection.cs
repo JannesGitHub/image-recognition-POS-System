@@ -9,8 +9,7 @@ namespace DetectionLibrary
 {
     internal interface IDetection
     {
-        Dictionary<Product, double> getValuedLineOfGoods();
-
+        (Dictionary<Product, double>,Product?) getDetectionOutput();
 
     }
 }

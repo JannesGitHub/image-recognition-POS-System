@@ -5,37 +5,30 @@ namespace DetectionLibrary
 {
     public class Detection : IDetection
     {
-        private Dictionary<Product, double> ValuedLineOfGoods;
-        
-
-        public LineOfGoods LineOfGoods
+        private Bitmap testBitmap
         {
             get
             {
-                return new LineOfGoods();// soll das aktuelle Sortiment Objekt abrufen
-            }
-            set 
-            { 
-                this.LineOfGoods = value; //
+                //Testbild aus meinem Verzeichnis Lesen
+                Image pictureApple = Image.FromFile("C://Users/cansc/OneDrive/Desktop/HTW/Progammierprojekt/Apfel.jpg");
+                return (Bitmap)pictureApple;
             }
         }
+        private Dictionary<Product, double> ValuedLineOfGoods;       
+        private LineOfGoods LineOfGoods { get; set; }
+        public Detection(LineOfGoods lineOfGoods)
+        {
+            LineOfGoods = lineOfGoods;
+        }
+        public (Dictionary<Product, double>, Product?) getDetectionOutput()
+        {
+            throw new NotImplementedException();
+        }
+
         public Product LastProduct { get; private set; }
         //Frage zu LineOfGoods und ValuedLineOfGoods, wo soll ich die Eigenschaften zuweisen im Getter oder im setter? 
         //eigentlich im Getter und den setter einfach weglassen/privat stellen?
-        
-        private CLIPVector ImageAsVector (Image image)
-        {
-            get { return ZeroshotDemo(currentImage)} // tauscht das von der GUI bekomme Image Object in einen CLIPVector
-        }
-        public Dictionary<Product, double> getValuedLineOfGoods(Image image)
-        {
-            ImageAsVector(image)
-            //muss das aktuellste Dictionory mit den Produkt/warscheinlichkeitspaaren zurrückgeben
-            return this.ValuedLineOfGoods;
-            
-            //Webclient, MIME decodierung, welche IMAGE Klasse nehmen wir - Bitmap 
-            //Kommunikation mit CLIP: eigenes Nebenprojekt machen - und einfachen Befehl testen. (PROG 2 Serialisierung?)
-        }
+
 
     }
 }
