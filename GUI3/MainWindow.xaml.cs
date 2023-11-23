@@ -166,5 +166,10 @@ namespace GUI
             PayWindow payWindow = new PayWindow();
             payWindow.Show();
         }
+
+        private void ShoppingBasketViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

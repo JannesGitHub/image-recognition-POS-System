@@ -53,17 +53,17 @@ namespace KassenmanagementLibrary
         
 
         // überladung der containsmethode, sucht anhand der atrikelnummer
-        public bool Contains(uint articlenumber)
+        public Product Contains(uint articlenumber)//umbenennen
         {
-            bool exists = false;
+            
             foreach (Product p in lineOfGoods)
             {
                 if (articlenumber == p.Articlenumber)
                 {
-                    exists = true;
+                    return p;
                 }
             }
-            return exists;
+            return null;
         }
 
         //fügt akritel dem sortiment hinzu
