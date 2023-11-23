@@ -32,7 +32,8 @@ namespace DetectionLibrary
             ImageAsVector(image)
             //muss das aktuellste Dictionory mit den Produkt/warscheinlichkeitspaaren zurrückgeben
             return this.ValuedLineOfGoods;
-            //Webclient, MIME decodierung, welche IMAGE Klasse nehmen wir, 
+            
+            //Webclient, MIME decodierung, welche IMAGE Klasse nehmen wir - Bitmap 
             //Kommunikation mit CLIP: eigenes Nebenprojekt machen - und einfachen Befehl testen. (PROG 2 Serialisierung?)
         }
 

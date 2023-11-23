@@ -18,10 +18,12 @@ namespace KassenmanagementLibrary
             return new ShoppingBasket(ArticleList);
         }
 
+
+        //konstruktor
         public ShoppingBasket (Dictionary<Product,uint> articlelist) 
         {
-            ArticleList = articlelist;
-            this.TotalPrice= getTotalPrice(articlelist);
+            this.ArticleList = articlelist;
+            this.TotalPrice = getTotalPrice(articlelist);
             
         }
 
@@ -43,7 +45,7 @@ namespace KassenmanagementLibrary
 
         }
 
-        //fügt einen artikel mit der jeweiligen menge dem Dictionary(artikelliste) hinzu
+        //fügt einen artikel mit der jeweiligen menge dem Dictionary(Artikelliste) hinzu
         public void addArticle(Product product, uint amount)
         {
             ArticleList.Add(product, amount);
@@ -93,11 +95,10 @@ namespace KassenmanagementLibrary
 
             receiptBuilder.AppendLine();
             receiptBuilder.AppendLine("--------------------------------------------");
-
             receiptBuilder.AppendLine();
 
             double totalprice = getTotalPrice(shoppingBasket.ArticleList);
-            receiptBuilder.AppendLine($"SUMME EUR  {totalprice}");
+            receiptBuilder.AppendLine($"SUMME EUR  {Math.Round(totalprice,2)}");
 
 
 

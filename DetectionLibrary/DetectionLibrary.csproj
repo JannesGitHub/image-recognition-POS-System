@@ -10,4 +10,8 @@
     <ProjectReference Include="..\KassenmanagementLibrary\KassenmanagementLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+  </ItemGroup>
+
 </Project>

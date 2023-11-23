@@ -32,16 +32,33 @@ namespace GUI
             InitializeComponent();
         }
 
-        private ObservableCollection<Article> entries;
+        //
+        public void CheckConstant()
+        {
+            //getBitmap -> Ralf
 
-        public ObservableCollection<Article> Entries
+            //getDetected(Bild Ralf) -> ProduktDictionary von Can
+
+            //zeit ticker
+
+            //getDetected -> bool
+            //getValidProduct -> Product
+
+            //Warenkorb:
+            //Produkte bearbeiten 
+            //Sortiment 
+            //Sortiment speichern
+        }
+
+        private ObservableCollection<Article> entries; 
+
+        public ObservableCollection<Article> Entries 
         {
             get { return entries; }
             set { entries = value; }
         }
 
-        
-        public void UpdateTotalPrice()//Aktualisiert die Gesamtpreisausgabe
+        public void UpdateTotalPrice()//Aktualisiert die Gesamtpreisausgabe 
         {
             double price = 0;
             foreach (Article ar in Entries)
@@ -49,6 +66,8 @@ namespace GUI
                 price += ar.TotalPrice;
             }
             priceTextBlock.Text = price.ToString();
+
+            //////////////////////////ToChange
         }
 
         /// <summary>
@@ -86,34 +105,42 @@ namespace GUI
             textBoxPrice.Clear();
 
             UpdateTotalPrice();
+
+            //////////////////////////ToChange
         }
 
-        private void deleteButton_Click(object sender, RoutedEventArgs e) //nur zu testzwecken, später in der Minusfunktion inbegriffen
+        private void deleteButton_Click(object sender, RoutedEventArgs e) //nur zu testzwecken, später in der Minusfunktion inbegriffen //ToChange
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             Entries.Remove(item);
 
             UpdateTotalPrice();
+
+            //////////////////////////ToChange
         }
 
-        private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e) //löscht den gesamten ShoppingBasket
+        private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e) //löscht den gesamten ShoppingBasket //ToChange
         {
             Entries.Clear();
 
             UpdateTotalPrice();
+
+            //////////////////////////ToChange
         }
 
         //Vorerst nur für Stück Produkte
-        private void plusButton_Click(object sender, RoutedEventArgs e) //erhöht Stückzahl und automatisch Preis Update
+        private void plusButton_Click(object sender, RoutedEventArgs e) //erhöht Stückzahl und automatisch Preis Update //ToChange
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             Entries[Entries.IndexOf(item)].Quantity++;
             Entries[Entries.IndexOf(item)].TotalPrice += Entries[Entries.IndexOf(item)].Price; 
 
             UpdateTotalPrice();
+
+            //////////////////////////ToChange
         }
 
-        private void minusButton_Click(object sender, RoutedEventArgs e) //vermindert Stückzahl und Preis
+        private void minusButton_Click(object sender, RoutedEventArgs e) //vermindert Stückzahl und Preis 
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             Entries[Entries.IndexOf(item)].Quantity--;
@@ -123,6 +150,14 @@ namespace GUI
                 Entries.Remove(item);
          
             UpdateTotalPrice();
+
+            //////////////////////////ToChange
+        }
+
+        private void tryScreenButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewWindow newWindow = new NewWindow();
+            newWindow.Show();
         }
     }
 }
