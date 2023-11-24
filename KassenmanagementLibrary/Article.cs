@@ -36,7 +36,8 @@ namespace KassenmanagementLibrary
             {
                 if (totalPrice!= value)
                 {
-                    totalPrice = value;
+                    totalPrice = Math.Round(value,2); //Bugfix für zuviele Nachkommastellen und falsche Berechnung
+
                     OnPropertyChanged(nameof(TotalPrice));
                 }
             }
