@@ -77,7 +77,7 @@ namespace KassenmanagementLibrary
 
 
 
-        /*public  string generateReciept(ShoppingBasket shoppingBasket) 
+        public  string generateReciept(ShoppingBasket shoppingBasket) 
        {
            StringBuilder receiptBuilder = new StringBuilder();
             receiptBuilder.AppendLine("Kassenbeleg");
@@ -110,7 +110,7 @@ namespace KassenmanagementLibrary
             Console.WriteLine(receiptBuilder.ToString());
             
             return receiptBuilder.ToString();
-       }*/
+       }
 
     }
 }
