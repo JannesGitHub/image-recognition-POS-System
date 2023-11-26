@@ -12,7 +12,41 @@ namespace KassenmanagementLibrary
         public double[] Vector;
         public CLIPVector(double[] vector) 
         {  
-            this.Vector = vector; 
+            vector.CopyTo(Vector,0); 
         }
+        public List<double> CompareTo(List<CLIPVector> cLIPVectors)
+        {
+            List<double> result = new List<double>();
+            foreach(CLIPVector cLIP in cLIPVectors)
+            {
+                result.Add(GetMagnitude(this.Subtract(cLIP)));
+            }
+            return result;
+        }
+        private static double GetMagnitude(CLIPVector cLIPVector)
+        {
+            double presquareroot = 0;
+            foreach (double value in cLIPVector.Vector)
+            {
+                presquareroot += Math.Pow(value, 2);
+            }
+            return Math.Sqrt(presquareroot);
+        }
+        /// <summary>
+        /// this CLIPVector gets subtracted by the Parameter
+        /// </summary>
+        /// <param name="cLIPVector">Vector To be subtracted</param>
+        /// <returns></returns>
+        private CLIPVector Subtract (CLIPVector cLIPVector)
+        {
+            List<double> result = new List<double>();
+            for(int i = 0; i < cLIPVector.Vector.Length; i++)
+            {
+                result.Add(this.Vector[i] - cLIPVector.Vector[i]);
+            }
+            return new CLIPVector(result.ToArray());
+        }
+        
     }
+
 }

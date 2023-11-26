@@ -46,7 +46,7 @@ namespace GUI
 
             shoppingBasketObject = new ShoppingBasket();
 
-            shoppingBasket = shoppingBasketObject._ShoppingBasket;
+            ShoppingBasket = shoppingBasketObject._ShoppingBasket;
 
             InitializeComponent();
         }
@@ -68,20 +68,27 @@ namespace GUI
         //METHODEN
         private void addButton_Click(object sender, RoutedEventArgs e) 
         {
-            Product test = new Product("Banane", 123, 2, true, null);
+            Product test = new Product("Banane", 123, 2.2, true, null);
 
-            shoppingBasketObject.Add(test); 
+            shoppingBasketObject.Add(test);
+
+            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e) //Wird gecallt wenn Minusfunktion 0 erreicht //bzw. gelöscht später
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
+
             ShoppingBasket.Remove(item);
+
+            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
         
         private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e) //löscht den gesamten ShoppingBasket 
         {
             shoppingBasketObject.Clear();
+
+            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
         
         //Vorerst nur für Stück Produkte
@@ -89,6 +96,8 @@ namespace GUI
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             shoppingBasketObject.UpQuantity(item);
+
+            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
         
         private void minusButton_Click(object sender, RoutedEventArgs e) //vermindert Stückzahl und Preis 
@@ -98,6 +107,8 @@ namespace GUI
 
             if (ShoppingBasket[ShoppingBasket.IndexOf(item)].Quantity == 0) //Wenn 0 dann löschen
                 deleteButton_Click(this, e);
+
+            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
         
         private void tryScreenButton_Click(object sender, RoutedEventArgs e)
