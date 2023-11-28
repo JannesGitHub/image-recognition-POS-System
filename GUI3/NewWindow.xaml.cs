@@ -23,7 +23,7 @@ namespace GUI
             camera = new Cam();
 
             // Initialisiere den Timer mit einer Periodendauer von 30 ms
-            timer = new Timer(30);
+            timer = new Timer(100);
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
 
