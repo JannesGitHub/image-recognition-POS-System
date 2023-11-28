@@ -1,11 +1,11 @@
-﻿using KassenmanagementLibrary;
+﻿/*using KassenmanagementLibrary;
 using System.Drawing;
 
 namespace DetectionLibrary
 {
     public class Detection : IDetection
     {
-        private Bitmap testBitmap
+        /private Bitmap testBitmap
         {
             get
             {
@@ -31,4 +31,4 @@ namespace DetectionLibrary
 
 
     }
-}
+}*/

@@ -11,13 +11,16 @@ namespace KassenmanagementLibrary
     public class ShoppingBasket : IShoppingBasket
     {
 
-        public ShoppingBasket getShoppingBasket() //Interface
+        public ShoppingBasket GetShoppingBasket() //Interface
         {
             return this;
         }
 
         private ObservableCollection<Article> shoppingBasket = new ObservableCollection<Article>();  //ShoppingBasket
-
+        public ShoppingBasket(ObservableCollection<Article> liste)
+        {
+            shoppingBasket=liste;
+        }
         public ObservableCollection<Article> _ShoppingBasket
         {
             get { return shoppingBasket; }
@@ -48,7 +51,7 @@ namespace KassenmanagementLibrary
             SumPrice = price;
         }
 
-        public void Add(Product product)
+        public void AddArticle(Product product)
         {
             Article article = new Article(product);
 
@@ -89,6 +92,17 @@ namespace KassenmanagementLibrary
             UpdateSumPrice();
         }
 
+        public double TotalPrice(ShoppingBasket shoppingbasket)
+        {
+            double totalprice = 0.0;
+            foreach(Article article in _ShoppingBasket)
+            {
+                totalprice += article.TotalPrice;
+            }
+            return totalprice;
+
+        }
+
 
 
 
@@ -99,16 +113,12 @@ namespace KassenmanagementLibrary
             receiptBuilder.AppendLine();
             receiptBuilder.AppendLine("--------------------------------------------");
 
-            foreach (var item in ArticleList)
+            foreach (var item in _ShoppingBasket)
             {
-                if (item.Key.Quantityarticle == true)
-                {
-                    receiptBuilder.AppendLine($"Produkt:{item.Key.Name,-20} {item.Value}x  {item.Key.Price,10}");
-                }
-                else
-                {
-                    receiptBuilder.AppendLine($"Produkt:{item.Key.Name,-20} {item.Value}kg {item.Key.Price,10}");
-                }
+                
+                    receiptBuilder.AppendLine($"Produkt:{item.Name,-20} {item.Quantity}x  {item.TotalPrice,10}");
+                
+               
                 
                 
             }
@@ -117,7 +127,7 @@ namespace KassenmanagementLibrary
             receiptBuilder.AppendLine("--------------------------------------------");
             receiptBuilder.AppendLine();
 
-            double totalprice = getTotalPrice(shoppingBasket.ArticleList);
+            double totalprice = TotalPrice(shoppingBasket);
             receiptBuilder.AppendLine($"SUMME EUR  {Math.Round(totalprice,2)}");
 
 
