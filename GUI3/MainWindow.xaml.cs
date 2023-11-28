@@ -7,14 +7,13 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Camera;
+using System.Timers;
+using Camera;
+using System.Windows.Media.Media3D;
+using System.Drawing;
 
 namespace GUI
 {
@@ -49,10 +48,70 @@ namespace GUI
             ShoppingBasket = shoppingBasketObject._ShoppingBasket;
 
             InitializeComponent();
+
+
+            //CAMERA STUFF
+
+            camera = new Cam();
+
+            // Initialisiere den Timer mit einer Periodendauer von 30 ms
+            timer = new Timer(100); //not optimal
+            timer.Elapsed += Timer_Elapsed;
+            timer.AutoReset = true;
+
+            // Starte den Timer
+            timer.Start();
+
+            //CAMERA STUFF ENDE
+        }
+
+        //BILDDARSTELLUNG 
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            // Übertrage und zeige das aktuelle Bitmap
+            if (camera != null)
+            {
+                Bitmap bitmap = camera.GetCurrentBitmap();
+                if (bitmap != null)
+                {
+                    // Führe die Anzeigeoperation auf dem UI-Thread aus
+                    Dispatcher.Invoke(() => ShowBitmap(bitmap));
+                }
+            }
+        }
+
+        private void ShowBitmap(Bitmap bitmap)
+        {
+            // Konvertiere das Bitmap in ein BitmapImage und zeige es in der GUI an
+            BitmapImage bitmapImage = BmpImageFromBmp(bitmap);
+            anzeigeBild.Source = bitmapImage;
+        }
+
+        private BitmapImage BmpImageFromBmp(Bitmap bmp)
+        {
+            using (var memory = new System.IO.MemoryStream())
+            {
+                bmp.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
         }
 
 
         //ATTRIBUTE
+        private Cam camera;
+        private Timer timer;
+
+
         public ShoppingBasket shoppingBasketObject;
 
         private ObservableCollection<Article> shoppingBasket;  //ShoppingBasket
@@ -111,12 +170,6 @@ namespace GUI
             priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
         
-        private void tryScreenButton_Click(object sender, RoutedEventArgs e)
-        {
-            NewWindow newWindow = new NewWindow();
-            newWindow.Show();
-        }
-
         private void payButton_Click(object sender, RoutedEventArgs e)
         {
             PayWindow payWindow = new PayWindow();
