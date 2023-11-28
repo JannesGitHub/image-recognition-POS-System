@@ -66,7 +66,6 @@ namespace GUI
         }
 
         //BILDDARSTELLUNG 
-
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Übertrage und zeige das aktuelle Bitmap
@@ -154,6 +153,7 @@ namespace GUI
         private void plusButton_Click(object sender, RoutedEventArgs e) //erhöht Stückzahl und automatisch Preis Update //ToChange
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
+            if(item != null)
             shoppingBasketObject.UpQuantity(item);
 
             priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
