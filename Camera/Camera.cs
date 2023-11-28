@@ -2,15 +2,8 @@
 using System.Drawing;
 using Accord.Video;
 using Accord.Video.DirectShow;
-<<<<<<< HEAD
 
 namespace Camera
-=======
-using Accord.Imaging;
-using System;
-
-namespace program //Zum Testen der Funktionen
->>>>>>> Nichts wichtiges lol
 {
     public class Cam : ICamera
     {

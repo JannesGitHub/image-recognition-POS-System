@@ -8,7 +8,7 @@ namespace KassenmanagementLibrary
 {
     public interface IShoppingBasket
     {
-        ShoppingBasket GetShoppingBasket();
+        ShoppingBasket getShoppingBasket();
 
     }
 }

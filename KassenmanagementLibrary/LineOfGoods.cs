@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Xml.Serialization;
 
 namespace KassenmanagementLibrary
 {
@@ -40,25 +36,26 @@ namespace KassenmanagementLibrary
         }
         public List<Product> lineOfGoods { get; set; }
 
-
+       
         // prüft ob atrikel im sortiment existiert anhand des namens
-        public Product FindProductByName(string name)
+        public bool Containsname(string name)
         {
+            bool exists = false;
             foreach (Product p in lineOfGoods)
             {
-                if (name == p.Name)
+                if (p.Name == name)
                 {
-                    return p;
+                    exists = true;
                 }
             }
-            return null;
+            return exists;
         }
-
+        
 
         // überladung der containsmethode, sucht anhand der atrikelnummer
-        public Product FindProductByNumber(uint articlenumber)//umbenennen
+        public Product Contains(uint articlenumber)//umbenennen
         {
-
+            
             foreach (Product p in lineOfGoods)
             {
                 if (articlenumber == p.Articlenumber)
@@ -70,55 +67,29 @@ namespace KassenmanagementLibrary
         }
 
         //fügt akritel dem sortiment hinzu
-        public void AddProduct(Product p)
+        public void Add(Product p)
         {
             lineOfGoods.Add(p);
         }
 
         // löscht artikel aus sortiment
-        public void RemoveProduct(Product p)
+        public void Remove(Product p)
         {
             lineOfGoods.Remove(p);
         }
 
 
-
-        public void editproduct(Product product)
+        // nicht sicher wie die methode genau funktionieren soll, interaktiv? sprich: es wird gefragt was geändert werden soll
+        public void editproduct()
         {
-            if (FindProductByName(product.Name) != null)
-            {
-                FindProductByName(product.Name).Articlenumber = product.Articlenumber;
-                FindProductByName(product.Name).Quantityarticle = product.Quantityarticle;
-                FindProductByName(product.Name).Allproductvectors = product.Allproductvectors;
-                FindProductByName(product.Name).Price = product.Price;
+            
+        }
 
-            }
-            else
-            {
-                AddProduct(product);
-            }
+        public void safe()
+        { 
 
         }
 
-        public void safe(ShoppingBasket shoppingbasket)
-        {
-
-            string bon = shoppingbasket.generateReciept(shoppingbasket);
-
-            string filePath = "D:\\ProgProjekt\\Belege";
-
-            // Rufe die generateReceipt-Methode auf, um den String zu erhalten.
-
-
-            // Erstelle einen XmlSerializer für den Typ string.
-            XmlSerializer serializer = new XmlSerializer(typeof(string));
-
-            // Öffne eine Datei zum Schreiben (oder erstelle sie, wenn sie nicht existiert).
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                // Serialisiere den String und schreibe ihn in die Datei.
-                serializer.Serialize(writer, bon);
-            }
 
 
 
@@ -127,7 +98,5 @@ namespace KassenmanagementLibrary
 
 
 
-
-        }
     }
 }
