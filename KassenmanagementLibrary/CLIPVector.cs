@@ -14,6 +14,11 @@ namespace KassenmanagementLibrary
         {  
             vector.CopyTo(Vector,0); 
         }
+
+        //Parameterloser Konstruktor war nötig zur Serialisierung
+        public CLIPVector()
+        {
+        }
         public List<double> CompareTo(List<CLIPVector> cLIPVectors)
         {
             List<double> result = new List<double>();
