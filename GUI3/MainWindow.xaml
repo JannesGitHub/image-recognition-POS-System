@@ -72,7 +72,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button FontSize="80" Content="-" Name="minusButton" Grid.Column="0" Click="minusButton_Click"/>
+            <Button FontSize="15" Content="- und Sortiment" Name="minusButton" Grid.Column="0" Click="minusButton_Click"/>
             <Button FontSize="80" Content="+" Name="plusButton" Grid.Column="1" Click="plusButton_Click"/>
             <TextBlock Name="priceTextBlock" Text="{Binding SumPrice}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
         </Grid>
