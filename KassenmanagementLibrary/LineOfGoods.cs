@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 namespace KassenmanagementLibrary
 {
+   
     [Serializable]
     public class LineOfGoods : ILineOfGoods
     {
@@ -112,8 +113,10 @@ namespace KassenmanagementLibrary
        
         //speichert das Sortment objekt in angegebenen Pfad ab.
         //Pfad wird momentan noch als string übergeben
-        public void Safe(string filePath)
+        public void Safe()
         {
+            string filePath = AppDomain.CurrentDomain.BaseDirectory;
+
             //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
             if (string.IsNullOrWhiteSpace(filePath))
             {
@@ -127,8 +130,9 @@ namespace KassenmanagementLibrary
             }
         }
 
-        public void getFromXML(string filePath)
+        public void getFromXML()
         {
+            string filePath = AppDomain.CurrentDomain.BaseDirectory;
             if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));

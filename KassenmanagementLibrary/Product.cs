@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace KassenmanagementLibrary
 {
+    [Serializable]
     public class Product
     {
         public string Name { get; set; }

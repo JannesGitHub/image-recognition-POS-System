@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using KassenmanagementLibrary;
 
 namespace KassenmanagementLibrary
@@ -148,6 +149,24 @@ namespace KassenmanagementLibrary
             
             return receiptBuilder.ToString();
        }
+        public void SaveReciept()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(string));
+            string filePath = AppDomain.CurrentDomain.BaseDirectory;
+
+                //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
+                if (string.IsNullOrWhiteSpace(filePath))
+                {
+                    throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
+                }
+
+
+                using (FileStream fs = new FileStream(filePath, FileMode.Append))
+                {
+                    serializer.Serialize(fs, this);
+                }
+            
+        }
 
     }
 }
