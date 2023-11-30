@@ -20,7 +20,7 @@ namespace GUI
 
         public void CheckConstant()
         {
-            //getBitmap -> Ralf
+           
 
             //getDetected(Bitmap Ralf, Sortiment) -> ProduktDictionary von Can //sortiert nach Wahrscheinlichkeiten
 
@@ -28,10 +28,6 @@ namespace GUI
 
             //getValidProduct -> Product oder null
 
-            //Warenkorb:
-            //Produkte bearbeiten 
-            //Sortiment 
-            //Sortiment speichern
         }
 
 
