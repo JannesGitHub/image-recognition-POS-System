@@ -6,10 +6,11 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Camera;
 using System.Timers;
-using Camera;
+using DetectionLibrary;
 using System.Windows.Media.Media3D;
 using System.Drawing;
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace GUI
 {
@@ -41,6 +42,8 @@ namespace GUI
 
             lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
 
+            detectionObject = new Detection(lineOfGoodsObject);
+
             InitializeComponent();
 
             //CAMERA STUFF
@@ -48,7 +51,7 @@ namespace GUI
 
             //cam.newFrame -> RALF schau mal in Camera die Kommentare
 
-            timer = new Timer(100); //not optimal
+            timer = new Timer(30); //not optimal
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
 
@@ -73,20 +76,37 @@ namespace GUI
         //Detection Objects
         private Timer timer;
 
+        private Detection detectionObject;
+
         public Product scannedProduct;
 
-        Dictionary<Product, double> productsAndProbabilitys;
+        private Dictionary<Product, double> productsAndProbabilitys;
 
         ///////////////////////////////////////////////////////METHODEN///////////////////////////////////////////////////////////
 
-        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            // Check if the pressed key is the space bar
             if (e.Key == Key.Space)
             {
-                // Your code to handle the space bar press
-                // For example, display a message or perform an action
-                MessageBox.Show("Space bar pressed!");
+                statusTextBox.Text = "Scanning process is running.";
+
+                for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
+                {
+                    await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
+
+                    (Dictionary<Product, double>, Product?) input = detectionObject.getDetectionOutput(lineOfGoodsObject, currentBitmap);
+
+                    productsAndProbabilitys = input.Item1;
+
+                    scannedProduct = input.Item2;
+
+                    if(scannedProduct != null)
+                    {
+                        shoppingBasketObject.AddArticle(scannedProduct);
+                    }    
+                }
+
+                statusTextBox.Text = "Press Space to scan your product!";
             }
         }
 

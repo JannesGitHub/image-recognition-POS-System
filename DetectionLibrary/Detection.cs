@@ -22,6 +22,7 @@ namespace DetectionLibrary
         }
         public (Dictionary<Product, double>, Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame)
         {
+            
             Dictionary<Product, double> vlgdict = new Dictionary<Product, double>();
             foreach (Product p in sortiment.lineOfGoods)
             {
@@ -36,7 +37,7 @@ namespace DetectionLibrary
                     continue;
                 }
             }
-            return (vlgdict, null);
+            return (vlgdict, null); 
         }
 
         public double DummyCompare(List<double> list) // returnt einfach den durchschnitt der distanzen zwischen dem live vector und dern Product vectoren

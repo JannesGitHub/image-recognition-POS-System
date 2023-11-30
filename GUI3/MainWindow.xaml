@@ -18,9 +18,15 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <!--Hier soll immer CurrentImage geladen werden-->
         <Grid Grid.Row="0" Grid.Column="0">
-            <Image x:Name="anzeigeBild"/>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39*"/>
+                <RowDefinition Height="277*"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Text="Press Space to scan your product!" x:Name="statusTextBox"/>
+            <Image Grid.Row="1" x:Name="anzeigeBild"/>
         </Grid>
 
         <!--Warenkorb-->
@@ -77,6 +83,7 @@
             <Button FontSize="80" Content="+" Name="plusButton" Grid.Column="1" Click="plusButton_Click"/>
             <TextBlock Name="priceTextBlock" Text="{Binding SumPrice}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
         </Grid>
+
     </Grid>
 </Window>
 
