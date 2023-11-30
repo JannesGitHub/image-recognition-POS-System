@@ -9,6 +9,7 @@ using System.Timers;
 using Camera;
 using System.Windows.Media.Media3D;
 using System.Drawing;
+using System.Windows.Input;
 
 namespace GUI
 {
@@ -18,7 +19,7 @@ namespace GUI
     public partial class MainWindow : Window
     {
 
-        public void CheckConstant()
+        public void CheckConstant() 
         {
             //getBitmap -> Ralf
 
@@ -27,11 +28,6 @@ namespace GUI
             //zeit ticker
 
             //getValidProduct -> Product oder null
-
-            //Warenkorb:
-            //Produkte bearbeiten 
-            //Sortiment 
-            //Sortiment speichern
         }
 
 
@@ -39,26 +35,18 @@ namespace GUI
 
         public MainWindow()
         {
-
             shoppingBasketObject = new ShoppingBasket();
 
             DataContext = shoppingBasketObject; // DataContext wird auf dieses Object gelegt
 
-
-            //Sortiment laden
-
-            lineOfGoodsObject = LineOfGoods.getdummi();
+            lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
 
             InitializeComponent();
-
-            
 
             //CAMERA STUFF
             camera = new Cam();
 
-            // Initialisiere den Timer mit einer Periodendauer von 30 ms
-
-            //cam.newFrame
+            //cam.newFrame -> RALF schau mal in Camera die Kommentare
 
             timer = new Timer(100); //not optimal
             timer.Elapsed += Timer_Elapsed;
@@ -70,57 +58,38 @@ namespace GUI
             //CAMERA STUFF ENDE
         }
 
-        //BILDDARSTELLUNG 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            // Übertrage und zeige das aktuelle Bitmap
-            if (camera != null)
-            {
-                Bitmap bitmap = camera.GetCurrentBitmap();
-                if (bitmap != null)
-                {
-                    // Führe die Anzeigeoperation auf dem UI-Thread aus
-                    Dispatcher.Invoke(() => ShowBitmap(bitmap));
-                }
-            }
-        }
+        ///////////////////////////////////////////////////////ATTRIBUTE///////////////////////////////////////////////////////////
 
-        private void ShowBitmap(Bitmap bitmap)
-        {
-            // Konvertiere das Bitmap in ein BitmapImage und zeige es in der GUI an
-            BitmapImage bitmapImage = BmpImageFromBmp(bitmap);
-            anzeigeBild.Source = bitmapImage;
-        }
-
-        private BitmapImage BmpImageFromBmp(Bitmap bmp) //Aus Forum: Transformiert Bitmap in GUI nutzbares BitmapSource
-        {
-            using (var memory = new System.IO.MemoryStream())
-            {
-                bmp.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
-                memory.Position = 0;
-
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-
-                return bitmapImage;
-            }
-        }
-
-
-        //ATTRIBUTE
-        private Cam camera;
-        private Timer timer;
-
+        //Kassenmanagement Objects
         public ShoppingBasket shoppingBasketObject;
 
         public LineOfGoods lineOfGoodsObject;
-        public Product scanned { get; set; } //Hier wird das gescannte Produkt übergeben für die Add-Funktion
 
-        //METHODEN
+        //Cam Object
+        private Cam camera;
+
+        private Bitmap currentBitmap;
+
+        //Detection Objects
+        private Timer timer;
+
+        public Product scannedProduct;
+
+        Dictionary<Product, double> productsAndProbabilitys;
+
+        ///////////////////////////////////////////////////////METHODEN///////////////////////////////////////////////////////////
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if the pressed key is the space bar
+            if (e.Key == Key.Space)
+            {
+                // Your code to handle the space bar press
+                // For example, display a message or perform an action
+                MessageBox.Show("Space bar pressed!");
+            }
+        }
+
         private void addButton_Click(object sender, RoutedEventArgs e) 
         {
             Product test = new Product("Banane", 123, 2.2, true, null);
@@ -176,6 +145,48 @@ namespace GUI
         {
             addManuallyWindow addManuallyWindow = new addManuallyWindow();
             addManuallyWindow.Show();
+        }
+
+        ///////////////////////////////////////////////////////BILDDARSTELLUNG///////////////////////////////////////////////////////////
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            // Übertrage und zeige das aktuelle Bitmap
+            if (camera != null)
+            {
+                Bitmap bitmap = camera.GetCurrentBitmap();
+
+                currentBitmap = bitmap; //speichern in lokaler Variable
+                if (bitmap != null)
+                {
+                    // Führe die Anzeigeoperation auf dem UI-Thread aus
+                    Dispatcher.Invoke(() => ShowBitmap(bitmap));
+                }
+            }
+        }
+
+        private void ShowBitmap(Bitmap bitmap)
+        {
+            // Konvertiere das Bitmap in ein BitmapImage und zeige es in der GUI an
+            BitmapImage bitmapImage = BmpImageFromBmp(bitmap);
+            anzeigeBild.Source = bitmapImage;
+        }
+
+        private BitmapImage BmpImageFromBmp(Bitmap bmp) //Aus Forum: Transformiert Bitmap in GUI nutzbares BitmapSource
+        {
+            using (var memory = new System.IO.MemoryStream())
+            {
+                bmp.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
         }
     }
 }
