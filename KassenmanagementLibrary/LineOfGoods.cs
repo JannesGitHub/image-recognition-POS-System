@@ -90,17 +90,24 @@ namespace KassenmanagementLibrary
         }
 
 
-        //Nutzt die FindProduct methode um zu schauen ob das Produkt existiert
-        // und setzt das von der Methodenzurückgegebene Produkt dem neuen Übergebenen Produkt gleich
-        public void editproduct(Product product)
+       
+        public void editProductName(Product product, string name)
         {
-            FindProduct(product.Name).Articlenumber= product.Articlenumber;
-            FindProduct(product.Name).Price = product.Price;
-            FindProduct(product.Name).Quantityarticle = product.Quantityarticle;
-            FindProduct(product.Name).Allproductvectors = product.Allproductvectors;
-
+            product.Name = name;
         }
-
+        public void editProductArticlenumber(Product product, uint articlenumber) 
+        {
+            product.Articlenumber = articlenumber;
+        }
+        public void editProductPrice(Product product, double price)
+        {
+            product.Price=price;
+        }
+        public void editProductQuantityarticle(Product product,bool quantityarticle)
+        {
+            product.Quantityarticle=quantityarticle;
+        }
+      
         XmlSerializer serializer = new XmlSerializer(typeof(LineOfGoods));
        
         //speichert das Sortment objekt in angegebenen Pfad ab.
@@ -136,7 +143,7 @@ namespace KassenmanagementLibrary
         }
 
         //erstellt sortimentobjekt
-        public LineOfGoods getdummi()
+        public static LineOfGoods getdummi()
         {
 
             //vectoren von Can bekommen
@@ -171,13 +178,5 @@ namespace KassenmanagementLibrary
 
             return line;
         }
-
-
-
-
-
-
-
-
     }
 }

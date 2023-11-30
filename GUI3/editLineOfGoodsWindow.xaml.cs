@@ -23,5 +23,17 @@ namespace GUI
         {
             InitializeComponent();
         }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            addProductToLineOfGoodsWindow addProductToLineOfGoodsWindow = new addProductToLineOfGoodsWindow();
+            addProductToLineOfGoodsWindow.Show();
+        }
+
+        private void editButton_Click(object sender, RoutedEventArgs e)
+        {
+            searchProductInLineOfGoodsWindow searchProductInLineOfGoodsWindow = new searchProductInLineOfGoodsWindow();
+            searchProductInLineOfGoodsWindow.Show();
+        }
     }
 }

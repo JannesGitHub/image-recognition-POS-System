@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="edit line of goods" Height="450" Width="800">
+        Title="edit line of goods" Height="250" Width="350">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button Content = "Add" Grid.Column="0" x:Name="addButton" Click="addButton_Click"/>
+        <Button Content = "Edit" Grid.Column="1" x:Name="editButton" Click="editButton_Click"/>
     </Grid>
+
+    
 </Window>

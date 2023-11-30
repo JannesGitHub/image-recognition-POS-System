@@ -35,7 +35,7 @@ namespace GUI
         }
 
 
-        public ShoppingBasket shoppingBasketObject;
+        
 
         public MainWindow()
         {
@@ -44,8 +44,14 @@ namespace GUI
 
             DataContext = shoppingBasketObject; // DataContext wird auf dieses Object gelegt
 
+
+            //Sortiment laden
+
+            lineOfGoodsObject = LineOfGoods.getdummi();
+
             InitializeComponent();
 
+            
 
             //CAMERA STUFF
             camera = new Cam();
@@ -109,6 +115,9 @@ namespace GUI
         private Cam camera;
         private Timer timer;
 
+        public ShoppingBasket shoppingBasketObject;
+
+        public LineOfGoods lineOfGoodsObject;
         public Product scanned { get; set; } //Hier wird das gescannte Produkt übergeben für die Add-Funktion
 
         //METHODEN

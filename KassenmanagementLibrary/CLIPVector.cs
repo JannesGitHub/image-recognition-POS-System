@@ -11,8 +11,10 @@ namespace KassenmanagementLibrary
     {
         public double[] Vector;
         public CLIPVector(double[] vector) 
-        {  
-            vector.CopyTo(Vector,0);
+        {
+            Vector = new double[vector.Length];
+
+            vector.CopyTo(Vector,0); 
         }
 
         //Parameterloser Konstruktor war nötig zur Serialisierung
