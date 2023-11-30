@@ -21,8 +21,7 @@ namespace KassenmanagementLibrary
         {
             return this;
         }
-
-       
+  
 
         private ObservableCollection<Article> shoppingBasket = new ObservableCollection<Article>();  //ShoppingBasket
 
@@ -84,12 +83,12 @@ namespace KassenmanagementLibrary
 
             bool containsArticleName = false;
 
-            foreach(Article x in _ShoppingBasket)
+            foreach(Article a in _ShoppingBasket)
             {
-                if (x.Name == articleName)
+                if (a.Name == articleName)
                 {
                     containsArticleName = true;
-                    UpQuantity(x);
+                    UpQuantity(a);
                 }
             }
 
@@ -124,9 +123,6 @@ namespace KassenmanagementLibrary
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity = quantity;
            UpdateSumPrice();
         }
-
-
-
 
 
         public  string generateReciept() 
