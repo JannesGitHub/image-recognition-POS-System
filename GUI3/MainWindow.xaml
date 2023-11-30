@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
+        xmlns:KassenmanagementLibrary="clr-namespace:KassenmanagementLibrary;assembly=KassenmanagementLibrary"
         mc:Ignorable="d"
         Title="BarWho" Height="450" Width="800">
     <Grid>
@@ -18,28 +19,7 @@
 
         <!--Hier soll immer CurrentImage geladen werden-->
         <Grid Grid.Row="0" Grid.Column="0">
-            <!-- <Image/> soll eigentlich hier sein -->
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <TextBox Grid.Row="1" Name="textBoxName"/>
-                <TextBox Grid.Row="0" Name="textBoxPrice"/>
-
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                <Button Name="addButton" Content="ADD" Click="addButton_Click"/>
-                    <Button Name="deleteButton" Content="DELTETE" Grid.Column="1" Click="deleteButton_Click"/>
-                </Grid>
-            </Grid>
-         
-            
+            <Image x:Name="anzeigeBild"/>
         </Grid>
 
         <!--Warenkorb-->
@@ -53,7 +33,7 @@
                 <TextBlock FontSize ="23" Text="Shopping Basket" Grid.Row="0" FontWeight="Bold" Margin="0,0,32,0"/>
                 <Button Name="deleteShoppingBasketButton" Width="30" Height="30" HorizontalAlignment="Right" Click="deleteShoppingBasketButton_Click"/>
 
-                <ListView ItemsSource="{Binding ShoppingBasket}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness = "1">
+                <ListView ItemsSource="{Binding _ShoppingBasket}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness="1">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Quantity}" Header="X" Width="50"/>
@@ -75,7 +55,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button FontSize="15" Content="try Screen" Name="tryScreenButton" Grid.Column="0" FontWeight="Heavy" Click="tryScreenButton_Click"/>
+            <Button FontSize="15" Content="Add Banane 2,2" Name="tryScreenButton" Grid.Column="0" FontWeight="Heavy" Click="addButton_Click"/>
             <Button FontSize="23" Content="pay" Name="payButton" Grid.Column="1" FontWeight="Heavy" Click="payButton_Click"/>
             <Button FontSize="12" Content="edit line of goods" Name="editLineOfGoodsButton" Grid.Column="2" FontWeight="Heavy"/>
         </Grid>
@@ -91,8 +71,7 @@
 
             <Button FontSize="80" Content="-" Name="minusButton" Grid.Column="0" Click="minusButton_Click"/>
             <Button FontSize="80" Content="+" Name="plusButton" Grid.Column="1" Click="plusButton_Click"/>
-            <TextBlock Name="priceTextBlock" Text="{Binding SP}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
-
+            <TextBlock Name="priceTextBlock" Text="{Binding SumPrice}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
         </Grid>
     </Grid>
 </Window>
