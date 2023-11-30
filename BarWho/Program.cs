@@ -1,4 +1,5 @@
 ﻿using KassenmanagementLibrary;
+using System.Collections.ObjectModel;
 
 //Test ob alle klassen der KassenmanagerLibrary funktionieren.
 
@@ -12,19 +13,36 @@ Product product6 = new Product("Banane", 6, 9.99, false, new List<CLIPVector> { 
 // Füge die neuen Produkte zum Warenkorb hinzu
 
 
-// Erstelle einen leeren Warenkorb
-ShoppingBasket shoppingBasket = new ShoppingBasket(new Dictionary<Product, uint>());
+
+ShoppingBasket shoppingBasket = new ShoppingBasket();
+
 
 // Füge Produkte zum Warenkorb hinzu
-shoppingBasket.addArticle(product1, 2);
-shoppingBasket.addArticle(product2, 3);
-shoppingBasket.addArticle(product3, 1);
-shoppingBasket.addArticle(product4, 2);
-shoppingBasket.addArticle(product5, 2);
-shoppingBasket.addArticle(product6, 3);
+shoppingBasket.AddArticle(product1);
+shoppingBasket.AddArticle(product2);
+shoppingBasket.AddArticle(product3);
+shoppingBasket.AddArticle(product4);
+shoppingBasket.AddArticle(product5);
+shoppingBasket.AddArticle(product6);
+shoppingBasket.AddArticle(product2);
+
+shoppingBasket.generateReciept();
+
+List<Product> produkte = new List<Product>();
+produkte.Add(product1);
+produkte.Add(product2);
 
 
-shoppingBasket.generateReciept(shoppingBasket);
+
+LineOfGoods lineOfGoodsInstance = LineOfGoods.Instance;
+lineOfGoodsInstance.Add(product1);
+lineOfGoodsInstance.Add(product2);
+
+string filePath = "D:\\ProgProjekt\\Sortiment";
+lineOfGoodsInstance.Safe(filePath);
+
+
+
 
 
 Console.ReadKey();

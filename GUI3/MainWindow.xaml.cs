@@ -70,7 +70,7 @@ namespace GUI
         {
             Product test = new Product("Banane", 123, 2.2, true, null);
 
-            shoppingBasketObject.Add(test);
+            shoppingBasketObject.AddArticle(test);
 
             priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }

@@ -19,7 +19,13 @@ namespace KassenmanagementLibrary
         public bool Quantityarticle { get; set; }
 
         // Liste von Vektoren für das Produkt
-        public List<CLIPVector> Allproductvectors { get; set; } 
+        public List<CLIPVector> Allproductvectors { get; set; }
+
+
+        //Parameterloser Konstruktor war nötig zur Serialisierung
+        public Product()
+        {
+        }
 
         //konstruktor
         public Product(string name, uint atriclenumber, double price, bool quantityarticle,List<CLIPVector> allproductvectors)

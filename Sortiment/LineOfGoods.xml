@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LineOfGoods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <lineOfGoods>
+    <Product>
+      <Name>Apfel</Name>
+      <Articlenumber>1</Articlenumber>
+      <Price>10.99</Price>
+      <Quantityarticle>false</Quantityarticle>
+      <Allproductvectors>
+        <CLIPVector />
+      </Allproductvectors>
+    </Product>
+    <Product>
+      <Name>Eistee</Name>
+      <Articlenumber>2</Articlenumber>
+      <Price>5.49</Price>
+      <Quantityarticle>true</Quantityarticle>
+      <Allproductvectors>
+        <CLIPVector />
+      </Allproductvectors>
+    </Product>
+  </lineOfGoods>
+</LineOfGoods>
