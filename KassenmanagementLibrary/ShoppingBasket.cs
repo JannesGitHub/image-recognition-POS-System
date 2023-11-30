@@ -80,11 +80,21 @@ namespace KassenmanagementLibrary
         {
             Article article = new Article(product);
 
-            if(_ShoppingBasket.Contains(article))
+            string articleName = article.Name;
+
+            bool containsArticleName = false;
+
+            foreach(Article x in _ShoppingBasket)
             {
-                UpQuantity(article);
+                if (x.Name == articleName)
+                {
+                    containsArticleName = true;
+                    UpQuantity(x);
+                }
             }
-            else
+
+
+            if(!containsArticleName)
             {
                 _ShoppingBasket.Add(article);
             }
@@ -127,10 +137,8 @@ namespace KassenmanagementLibrary
             receiptBuilder.AppendLine("--------------------------------------------");
 
             foreach (Article item in _ShoppingBasket)
-            {
-                
+            {       
                     receiptBuilder.AppendLine($"Produkt:{item.Name,-20} {item.Quantity}x  {item.Price,10}");
- 
             }
 
             receiptBuilder.AppendLine();
@@ -139,8 +147,6 @@ namespace KassenmanagementLibrary
 
             double totalprice = GetTotalPrice(_ShoppingBasket);
             receiptBuilder.AppendLine($"SUMME EUR  {Math.Round(totalprice,2)}");
-
-
 
             Console.WriteLine(receiptBuilder.ToString());
             
