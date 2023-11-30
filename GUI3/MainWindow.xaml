@@ -53,11 +53,14 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button FontSize="15" Content="Add Banane 2,2" Name="tryScreenButton" Grid.Column="0" FontWeight="Heavy" Click="addButton_Click"/>
+            <Button FontSize="12" Content="add manually" Name="addManuallyButton" Grid.Column="0" FontWeight="Heavy" Click="addManuallyButton_Click"/>
             <Button FontSize="23" Content="pay" Name="payButton" Grid.Column="1" FontWeight="Heavy" Click="payButton_Click"/>
-            <Button FontSize="12" Content="edit line of goods" Name="editLineOfGoodsButton" Grid.Column="2" FontWeight="Heavy"/>
+            <Button FontSize="11" Content="edit line of goods" Name="editLineOfGoodsButton" Grid.Column="2" FontWeight="Heavy" Click="editLineOfGoodsButton_Click"/>
+            <Button FontSize="15" Content="Add Banana" Name="addBananaButton" Grid.Column="3" FontWeight="Heavy" Click="addButton_Click"/>
+
         </Grid>
 
         <!--Warenkorb bearbeiten und Preis-->

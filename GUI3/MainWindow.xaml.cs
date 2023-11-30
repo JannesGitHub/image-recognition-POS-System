@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using KassenmanagementLibrary;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Camera;
@@ -160,6 +155,18 @@ namespace GUI
         {
             PayWindow payWindow = new PayWindow();
             payWindow.Show();
+        }
+
+        private void editLineOfGoodsButton_Click(object sender, RoutedEventArgs e)
+        {
+            editLineOfGoodsWindow editLineOfGoodsWindow = new editLineOfGoodsWindow();
+            editLineOfGoodsWindow.Show();
+        }
+
+        private void addManuallyButton_Click(object sender, RoutedEventArgs e)
+        {
+            addManuallyWindow addManuallyWindow = new addManuallyWindow();
+            addManuallyWindow.Show();
         }
     }
 }
