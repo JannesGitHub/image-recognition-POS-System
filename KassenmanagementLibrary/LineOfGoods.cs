@@ -143,7 +143,7 @@ namespace KassenmanagementLibrary
         }
 
         //erstellt sortimentobjekt
-        public LineOfGoods getdummi()
+        public static LineOfGoods getdummi()
         {
 
             //vectoren von Can bekommen

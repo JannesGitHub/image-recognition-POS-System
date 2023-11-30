@@ -11,7 +11,9 @@ namespace KassenmanagementLibrary
     {
         public double[] Vector;
         public CLIPVector(double[] vector) 
-        {  
+        {
+            Vector = new double[vector.Length];
+
             vector.CopyTo(Vector,0); 
         }
 

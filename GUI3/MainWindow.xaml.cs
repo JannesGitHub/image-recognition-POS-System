@@ -47,7 +47,7 @@ namespace GUI
 
             //Sortiment laden
 
-            //lineOfGoodsObject =
+            lineOfGoodsObject = LineOfGoods.getdummi();
 
             InitializeComponent();
 
