@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
+        xmlns:KassenmanagementLibrary="clr-namespace:KassenmanagementLibrary;assembly=KassenmanagementLibrary"
         mc:Ignorable="d"
         Title="BarWho" Height="450" Width="800">
     <Grid>
@@ -18,12 +19,7 @@
 
         <!--Hier soll immer CurrentImage geladen werden-->
         <Grid Grid.Row="0" Grid.Column="0">
-            <!-- <Image/> soll eigentlich hier sein -->
-            <Grid>
-                <Image x:Name="anzeigeBild"/>
-            </Grid>
-         
-            
+            <Image x:Name="anzeigeBild"/>
         </Grid>
 
         <!--Warenkorb-->
@@ -37,7 +33,7 @@
                 <TextBlock FontSize ="23" Text="Shopping Basket" Grid.Row="0" FontWeight="Bold" Margin="0,0,32,0"/>
                 <Button Name="deleteShoppingBasketButton" Width="30" Height="30" HorizontalAlignment="Right" Click="deleteShoppingBasketButton_Click"/>
 
-                <ListView ItemsSource="{Binding ShoppingBasket}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness = "1">
+                <ListView ItemsSource="{Binding _ShoppingBasket}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness="1">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Quantity}" Header="X" Width="50"/>
@@ -75,8 +71,7 @@
 
             <Button FontSize="80" Content="-" Name="minusButton" Grid.Column="0" Click="minusButton_Click"/>
             <Button FontSize="80" Content="+" Name="plusButton" Grid.Column="1" Click="plusButton_Click"/>
-            <TextBlock Name="priceTextBlock" Text="{Binding SP}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
-
+            <TextBlock Name="priceTextBlock" Text="{Binding SumPrice}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
         </Grid>
     </Grid>
 </Window>

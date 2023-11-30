@@ -39,22 +39,26 @@ namespace GUI
             //Sortiment speichern
         }
 
+
+        public ShoppingBasket shoppingBasketObject;
+
         public MainWindow()
         {
-            DataContext = this;
 
             shoppingBasketObject = new ShoppingBasket();
 
-            ShoppingBasket = shoppingBasketObject._ShoppingBasket;
+            DataContext = shoppingBasketObject; // DataContext wird auf dieses Object gelegt
 
             InitializeComponent();
 
 
             //CAMERA STUFF
-
             camera = new Cam();
 
             // Initialisiere den Timer mit einer Periodendauer von 30 ms
+
+            //cam.newFrame
+
             timer = new Timer(100); //not optimal
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
@@ -87,7 +91,7 @@ namespace GUI
             anzeigeBild.Source = bitmapImage;
         }
 
-        private BitmapImage BmpImageFromBmp(Bitmap bmp)
+        private BitmapImage BmpImageFromBmp(Bitmap bmp) //Aus Forum: Transformiert Bitmap in GUI nutzbares BitmapSource
         {
             using (var memory = new System.IO.MemoryStream())
             {
@@ -110,17 +114,6 @@ namespace GUI
         private Cam camera;
         private Timer timer;
 
-
-        public ShoppingBasket shoppingBasketObject;
-
-        private ObservableCollection<Article> shoppingBasket;  //ShoppingBasket
-
-        public ObservableCollection<Article> ShoppingBasket 
-        {
-            get { return shoppingBasket; }
-            set { shoppingBasket = value; }
-        }
-
         public Product scanned { get; set; } //Hier wird das gescannte Produkt übergeben für die Add-Funktion
 
         //METHODEN
@@ -129,24 +122,18 @@ namespace GUI
             Product test = new Product("Banane", 123, 2.2, true, null);
 
             shoppingBasketObject.Add(test);
-
-            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e) //Wird gecallt wenn Minusfunktion 0 erreicht //bzw. gelöscht später
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
 
-            ShoppingBasket.Remove(item);
-
-            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
+            shoppingBasketObject._ShoppingBasket.Remove(item);
         }
         
         private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e) //löscht den gesamten ShoppingBasket 
         {
             shoppingBasketObject.Clear();
-
-            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
         
         //Vorerst nur für Stück Produkte
@@ -155,19 +142,18 @@ namespace GUI
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
             if(item != null)
             shoppingBasketObject.UpQuantity(item);
-
-            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
         }
         
         private void minusButton_Click(object sender, RoutedEventArgs e) //vermindert Stückzahl und Preis 
         {
             Article item = (Article)ShoppingBasketViewList.SelectedItem;
-            shoppingBasketObject.DownQuantity(item);
+            if (item != null)
+            {
+                shoppingBasketObject.DownQuantity(item);
 
-            if (ShoppingBasket[ShoppingBasket.IndexOf(item)].Quantity == 0) //Wenn 0 dann löschen
-                deleteButton_Click(this, e);
-
-            priceTextBlock.Text = Convert.ToString(shoppingBasketObject.SumPrice); //Update Price
+                if (shoppingBasketObject._ShoppingBasket[shoppingBasketObject._ShoppingBasket.IndexOf(item)].Quantity == 0) //Wenn 0 dann löschen
+                    deleteButton_Click(this, e);
+            }
         }
         
         private void payButton_Click(object sender, RoutedEventArgs e)

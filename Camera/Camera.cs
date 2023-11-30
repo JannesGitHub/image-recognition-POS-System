@@ -10,9 +10,10 @@ namespace Camera
         private VideoCaptureDevice videoSource;
         private Bitmap currentBitmap;
 
+        //Cam Eventerstellen für NewFrame
+
         public Cam()
         {
-            // 
             FilterInfoCollection videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             if (videoDevices.Count > 0)
             {
@@ -28,10 +29,11 @@ namespace Camera
 
         public void VideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            // 
             if (eventArgs.Frame != null)
             {
                 currentBitmap = (Bitmap)eventArgs.Frame.Clone(); //geschützten Thread einbauen
+
+                //hier soll eigenes Event getriggert -> wird von UI registriert
             }
         }
 
@@ -40,9 +42,8 @@ namespace Camera
             return currentBitmap;
         }
 
-        public void StopCapture()
+        public void StopCapture() //??
         {
-            // 
             if (videoSource != null && videoSource.IsRunning)
             {
                 videoSource.SignalToStop();

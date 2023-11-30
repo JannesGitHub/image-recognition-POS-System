@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KassenmanagementLibrary
 {
-    public class Article : INotifyPropertyChanged
+    public class Article : ObserveableObject, INotifyPropertyChanged
     {
         public Product Source;
 
@@ -67,13 +67,6 @@ namespace KassenmanagementLibrary
                     OnPropertyChanged(nameof(Price));
                 }
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

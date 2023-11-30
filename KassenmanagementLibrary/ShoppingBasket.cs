@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace KassenmanagementLibrary
 {
-    public class ShoppingBasket : IShoppingBasket
+    public class ShoppingBasket : ObserveableObject, IShoppingBasket
     {
+        public ShoppingBasket()
+        {
+            shoppingBasket.CollectionChanged += (sender, e) => UpdateSumPrice();
+        }
 
         public ShoppingBasket getShoppingBasket() //Interface
         {
@@ -22,18 +27,27 @@ namespace KassenmanagementLibrary
         {
             get { return shoppingBasket; }
             
-            set
-            {
-                shoppingBasket = value;
+            set {shoppingBasket = value;     
+                OnPropertyChanged(nameof(_ShoppingBasket));
+                shoppingBasket.CollectionChanged += (sender, e) => UpdateSumPrice();
             }
         }
+
         private double sumPrice;
 
         public double SumPrice
         {
             get { return sumPrice; }
-            private set { sumPrice = value; }
+            set
+            {
+                if (sumPrice != value)
+                {
+                    sumPrice = value;
+                    OnPropertyChanged(nameof(SumPrice));
+                }
+            }
         }
+
         private void UpdateSumPrice()
         {
             double price = 0;
@@ -60,33 +74,31 @@ namespace KassenmanagementLibrary
             {
                 _ShoppingBasket.Add(article);
             }
-            UpdateSumPrice();
         }
 
         public void Clear()
         {
             _ShoppingBasket.Clear();
-            UpdateSumPrice();
         }
 
         public void UpQuantity(Article article)
         {
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity += 1;
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice += _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
-            UpdateSumPrice();
+           UpdateSumPrice();
         }
 
         public void DownQuantity(Article article)
         {
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity -= 1;
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice -= _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
-            UpdateSumPrice();
+           UpdateSumPrice();
         }
 
         public void NewQuantity(Article article, double quantity) //for change in wheigths
         {
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity = quantity;
-            UpdateSumPrice();
+           UpdateSumPrice();
         }
 
 
