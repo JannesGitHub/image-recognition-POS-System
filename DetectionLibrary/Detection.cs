@@ -20,7 +20,7 @@ namespace DetectionLibrary
         {
             LineOfGoods = lineOfGoods;
         }
-        public (Dictionary<Product, double>, Product?) getValuedLineOfGoods(LineOfGoods sortiment, Bitmap frame)
+        public (Dictionary<Product, double>, Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame)
         {
             Dictionary<Product, double> vlgdict = new Dictionary<Product, double>();
             foreach (Product p in sortiment.lineOfGoods)

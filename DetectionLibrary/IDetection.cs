@@ -10,7 +10,7 @@ namespace DetectionLibrary
 {
     internal interface IDetection
     {
-        (Dictionary<Product, double>,Product?) getDetectionOutput(LineOfGoods x, Bitmap y);
+        (Dictionary<Product, double>,Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame);
 
     }
 }
