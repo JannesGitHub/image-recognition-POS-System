@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GUI"
+        xmlns:local="clr-namespace:GUI.ViewModel"
         xmlns:KassenmanagementLibrary="clr-namespace:KassenmanagementLibrary;assembly=KassenmanagementLibrary"
         mc:Ignorable="d"
-        Title="BarWho" Height="450" Width="800"
-        PreviewKeyDown="Window_PreviewKeyDown">
+        Title="BarWho" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="160*"/>
@@ -38,9 +40,9 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock FontSize ="23" Text="Shopping Basket" Grid.Row="0" FontWeight="Bold" Margin="0,0,32,0"/>
-                <Button Name="deleteShoppingBasketButton" Width="30" Height="30" HorizontalAlignment="Right" Click="deleteShoppingBasketButton_Click"/>
+                <Button Name="deleteShoppingBasketButton" Command="{Binding ClearCommand}"  Width="30" Height="30" HorizontalAlignment="Right"/>
 
-                <ListView ItemsSource="{Binding _ShoppingBasket}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness="1">
+                <ListView ItemsSource="{Binding shoppingBasketObject._ShoppingBasket}" SelectedItem="{Binding SelectedArticle}" Grid.Row="1" x:Name="ShoppingBasketViewList" BorderThickness="1">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding Quantity}" Header="X" Width="50"/>
@@ -63,10 +65,10 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button FontSize="12" Content="add manually" Name="addManuallyButton" Grid.Column="0" FontWeight="Heavy" Click="addManuallyButton_Click"/>
-            <Button FontSize="23" Content="pay" Name="payButton" Grid.Column="1" FontWeight="Heavy" Click="payButton_Click"/>
-            <Button FontSize="11" Content="edit line of goods" Name="editLineOfGoodsButton" Grid.Column="2" FontWeight="Heavy" Click="editLineOfGoodsButton_Click"/>
-            <Button FontSize="15" Content="Add Banana" Name="addBananaButton" Grid.Column="3" FontWeight="Heavy" Click="addButton_Click"/>
+            <Button FontSize="12" Content="add manually" Command="{Binding addManuallyWindowCommand}" Name="addManuallyButton" Grid.Column="0" FontWeight="Heavy"/>
+            <Button FontSize="23" Content="pay" Command="{Binding payWindowCommand}" Name="payButton" Grid.Column="1" FontWeight="Heavy"/>
+            <Button FontSize="11" Content="edit line of goods" Command="{Binding editLineOfGoodsWindowCommand}" Name="editLineOfGoodsButton" Grid.Column="2" FontWeight="Heavy"/>
+            <Button FontSize="15" Content="Add Banana" Command="{Binding AddCommand}" Name="addBananaButton" Grid.Column="3" FontWeight="Heavy"/>
 
         </Grid>
 
@@ -79,9 +81,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button FontSize="80" Content="-" Name="minusButton" Grid.Column="0" Click="minusButton_Click"/>
-            <Button FontSize="80" Content="+" Name="plusButton" Grid.Column="1" Click="plusButton_Click"/>
-            <TextBlock Name="priceTextBlock" Text="{Binding SumPrice}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
+            <Button FontSize="80" Content="-" Command="{Binding downQuantityCommand}" Name="minusButton" Grid.Column="0"/>
+            <Button FontSize="80" Content="+" Command="{Binding upQuantityCommand}" Name="plusButton" Grid.Column="1"/>
+            <TextBlock Name="priceTextBlock" Text="{Binding shoppingBasketObject.SumPrice}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
         </Grid>
 
     </Grid>

@@ -18,4 +18,8 @@
     <ProjectReference Include="..\KassenmanagementLibrary\KassenmanagementLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
+
 </Project>

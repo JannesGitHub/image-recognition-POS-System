@@ -19,153 +19,22 @@ namespace GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        public void CheckConstant() 
-        {
-           
-
-            //getDetected(Bitmap Ralf, Sortiment) -> ProduktDictionary von Can //sortiert nach Wahrscheinlichkeiten
-
-            //zeit ticker
-
-            //getValidProduct -> Product oder null
-        }
-
-
-        
-
         public MainWindow()
         {
-            shoppingBasketObject = new ShoppingBasket();
-
-            DataContext = shoppingBasketObject; // DataContext wird auf dieses Object gelegt
-
-            lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
-
-            detectionObject = new Detection(lineOfGoodsObject);
-
             InitializeComponent();
 
-            //CAMERA STUFF
             camera = new Cam();
-
-            //cam.newFrame -> RALF schau mal in Camera die Kommentare
-
-            timer = new Timer(30); //not optimal
+            timer = new Timer(500); //not optimal
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
-
-            // Starte den Timer
             timer.Start();
-
-            //CAMERA STUFF ENDE
         }
 
-        ///////////////////////////////////////////////////////ATTRIBUTE///////////////////////////////////////////////////////////
-
-        //Kassenmanagement Objects
-        public ShoppingBasket shoppingBasketObject;
-
-        public LineOfGoods lineOfGoodsObject;
-
-        //Cam Object
         private Cam camera;
 
         private Bitmap currentBitmap;
 
-        //Detection Objects
         private Timer timer;
-
-        private Detection detectionObject;
-
-        public Product scannedProduct;
-
-        private Dictionary<Product, double> productsAndProbabilitys;
-
-        ///////////////////////////////////////////////////////METHODEN///////////////////////////////////////////////////////////
-
-        private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                statusTextBox.Text = "Scanning process is running.";
-
-                for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
-                {
-                    await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
-
-                    (Dictionary<Product, double>, Product?) input = detectionObject.getDetectionOutput(lineOfGoodsObject, currentBitmap);
-
-                    productsAndProbabilitys = input.Item1;
-
-                    scannedProduct = input.Item2;
-
-                    if(scannedProduct != null)
-                    {
-                        shoppingBasketObject.AddArticle(scannedProduct);
-                    }    
-                }
-
-                statusTextBox.Text = "Press Space to scan your product!";
-            }
-        }
-
-        private void addButton_Click(object sender, RoutedEventArgs e) 
-        {
-            Product test = new Product("Banane", 123, 2.2, true, null);
-
-            shoppingBasketObject.AddArticle(test);
-        }
-
-        private void deleteButton_Click(object sender, RoutedEventArgs e) //Wird gecallt wenn Minusfunktion 0 erreicht //bzw. gelöscht später
-        {
-            Article item = (Article)ShoppingBasketViewList.SelectedItem;
-
-            shoppingBasketObject._ShoppingBasket.Remove(item);
-        }
-        
-        private void deleteShoppingBasketButton_Click(object sender, RoutedEventArgs e) //löscht den gesamten ShoppingBasket 
-        {
-            shoppingBasketObject.Clear();
-        }
-        
-        //Vorerst nur für Stück Produkte
-        private void plusButton_Click(object sender, RoutedEventArgs e) //erhöht Stückzahl und automatisch Preis Update //ToChange
-        {
-            Article item = (Article)ShoppingBasketViewList.SelectedItem;
-            if(item != null)
-            shoppingBasketObject.UpQuantity(item);
-        }
-        
-        private void minusButton_Click(object sender, RoutedEventArgs e) //vermindert Stückzahl und Preis 
-        {
-            Article item = (Article)ShoppingBasketViewList.SelectedItem;
-            if (item != null)
-            {
-                shoppingBasketObject.DownQuantity(item);
-
-                if (shoppingBasketObject._ShoppingBasket[shoppingBasketObject._ShoppingBasket.IndexOf(item)].Quantity == 0) //Wenn 0 dann löschen
-                    deleteButton_Click(this, e);
-            }
-        }
-        
-        private void payButton_Click(object sender, RoutedEventArgs e)
-        {
-            PayWindow payWindow = new PayWindow();
-            payWindow.Show();
-        }
-
-        private void editLineOfGoodsButton_Click(object sender, RoutedEventArgs e)
-        {
-            editLineOfGoodsWindow editLineOfGoodsWindow = new editLineOfGoodsWindow();
-            editLineOfGoodsWindow.Show();
-        }
-
-        private void addManuallyButton_Click(object sender, RoutedEventArgs e)
-        {
-            addManuallyWindow addManuallyWindow = new addManuallyWindow();
-            addManuallyWindow.Show();
-        }
 
         ///////////////////////////////////////////////////////BILDDARSTELLUNG///////////////////////////////////////////////////////////
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
