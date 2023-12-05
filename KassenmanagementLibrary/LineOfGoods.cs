@@ -111,7 +111,7 @@ namespace KassenmanagementLibrary
       
         XmlSerializer serializer = new XmlSerializer(typeof(LineOfGoods));
        
-        //speichert das Sortment objekt in angegebenen Pfad ab.
+        //speichert das Sortment objekt in e
         //Pfad wird momentan noch als string übergeben
         public void Safe()
         {

@@ -149,19 +149,24 @@ namespace KassenmanagementLibrary
             
             return receiptBuilder.ToString();
        }
+
+       // speichert den beleg als neue datei ab
         public void SaveReciept()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(string));
-            string filePath = AppDomain.CurrentDomain.BaseDirectory;
+            string basedirectory = AppDomain.CurrentDomain.BaseDirectory;
 
                 //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
-                if (string.IsNullOrWhiteSpace(filePath))
+                if (string.IsNullOrWhiteSpace(basedirectory))
                 {
-                    throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
+                    throw new ArgumentException("Ungültiger Dateipfad.", nameof(basedirectory));
                 }
 
+            string fileName = $"Receipt_{DateTime.Now:yyyyMMddHHmmssfff}.xml";
+            string filePath = Path.Combine(basedirectory, fileName);
 
-                using (FileStream fs = new FileStream(filePath, FileMode.Append))
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
                 {
                     serializer.Serialize(fs, this);
                 }
