@@ -15,7 +15,7 @@ namespace GUI.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        public MainWindowViewModel() 
+        public MainWindowViewModel()
         {
 
             shoppingBasketObject = new ShoppingBasket();
@@ -26,16 +26,20 @@ namespace GUI.ViewModel
 
             ///////////////////////////////////////////Commands////////////////////////////////////////////
 
-            this.ClearCommand = new DelegateCommand((o) => shoppingBasketObject._ShoppingBasket.Count > 0
+            this.ClearCommand = new DelegateCommand((o) => shoppingBasketObject._ShoppingBasket.Count >= 0
                                                    , (o) => shoppingBasketObject.Clear());
 
-            this.AddCommand = new DelegateCommand((o) => shoppingBasketObject.AddArticle(new Product("Banane", 23, 2.2, true, null)));
+            this.AddCommand = new DelegateCommand((o) => { shoppingBasketObject.AddArticle(new Product("Banane", 23, 2.2, true, null)); }); 
 
-            this.RemoveCommand = new DelegateCommand((o) => shoppingBasketObject._ShoppingBasket.Remove(SelectedArticle));
+            this.RemoveCommand = new DelegateCommand((o) => { shoppingBasketObject._ShoppingBasket.Remove(SelectedArticle); });
 
-            this.downQuantityCommand = new DelegateCommand(/*(o) => SelectedArticle == null,*/
-                (o) => shoppingBasketObject.DownQuantity(SelectedArticle));
+            this.downQuantityCommand = new DelegateCommand((o) => { shoppingBasketObject.DownQuantity(SelectedArticle); });
 
+            //this.upQuantityCommand = new DelegateCommand((o) => { shoppingBasketObject.UpQuantity(SelectedArticle); } ); 
+            
+            //WIESO FUNKTIONIERT DAS NICHT?? genau wie Zeile darüber ps: alter Code unten auskommentiert
+
+            //Command für ScanProzess hier initialisieren
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
@@ -55,7 +59,7 @@ namespace GUI.ViewModel
                 addManuallyWindow.Show();
             });
         }
-        /// /////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
+        ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
         
         //Kassenmanagement Objects
         public ShoppingBasket shoppingBasketObject { get; set; }
