@@ -24,10 +24,8 @@ namespace GUI
             InitializeComponent();
 
             camera = new Cam();
-            timer = new Timer(500); //not optimal
-            timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = true;
-            timer.Start();
+
+            camera.NewFrame += OnNewFrame;
         }
 
         private Cam camera;
@@ -37,6 +35,22 @@ namespace GUI
         private Timer timer;
 
         ///////////////////////////////////////////////////////BILDDARSTELLUNG///////////////////////////////////////////////////////////
+       
+        public virtual void OnNewFrame(object sender, EventArgs e)
+        {
+            if (camera != null)
+            {
+                Bitmap bitmap = camera.GetCurrentBitmap();
+
+                currentBitmap = bitmap; //speichern in lokaler Variable
+                if (bitmap != null)
+                {
+                    // Führe die Anzeigeoperation auf dem UI-Thread aus
+                    Dispatcher.Invoke(() => ShowBitmap(bitmap));
+                }
+            }
+        }
+        
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Übertrage und zeige das aktuelle Bitmap

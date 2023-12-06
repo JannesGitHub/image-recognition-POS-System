@@ -10,7 +10,7 @@ namespace Camera
         private VideoCaptureDevice videoSource;
         private Bitmap currentBitmap;
 
-        //Cam Eventerstellen für NewFrame
+        public event EventHandler NewFrame;
 
         public Cam()
         {
@@ -33,7 +33,7 @@ namespace Camera
             {
                 currentBitmap = (Bitmap)eventArgs.Frame.Clone(); //geschützten Thread einbauen
 
-                //hier soll eigenes Event getriggert -> wird von UI registriert
+                NewFrame?.Invoke(this, eventArgs);
             }
         }
 
