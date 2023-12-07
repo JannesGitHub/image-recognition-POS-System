@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KassenmanagementLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,15 @@ namespace GUI.ViewModel
     {
         public addManuallyViewModel()
         {
-            Name = "hallo";
-        }
-         
+            SelectedProduct = new Product("Banane", 23, 2.2, true, null);
 
-        public string Name { get; set; }
+            this.AddCommand = new DelegateCommand((o) => { this.Add?.Invoke(this, EventArgs.Empty); });
+        }
+
+        public Product SelectedProduct { get; set; }
+
+        public DelegateCommand AddCommand { get; set; }
+
+        public event EventHandler Add;
     }
 }

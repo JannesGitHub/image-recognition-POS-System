@@ -11,6 +11,7 @@ using System.Windows.Media.Media3D;
 using System.Drawing;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using GUI.ViewModel;
 
 namespace GUI
 {
@@ -24,8 +25,24 @@ namespace GUI
             InitializeComponent();
         }
 
-        private void addManuallyButton_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var mainWindowViewModel = ((MainWindowViewModel)DataContext);
+
+            mainWindowViewModel.addManuallyWindow += (s, ev) =>
+            {
+                addManuallyWindow addManuallyWindow = new addManuallyWindow();
+                if(addManuallyWindow.ShowDialog()== true)
+                {
+                    var addManuallyViewModel = (addManuallyViewModel)addManuallyWindow.DataContext;
+
+                    mainWindowViewModel.shoppingBasketObject.AddArticle(addManuallyViewModel.SelectedProduct);
+                }
+
+                
+            };
+
+
 
         }
     }

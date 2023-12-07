@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="65*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="{Binding Name}" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+            <TextBlock Text="Search" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
             <TextBox x:Name="searchAddManuallyTextBox" Grid.Column="1" FontSize="20"/>
         </Grid>
 
@@ -35,6 +35,6 @@
             </ListView.View>
         </ListView>
 
-        <Button Content = "Add" Grid.Row="2"/>
+        <Button Content = "Add" Grid.Row="2" Command="{Binding AddCommand}"/>
     </Grid>
 </Window>

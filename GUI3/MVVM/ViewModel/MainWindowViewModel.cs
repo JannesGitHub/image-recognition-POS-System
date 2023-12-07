@@ -84,20 +84,17 @@ namespace GUI.ViewModel
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
-                PayWindow payWindow = new PayWindow();
-                payWindow.Show();
+                this.payWindow?.Invoke(this, EventArgs.Empty);
             });
 
             this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
             {
-                editLineOfGoodsWindow editLineOfGoodsWindow = new editLineOfGoodsWindow();
-                editLineOfGoodsWindow.Show();
+                this.editLineOfGoodsWindow?.Invoke(this, EventArgs.Empty);
             });
 
             this.addManuallyWindowCommand = new DelegateCommand((o) =>
             {
-                addManuallyWindow addManuallyWindow = new addManuallyWindow();
-                addManuallyWindow.Show();
+                this.addManuallyWindow?.Invoke(this, EventArgs.Empty);
             });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
@@ -163,6 +160,14 @@ namespace GUI.ViewModel
             }
         }
 
+        //////////////////////////////////////////////EVENTS////////////////////////////////////////////////////// 
+
+        public event EventHandler addManuallyWindow;
+
+        public event EventHandler editLineOfGoodsWindow;
+
+        public event EventHandler payWindow;
+
         ////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////
 
         public virtual void OnNewFrame(object sender, EventArgs e)
@@ -215,6 +220,7 @@ namespace GUI.ViewModel
                 return bitmapImage;
             }
         }
+
 
         ////////////////////////////////////////////Commands//////////////////////////////////////////////////////
 
