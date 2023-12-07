@@ -6,13 +6,20 @@
         xmlns:local="clr-namespace:GUI.ViewModel"
         xmlns:KassenmanagementLibrary="clr-namespace:KassenmanagementLibrary;assembly=KassenmanagementLibrary"
         mc:Ignorable="d"
-        Title="BarWho" Height="450" Width="800">
+        Title="BarWho" Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="true"
+        >
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding ScanCommand}"/>
     </Window.InputBindings>
+    
+    <Border Background="#272527" CornerRadius="10">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="160*"/>
@@ -29,6 +36,7 @@
                 <RowDefinition Height="39*"/>
                 <RowDefinition Height="277*"/>
             </Grid.RowDefinitions>
+            
             
             <TextBlock Grid.Row="0" Text="{Binding ScanStatus}" x:Name="statusTextBox"/>
             <Image Grid.Row="1" x:Name="anzeigeBild" Source="{Binding CurrentSource}"/>
@@ -64,16 +72,14 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+                 <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-            <Button FontSize="12" Content="add manually" Command="{Binding addManuallyWindowCommand}" Name="addManuallyButton" Grid.Column="0" FontWeight="Heavy"/>
+            <Button FontSize="12" Content="add manually" Command="{Binding addManuallyWindowCommand}" Name="addManuallyButton" Grid.Column="0" FontWeight="Heavy" Click="addManuallyButton_Click"/>
             <Button FontSize="23" Content="pay" Command="{Binding payWindowCommand}" Name="payButton" Grid.Column="1" FontWeight="Heavy"/>
-            <Button FontSize="11" Content="edit line of goods" Command="{Binding editLineOfGoodsWindowCommand}" Name="editLineOfGoodsButton" Grid.Column="2" FontWeight="Heavy"/>
-            <Button FontSize="15" Content="Add Banana" Command="{Binding AddCommand}" Name="addBananaButton" Grid.Column="3" FontWeight="Heavy"/>
+                <Button FontSize="11" Content="edit line of goods" Command="{Binding editLineOfGoodsWindowCommand}" Name="editLineOfGoodsButton" Grid.Column="2" FontWeight="Heavy"/>
 
-        </Grid>
+            </Grid>
 
         <!--Warenkorb bearbeiten und Preis-->
 
@@ -82,13 +88,15 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                
             </Grid.ColumnDefinitions>
 
-            <Button FontSize="80" Content="-" Command="{Binding downQuantityCommand}" Name="minusButton" Grid.Column="0"/>
-            <Button FontSize="80" Content="+" Command="{Binding upQuantityCommand}" Name="plusButton" Grid.Column="1"/>
+            <Button Margin="10,10,10,10"  FontSize="80" Content="-" Command="{Binding downQuantityCommand}" Name="minusButton" Grid.Column="0"/>
+            <Button Margin="10,10,10,10" FontSize="80" Content="+" Command="{Binding upQuantityCommand}" Name="plusButton" Grid.Column="1"/>
             <TextBlock Name="priceTextBlock" Text="{Binding shoppingBasketObject.SumPrice}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
         </Grid>
     </Grid>
+    </Border>
 </Window>
 
 

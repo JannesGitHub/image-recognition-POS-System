@@ -23,5 +23,10 @@ namespace GUI
         {
             InitializeComponent();
         }
+
+        private void addManuallyButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
