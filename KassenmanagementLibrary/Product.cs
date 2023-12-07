@@ -26,6 +26,7 @@ namespace KassenmanagementLibrary
         //Parameterloser Konstruktor war nötig zur Serialisierung
         public Product()
         {
+
         }
 
         //konstruktor

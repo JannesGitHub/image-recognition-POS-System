@@ -11,8 +11,10 @@ using KassenmanagementLibrary;
 
 namespace KassenmanagementLibrary
 {
+    
     public class ShoppingBasket : ObserveableObject, IShoppingBasket
     {
+
         public ShoppingBasket()
         {
             shoppingBasket.CollectionChanged += (sender, e) => UpdateSumPrice();
@@ -107,16 +109,23 @@ namespace KassenmanagementLibrary
 
         public void UpQuantity(Article article)
         {
-            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity += 1;
-            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice += _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
-           UpdateSumPrice();
+            if (article != null)
+            {
+                _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity += 1;
+                _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice += _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
+                UpdateSumPrice();
+            }
+           
         }
 
         public void DownQuantity(Article article)
         {
-            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity -= 1;
-            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice -= _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
-           UpdateSumPrice();
+            if (article != null)
+            {
+                _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity -= 1;
+                _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice -= _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
+                UpdateSumPrice();
+            }
         }
 
         public void NewQuantity(Article article, double quantity) //for change in wheigths

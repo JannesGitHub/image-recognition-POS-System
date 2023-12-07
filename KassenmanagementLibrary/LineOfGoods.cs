@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -13,6 +14,8 @@ namespace KassenmanagementLibrary
     [Serializable]
     public class LineOfGoods : ILineOfGoods
     {
+
+
         private static LineOfGoods instance;
 
         public LineOfGoods GetLineOfGoods()
@@ -44,6 +47,7 @@ namespace KassenmanagementLibrary
                 // wenn leer -> neues erstellen
                 lineOfGoods = new List<Product>();
             }
+            
         }
         public List<Product> lineOfGoods { get; set; }
 
@@ -92,7 +96,7 @@ namespace KassenmanagementLibrary
 
 
        
-        public void editProductName(Product product, string name)
+       /* public void editProductName(Product product, string name)
         {
             product.Name = name;
         }
@@ -107,32 +111,46 @@ namespace KassenmanagementLibrary
         public void editProductQuantityarticle(Product product,bool quantityarticle)
         {
             product.Quantityarticle=quantityarticle;
-        }
+        }*/
       
         XmlSerializer serializer = new XmlSerializer(typeof(LineOfGoods));
        
-        //speichert das Sortment objekt in e
-        //Pfad wird momentan noch als string übergeben
+        //speichert das Sortiment objekt in executeable
+      
         public void Safe()
         {
-            string filePath = AppDomain.CurrentDomain.BaseDirectory;
+            string fileName = "LineOfGoods.xml";
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
 
             //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
+
+
             if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
             }
 
-           
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
                 serializer.Serialize(fs, this);
             }
         }
 
-        public void getFromXML()
+
+        //frage: geht es auch ohne static und als void??
+        public static LineOfGoods getFromXML()
         {
-            string filePath = AppDomain.CurrentDomain.BaseDirectory;
+            XmlSerializer serializer = new XmlSerializer(typeof(LineOfGoods));
+
+            string fileName = "LineOfGoods.xml";
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
             if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
@@ -144,6 +162,7 @@ namespace KassenmanagementLibrary
                     instance = (LineOfGoods)serializer.Deserialize(reader);
                 }
             }
+            return instance;
         }
 
         //erstellt sortimentobjekt
