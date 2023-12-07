@@ -24,7 +24,7 @@
     
     <Border 
         Background="#272527" 
-        CornerRadius="30">
+        CornerRadius="0,0,15,15">
         
     <Grid>
         <Grid.RowDefinitions>
@@ -58,10 +58,11 @@
                     x:Name="statusTextBox"/>
             
                 <Border 
+                    Margin="5,0,0,0"
                     Grid.Row="1" 
                     CornerRadius="10" 
                     BorderThickness="5" 
-                    BorderBrush="Aqua">
+                    BorderBrush="#5CF3FA">
                     
                     <Image 
                         x:Name="anzeigeBild" 
@@ -126,47 +127,70 @@
         </Grid>
 
         <!--Sonstige Funktionen-->
-        <Grid 
-            Grid.Row="1" 
-            Grid.Column="0">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                 <ColumnDefinition/>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-            <Button 
-                Margin="10,10,0,10"  
-                FontSize="12" 
-                Content="add manually" 
-                Command="{Binding addManuallyWindowCommand}" 
-                Name="addManuallyButton" 
-                Grid.Column="0" 
-                FontWeight="Heavy" 
-                Click="addManuallyButton_Click"/>
-            
-            <Button 
-                Margin="0,10,0,10" 
-                FontSize="23" 
-                Content="pay" 
-                Command="{Binding payWindowCommand}" 
-                Name="payButton" 
-                Grid.Column="1" 
-                FontWeight="Heavy"/>
-            
-            <Button 
-                Margin="10,10,0,10" 
-                FontSize="11" 
-                Content="edit line of goods" 
-                Command="{Binding editLineOfGoodsWindowCommand}" 
-                Name="editLineOfGoodsButton" 
-                Grid.Column="2" 
-                FontWeight="Heavy"/>
+                <Button
+                    Margin="10,10,0,10"
+                    FontSize="12"
+                    Content="add manually"
+                    Command="{Binding addManuallyWindowCommand}"
+                    Name="addManuallyButton"
+                    Grid.Column="0"
+                    FontWeight="Heavy"
+                    Click="addManuallyButton_Click">
+                    
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button
+                    Margin="0,10,0,10"
+                    FontSize="23"
+                    Content="pay"
+                    Command="{Binding payWindowCommand}"
+                    Name="payButton"
+                    Grid.Column="1"
+                    FontWeight="Heavy">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="#5C90FA" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button
+                    Margin="2,10,0,10"
+                    FontSize="11"
+                    Content="edit line of goods"
+                    Command="{Binding editLineOfGoodsWindowCommand}"
+                    Name="editLineOfGoodsButton"
+                    Grid.Column="2"
+                    FontWeight="Heavy">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="#5C90FA" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
             </Grid>
 
-        <!--Warenkorb bearbeiten und Preis-->
+
+            <!--Warenkorb bearbeiten und Preis-->
 
         <Grid 
             Grid.Row="1" 
