@@ -27,7 +27,7 @@ namespace GUI.ViewModel
             ///////////////////////////////////////////Commands////////////////////////////////////////////
 
             this.ClearCommand = new DelegateCommand((o) => shoppingBasketObject._ShoppingBasket.Count >= 0
-                                                   , (o) => shoppingBasketObject.Clear());
+                                                   ,(o) => shoppingBasketObject.Clear());
 
             this.AddCommand = new DelegateCommand((o) => { shoppingBasketObject.AddArticle(new Product("Banane", 23, 2.2, true, null)); }); 
 
@@ -35,11 +35,7 @@ namespace GUI.ViewModel
 
             this.downQuantityCommand = new DelegateCommand((o) => { shoppingBasketObject.DownQuantity(SelectedArticle); });
 
-            //this.upQuantityCommand = new DelegateCommand((o) => { shoppingBasketObject.UpQuantity(SelectedArticle); } ); 
-            
-            //WIESO FUNKTIONIERT DAS NICHT?? genau wie Zeile darüber ps: alter Code unten auskommentiert
-
-            //Command für ScanProzess hier initialisieren
+            this.upQuantityCommand = new DelegateCommand((o) => { shoppingBasketObject.UpQuantity(SelectedArticle); } ); 
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
@@ -95,7 +91,7 @@ namespace GUI.ViewModel
 
         public DelegateCommand RemoveCommand { get; set;}
 
-        public Delegate upQuantityCommand { get; set; }
+        public DelegateCommand upQuantityCommand { get; set; }
 
         public DelegateCommand downQuantityCommand { get; set; }
 

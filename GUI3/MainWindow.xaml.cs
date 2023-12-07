@@ -35,25 +35,9 @@ namespace GUI
         private Timer timer;
 
         ///////////////////////////////////////////////////////BILDDARSTELLUNG///////////////////////////////////////////////////////////
-       
+       //-> Noch in MainWindowViewModel übetragen
         public virtual void OnNewFrame(object sender, EventArgs e)
         {
-            if (camera != null)
-            {
-                Bitmap bitmap = camera.GetCurrentBitmap();
-
-                currentBitmap = bitmap; //speichern in lokaler Variable
-                if (bitmap != null)
-                {
-                    // Führe die Anzeigeoperation auf dem UI-Thread aus
-                    Dispatcher.Invoke(() => ShowBitmap(bitmap));
-                }
-            }
-        }
-        
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            // Übertrage und zeige das aktuelle Bitmap
             if (camera != null)
             {
                 Bitmap bitmap = camera.GetCurrentBitmap();
