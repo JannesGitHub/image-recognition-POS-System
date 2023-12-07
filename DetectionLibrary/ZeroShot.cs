@@ -12,6 +12,7 @@ namespace DetectionLibrary
 {
     internal static class ZeroShot
     {
+        //Testnotiz
         /// <summary>
         /// returns a CLIPVector Object from a Bitmap
         /// </summary>
