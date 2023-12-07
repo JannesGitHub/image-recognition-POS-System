@@ -14,46 +14,27 @@ namespace DetectionLibrary
                 return (Bitmap)pictureApple;
             }
         }
-        private Dictionary<Product, double> ValuedLineOfGoods;       
-        private LineOfGoods LineOfGoods { get; set; }
-        public Detection(LineOfGoods lineOfGoods)
-        {
-            LineOfGoods = lineOfGoods;
-        }
-        public (Dictionary<Product, double>, Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame)
-        {
-            
-            Dictionary<Product, double> vlgdict = new Dictionary<Product, double>();
-            foreach (Product p in sortiment.lineOfGoods)
-            {
-                List<double> similarityList = ZeroShot.GetCLIPVector(frame).CompareTo(p.Allproductvectors);
-                vlgdict.Add(p, DummyCompare(similarityList));
-            }
-            foreach(KeyValuePair<Product,double> d in vlgdict)
-            {
-                if (d.Value > 10000000) //hier müsste man herrausfinden, ab welchem double Wert wir triggern wollen,
-                                        //dazu müsste man sich die resultirenden Werte eratmal anscheun.
-                {
-                    continue;
-                }
-            }
-            return (vlgdict, null); 
-        }
+        // wird das überhaupt gespeichert ?? bei einer statischen klasse eigentlich nicht möglich?
+        private SmartList LastProducts = new SmartList();   
 
-        public double DummyCompare(List<double> list) // returnt einfach den durchschnitt der distanzen zwischen dem live vector und dern Product vectoren
+        public (SortedDictionary<double, Product>, Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame)
         {
-            double averager = 0;
-            foreach(double d in list)
-            {
-                averager += d;
+            double minimumProbability = 0.8;
+
+			//erstellt ein Dictionary mit der nähesten Distanz für jede ProduktvectorListe
+			Dictionary<double, Product> dictOfClosestDistances = new Dictionary<double, Product>();
+            foreach(Product p in sortiment.lineOfGoods)
+            {         
+                dictOfClosestDistances.Add(DetectionMathLib.SmallestValueOf(ZeroShot.GetCLIPVector(frame).CompareTo(p.Allproductvectors)),p);
             }
-            return averager / list.Count;
-        }
-
-        public Product LastProduct { get; private set; }
-        //Frage zu LineOfGoods und ValuedLineOfGoods, wo soll ich die Eigenschaften zuweisen im Getter oder im setter? 
-        //eigentlich im Getter und den setter einfach weglassen/privat stellen?
-
+            SortedDictionary<double, Product> dictOfProbabilities = DetectionMathLib.Softmax(dictOfClosestDistances);
+            if(dictOfProbabilities.Last().Key > minimumProbability)
+            {
+                LastProducts.Add(dictOfProbabilities.Last().Value);
+            }
+            // Problem: resultDict ist nur basierend auf dem letzten Frame
+            return (dictOfProbabilities, LastProducts.GetResultProduct());
+		}
 
     }
 }
