@@ -10,6 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+
 
 namespace GUI.ViewModel
 {
@@ -18,11 +21,21 @@ namespace GUI.ViewModel
         public MainWindowViewModel()
         {
 
+            //////////////////////////////////////////INITIALIZING/////////////////////////////////////////
+
             shoppingBasketObject = new ShoppingBasket();
 
             lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
 
             detectionObject = new Detection(lineOfGoodsObject);
+
+            ScanStatus = "Press Space to scan your product!";
+
+            ////////////////////////////////////////////CAMERA/////////////////////////////////////////////
+
+            camera = new Cam();
+
+            camera.NewFrame += OnNewFrame;
 
             ///////////////////////////////////////////Commands////////////////////////////////////////////
 
@@ -33,9 +46,41 @@ namespace GUI.ViewModel
 
             this.RemoveCommand = new DelegateCommand((o) => { shoppingBasketObject._ShoppingBasket.Remove(SelectedArticle); });
 
-            this.downQuantityCommand = new DelegateCommand((o) => { shoppingBasketObject.DownQuantity(SelectedArticle); });
+            this.downQuantityCommand = new DelegateCommand((o) => 
+            {
+                if (SelectedArticle != null)
+                {
+                    shoppingBasketObject.DownQuantity(SelectedArticle);
+                    if (shoppingBasketObject._ShoppingBasket[shoppingBasketObject._ShoppingBasket.IndexOf(SelectedArticle)].Quantity == 0)
+                        shoppingBasketObject._ShoppingBasket.Remove(SelectedArticle);
+                }
+            });
 
-            this.upQuantityCommand = new DelegateCommand((o) => { shoppingBasketObject.UpQuantity(SelectedArticle); } ); 
+            this.upQuantityCommand = new DelegateCommand((o) => {
+                if (SelectedArticle != null)
+                    shoppingBasketObject.UpQuantity(SelectedArticle); } );
+
+            
+            this.ScanCommand = new DelegateCommand(async (o) => 
+            {
+                ScanStatus = "Scanning process is running.";
+                for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
+                {
+                    await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
+
+                    (Dictionary<Product, double>, Product?) input = detectionObject.getDetectionOutput(lineOfGoodsObject, currentBitmap);
+
+                    productsAndProbabilitys = input.Item1;
+
+                    scannedProduct = input.Item2;
+
+                    if (scannedProduct != null)
+                    {
+                        shoppingBasketObject.AddArticle(scannedProduct);
+                    }
+                }
+                ScanStatus = "Press Space to scan your product!";
+            });
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
@@ -83,8 +128,96 @@ namespace GUI.ViewModel
 
         private Dictionary<Product, double> productsAndProbabilitys {  get; set; }
 
+        private string scanStatus;
+
+        public string ScanStatus {
+            get { return scanStatus; }
+            set
+            {
+                if (scanStatus != value)
+                {
+                    scanStatus = value;
+                    OnPropertyChanged(nameof(ScanStatus));
+                }
+            }
+        }
+
+        //Camera Objects
+
+        public Cam camera { get; set; }
+
+        public Bitmap currentBitmap { get; set; }
+
+        private BitmapSource _currentSource;
+
+        public BitmapSource CurrentSource
+        {
+            get { return _currentSource; }
+            set
+            {
+                if (_currentSource != value)
+                {
+                    _currentSource = value;
+                    OnPropertyChanged(nameof(CurrentSource));
+                }
+            }
+        }
+
+        ////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////
+
+        public virtual void OnNewFrame(object sender, EventArgs e)
+        {
+            if (camera != null)
+            {
+                Bitmap bitmap = camera.GetCurrentBitmap();
+
+                currentBitmap = bitmap; //speichern in lokaler Variable
+
+                //CHATGPT -> unsicher ob es funktioniert
+
+                if (bitmap != null)
+                {
+                    // Überprüfen Sie, ob der Dispatcher verfügbar ist und auf dem UI-Thread läuft
+                    if (System.Windows.Application.Current.Dispatcher.CheckAccess())
+                    {
+                        ShowBitmap(bitmap);
+                    }
+                    else
+                    {
+                        // Falls nicht, rufen Sie den Dispatcher des UI-Threads auf
+                        System.Windows.Application.Current.Dispatcher.Invoke(() => ShowBitmap(bitmap));
+                    }
+                }
+            }
+        }
+
+        private void ShowBitmap(Bitmap bitmap)
+        {
+            // Konvertiere das Bitmap in ein BitmapImage und zeige es in der GUI an
+            BitmapImage bitmapImage = BmpImageFromBmp(bitmap);
+            CurrentSource = bitmapImage;
+        }
+
+        private BitmapImage BmpImageFromBmp(Bitmap bmp) //Aus Forum: Transformiert Bitmap in GUI nutzbares BitmapSource
+        {
+            using (var memory = new System.IO.MemoryStream())
+            {
+                bmp.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
+        }
+
         ////////////////////////////////////////////Commands//////////////////////////////////////////////////////
-        
+
         public DelegateCommand ClearCommand { get; set; }
 
         public DelegateCommand AddCommand { get; set;}
@@ -101,55 +234,6 @@ namespace GUI.ViewModel
 
         public DelegateCommand addManuallyWindowCommand { get; set; }
 
-
-
-        /*
-         
-        private async void Window_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Space)
-            {
-                statusTextBox.Text = "Scanning process is running.";
-
-                for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
-                {
-                    await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
-
-                    (Dictionary<Product, double>, Product?) input = detectionObject.getDetectionOutput(lineOfGoodsObject, currentBitmap);
-
-                    productsAndProbabilitys = input.Item1;
-
-                    scannedProduct = input.Item2;
-
-                    if(scannedProduct != null)
-                    {
-                        shoppingBasketObject.AddArticle(scannedProduct);
-                    }    
-                }
-
-                statusTextBox.Text = "Press Space to scan your product!";
-            }
-        }
-        
-        //Vorerst nur für Stück Produkte
-        private void plusButton_Click(object sender, RoutedEventArgs e) //erhöht Stückzahl und automatisch Preis Update //ToChange
-        {
-            Article item = (Article)ShoppingBasketViewList.SelectedItem;
-            if(item != null)
-            shoppingBasketObject.UpQuantity(item);
-        }
-        
-        private void minusButton_Click(object sender, RoutedEventArgs e) //vermindert Stückzahl und Preis 
-        {
-            Article item = (Article)ShoppingBasketViewList.SelectedItem;
-            if (item != null)
-            {
-                shoppingBasketObject.DownQuantity(item);
-
-                if (shoppingBasketObject._ShoppingBasket[shoppingBasketObject._ShoppingBasket.IndexOf(item)].Quantity == 0) //Wenn 0 dann löschen
-                    deleteButton_Click(this, e);
-            }
-        }
-         */
+        public DelegateCommand ScanCommand { get; set; }
     }
 }

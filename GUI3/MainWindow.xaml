@@ -10,6 +10,9 @@
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Space" Command="{Binding ScanCommand}"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="160*"/>
@@ -27,8 +30,8 @@
                 <RowDefinition Height="277*"/>
             </Grid.RowDefinitions>
             
-            <TextBlock Grid.Row="0" Text="Press Space to scan your product!" x:Name="statusTextBox"/>
-            <Image Grid.Row="1" x:Name="anzeigeBild"/>
+            <TextBlock Grid.Row="0" Text="{Binding ScanStatus}" x:Name="statusTextBox"/>
+            <Image Grid.Row="1" x:Name="anzeigeBild" Source="{Binding CurrentSource}"/>
         </Grid>
 
         <!--Warenkorb-->
@@ -85,7 +88,6 @@
             <Button FontSize="80" Content="+" Command="{Binding upQuantityCommand}" Name="plusButton" Grid.Column="1"/>
             <TextBlock Name="priceTextBlock" Text="{Binding shoppingBasketObject.SumPrice}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="33" FontWeight="Bold" />
         </Grid>
-
     </Grid>
 </Window>
 

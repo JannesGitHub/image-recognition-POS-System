@@ -22,58 +22,6 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
-
-            camera = new Cam();
-
-            camera.NewFrame += OnNewFrame;
-        }
-
-        private Cam camera;
-
-        private Bitmap currentBitmap;
-
-        private Timer timer;
-
-        ///////////////////////////////////////////////////////BILDDARSTELLUNG///////////////////////////////////////////////////////////
-       //-> Noch in MainWindowViewModel übetragen
-        public virtual void OnNewFrame(object sender, EventArgs e)
-        {
-            if (camera != null)
-            {
-                Bitmap bitmap = camera.GetCurrentBitmap();
-
-                currentBitmap = bitmap; //speichern in lokaler Variable
-                if (bitmap != null)
-                {
-                    // Führe die Anzeigeoperation auf dem UI-Thread aus
-                    Dispatcher.Invoke(() => ShowBitmap(bitmap));
-                }
-            }
-        }
-
-        private void ShowBitmap(Bitmap bitmap)
-        {
-            // Konvertiere das Bitmap in ein BitmapImage und zeige es in der GUI an
-            BitmapImage bitmapImage = BmpImageFromBmp(bitmap);
-            anzeigeBild.Source = bitmapImage;
-        }
-
-        private BitmapImage BmpImageFromBmp(Bitmap bmp) //Aus Forum: Transformiert Bitmap in GUI nutzbares BitmapSource
-        {
-            using (var memory = new System.IO.MemoryStream())
-            {
-                bmp.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
-                memory.Position = 0;
-
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-
-                return bitmapImage;
-            }
         }
     }
 }
