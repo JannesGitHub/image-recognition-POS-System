@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace DetectionLibrary
 {
-    internal static class ZeroShot
+    internal static class ZeroShot : ICLIP
     {
         /// <summary>
         /// returns a CLIPVector Object from a Bitmap

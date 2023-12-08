@@ -36,5 +36,9 @@ namespace DetectionLibrary
             return (dictOfProbabilities, LastProducts.GetResultProduct());
 		}
 
-    }
+		public CLIPVector GetCLIPVector(Bitmap frame)
+		{
+			return ZeroShot.GetCLIPVector(frame);
+		}
+	}
 }
