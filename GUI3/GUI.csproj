@@ -8,6 +8,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Fonts\**" />
+    <Compile Remove="Images\**" />
+    <Compile Remove="Model\**" />
+    <Compile Remove="Theme\**" />
+    <EmbeddedResource Remove="Fonts\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <EmbeddedResource Remove="Model\**" />
+    <EmbeddedResource Remove="Theme\**" />
+    <None Remove="Fonts\**" />
+    <None Remove="Images\**" />
+    <None Remove="Model\**" />
+    <None Remove="Theme\**" />
+    <Page Remove="Fonts\**" />
+    <Page Remove="Images\**" />
+    <Page Remove="Model\**" />
+    <Page Remove="Theme\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
     <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
   </ItemGroup>
@@ -16,14 +37,6 @@
     <ProjectReference Include="..\Camera\Camera.csproj" />
     <ProjectReference Include="..\DetectionLibrary\DetectionLibrary.csproj" />
     <ProjectReference Include="..\KassenmanagementLibrary\KassenmanagementLibrary.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="MVVM\" />
-    <Folder Include="Fonts\" />
-    <Folder Include="Images\" />
-    <Folder Include="Theme\" />
   </ItemGroup>
 
 </Project>

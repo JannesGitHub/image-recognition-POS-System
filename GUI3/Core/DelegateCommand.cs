@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace GUI
+namespace GUI.Core
 {
     internal class DelegateCommand : ICommand
     {
@@ -14,17 +14,17 @@ namespace GUI
 
         readonly Predicate<object> canExecute;
 
-        public DelegateCommand(Predicate<object> canExecute, Action<object> execute) => 
+        public DelegateCommand(Predicate<object> canExecute, Action<object> execute) =>
             (this.canExecute, this.execute) = (canExecute, execute);
 
         public DelegateCommand(Action<object> execute) : this(null, execute) { }
-     
+
         public event EventHandler CanExecuteChanged;
 
-        public void OnCanExecuteChanged() => this.CanExecuteChanged.Invoke(this, EventArgs.Empty);
+        public void OnCanExecuteChanged() => CanExecuteChanged.Invoke(this, EventArgs.Empty);
 
-        public bool CanExecute(object parameter) => this.canExecute?.Invoke(parameter) ?? true;
+        public bool CanExecute(object parameter) => canExecute?.Invoke(parameter) ?? true;
 
-        public void Execute(object parameter) => this.execute?.Invoke(parameter);
+        public void Execute(object parameter) => execute?.Invoke(parameter);
     }
 }

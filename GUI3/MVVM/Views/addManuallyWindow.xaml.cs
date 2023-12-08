@@ -1,6 +1,8 @@
 ﻿using GUI.ViewModel;
+using KassenmanagementLibrary;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +26,8 @@ namespace GUI
         {
             InitializeComponent();
 
-            var vm = this.DataContext as addManuallyViewModel;
+            var vm = new addManuallyViewModel();
+            this.DataContext = vm;
 
             vm.Add += (o, e) => this.DialogResult = true;
         }

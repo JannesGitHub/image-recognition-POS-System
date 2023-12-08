@@ -38,12 +38,7 @@ namespace GUI
 
                     mainWindowViewModel.shoppingBasketObject.AddArticle(addManuallyViewModel.SelectedProduct);
                 }
-
-                
             };
-
-
-
         }
     }
 }

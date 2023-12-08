@@ -1,13 +1,16 @@
-﻿using KassenmanagementLibrary;
+﻿using GUI.Core;
+using KassenmanagementLibrary;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GUI.ViewModel
 {
-    internal class addManuallyViewModel
+    internal class addManuallyViewModel : ViewModelBase
     {
         public addManuallyViewModel()
         {
@@ -15,6 +18,8 @@ namespace GUI.ViewModel
 
             this.AddCommand = new DelegateCommand((o) => { this.Add?.Invoke(this, EventArgs.Empty); });
         }
+
+        public ObservableCollection<KeyValuePair<double, Product>> productsAndProbabilitys { get; set; }
 
         public Product SelectedProduct { get; set; }
 

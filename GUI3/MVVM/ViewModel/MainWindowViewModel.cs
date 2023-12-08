@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-
+using System.Printing;
+using GUI.Core;
 
 namespace GUI.ViewModel
 {
@@ -27,7 +28,7 @@ namespace GUI.ViewModel
 
             lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
 
-            detectionObject = new Detection(lineOfGoodsObject);
+            detectionObject = new Detection();
 
             ScanStatus = "Press Space to scan your product!";
 
@@ -63,23 +64,38 @@ namespace GUI.ViewModel
             
             this.ScanCommand = new DelegateCommand(async (o) => 
             {
-                ScanStatus = "Scanning process is running.";
+                /*ScanStatus = "Scanning process is running.";
                 for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
                 {
                     await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
 
-                    (Dictionary<Product, double>, Product?) input = detectionObject.getDetectionOutput(lineOfGoodsObject, currentBitmap);
+                    (SortedDictionary<double, Product>, Product?) input = detectionObject.getDetectionOutput(lineOfGoodsObject, currentBitmap);
 
                     productsAndProbabilitys = input.Item1;
 
                     scannedProduct = input.Item2;
 
                     if (scannedProduct != null)
-                    {
                         shoppingBasketObject.AddArticle(scannedProduct);
-                    }
+                    
                 }
                 ScanStatus = "Press Space to scan your product!";
+                */
+
+                SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
+
+                testInput.Add(0.5, new Product("Banane",123,1,true, null));
+
+                testInput.Add(0.2, new Product("Apfel", 234, 1, true, null));
+
+                testInput.Add(0.7, new Product("Khaki", 345, 1, true, null));
+
+                ObservableCollection<KeyValuePair<double, Product>> testCollection = new ObservableCollection<KeyValuePair<double, Product>>(testInput);
+
+                productsAndProbabilitys = testCollection;
+
+                shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
+
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>
@@ -123,7 +139,7 @@ namespace GUI.ViewModel
 
         public Product scannedProduct { get; set; }
 
-        private Dictionary<Product, double> productsAndProbabilitys {  get; set; }
+        public ObservableCollection<KeyValuePair<double, Product>> productsAndProbabilitys {  get; set; }
 
         private string scanStatus;
 
