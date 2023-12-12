@@ -6,9 +6,6 @@
         xmlns:local="clr-namespace:GUI.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="Add Manually" Height="450" Width="300">
-    <Window.DataContext>
-        <local:addManuallyViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
