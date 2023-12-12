@@ -12,6 +12,8 @@ namespace GUI.MVVM.ViewModel
 {
     public class addManuallyViewModel : ViewModelBase
     {
+
+
         public addManuallyViewModel()
         {
             SelectedProduct = new Product("Banane", 23, 2.2, true, null);
