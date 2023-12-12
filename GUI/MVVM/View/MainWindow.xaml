@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="BarWho" Height="450" Width="800"
         WindowStyle="SingleBorderWindow"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
         Background="Transparent"
-        AllowsTransparency="False"
+        AllowsTransparency="True"
         >
     <Window.InputBindings>
         <KeyBinding 
