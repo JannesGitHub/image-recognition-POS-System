@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GUI
+namespace GUI.MVVM.View
 {
     /// <summary>
-    /// Interaktionslogik für addProductToLineOfGoodsWindow.xaml
+    /// Interaktionslogik für editLineOfGoodsWindow.xaml
     /// </summary>
-    public partial class addProductToLineOfGoodsWindow : Window
+    public partial class editLineOfGoodsWindow : Window
     {
-        public addProductToLineOfGoodsWindow()
+        public editLineOfGoodsWindow()
         {
             InitializeComponent();
         }

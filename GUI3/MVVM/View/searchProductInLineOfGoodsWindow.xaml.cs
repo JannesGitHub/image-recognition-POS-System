@@ -12,22 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GUI
+namespace GUI.MVVM.View
 {
     /// <summary>
-    /// Interaktionslogik für PayWindow.xaml
+    /// Interaktionslogik für searchProductInLineOfGoodsWindow.xaml
     /// </summary>
-    public partial class PayWindow : Window
+    public partial class searchProductInLineOfGoodsWindow : Window
     {
-        public PayWindow()
+        public searchProductInLineOfGoodsWindow()
         {
-            DataContext = this;
-
-            //PriceToPay.Text = MainWindow.priceTextBlock.Text;
-            //check ChatGPT latest Chat to fix the problem
-
             InitializeComponent();
         }
-
     }
 }

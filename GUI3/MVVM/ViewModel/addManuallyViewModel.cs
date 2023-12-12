@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GUI.ViewModel
+namespace GUI.MVVM.ViewModel
 {
-    internal class addManuallyViewModel : ViewModelBase
+    public class addManuallyViewModel : ViewModelBase
     {
         public addManuallyViewModel()
         {

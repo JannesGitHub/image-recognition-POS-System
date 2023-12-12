@@ -1,4 +1,4 @@
-﻿using GUI.ViewModel;
+﻿using GUI.MVVM.ViewModel;
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;

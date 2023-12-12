@@ -15,9 +15,9 @@ using System.Windows.Threading;
 using System.Printing;
 using GUI.Core;
 
-namespace GUI.ViewModel
+namespace GUI.MVVM.ViewModel
 {
-    internal class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         public MainWindowViewModel()
         {

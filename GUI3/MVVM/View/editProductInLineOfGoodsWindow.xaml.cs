@@ -1,8 +1,5 @@
-﻿using GUI.ViewModel;
-using KassenmanagementLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,21 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GUI
+namespace GUI.MVVM.View
 {
     /// <summary>
-    /// Interaktionslogik für addManuallyWindow.xaml
+    /// Interaktionslogik für editProductInLineOfGoodsWindow.xaml
     /// </summary>
-    public partial class addManuallyWindow : Window
+    public partial class editProductInLineOfGoodsWindow : Window
     {
-        public addManuallyWindow()
+        public editProductInLineOfGoodsWindow()
         {
             InitializeComponent();
-
-            var vm = new addManuallyViewModel();
-            this.DataContext = vm;
-
-            vm.Add += (o, e) => this.DialogResult = true;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using GUI.Services;
-using GUI.ViewModel;
+using GUI.MVVM.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace GUI3
+namespace GUI
 {
     /// <summary>
     /// Interaction logic for App.xaml

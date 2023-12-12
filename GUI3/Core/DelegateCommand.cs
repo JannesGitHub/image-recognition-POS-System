@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace GUI.Core
 {
-    internal class DelegateCommand : ICommand
+    public class DelegateCommand : ICommand
     {
         readonly Action<object> execute;
 
