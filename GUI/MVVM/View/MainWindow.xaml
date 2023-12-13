@@ -9,8 +9,7 @@
         Title="BarWho" Height="450" Width="800"
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
-        Background="Transparent"
-        AllowsTransparency="True"
+        Background="Black"
         >
     <Window.InputBindings>
         <KeyBinding 
@@ -20,7 +19,7 @@
     </Window.InputBindings>
     
     <Border 
-        Background="#272527" 
+        Background="#000020"
         CornerRadius="0,0,15,15">
         
     <Grid>
@@ -59,7 +58,7 @@
                     Grid.Row="1" 
                     CornerRadius="10" 
                     BorderThickness="5" 
-                    BorderBrush="#5CF3FA">
+                    BorderBrush="#0000AF">
                     
                     <Image 
                         x:Name="anzeigeBild" 
@@ -70,27 +69,21 @@
             </Grid>
 
         <!--Warenkorb-->
-        <Grid 
+            <Grid 
             Grid.Row="0" 
             Grid.Column="1">
-            
-            <Grid 
-                Margin="25,25,25,25">
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition 
-                        Height="30"/>
-                    
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
 
-                <TextBlock 
-                    FontSize ="23" 
-                    Text="Shopping Basket" Grid.Row="0" 
-                    FontWeight="Bold" 
-                    Margin="0,0,32,0"/>
-                
-                <Button 
+                <Grid 
+                Margin="25,25,25,25">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition 
+                        Height="30"/>
+
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Button 
                     Name="deleteShoppingBasketButton" 
                     Command="{Binding ClearCommand}"  
                     Width="30" Height="30" 
@@ -99,14 +92,18 @@
                 <ListView 
                     ItemsSource="{Binding shoppingBasketObject._ShoppingBasket}" 
                     SelectedItem="{Binding SelectedArticle}" 
-                    Grid.Row="1" x:Name="ShoppingBasketViewList" 
-                    BorderThickness="1">
+                    Grid.Row="1" 
+                    x:Name="ShoppingBasketViewList" 
+                    BorderThickness="1"
+                    BorderBrush="BlueViolet" Margin="0,0,0,0"
+                    >
                     
                     <ListView.View>
                         <GridView>
                             <GridViewColumn 
                                 DisplayMemberBinding="{Binding Quantity}" 
-                                Header="X" Width="50"/>
+                                Header="X" Width="50"
+                                />
                             
                             <GridViewColumn 
                                 DisplayMemberBinding="{Binding Name}" 
@@ -142,7 +139,7 @@
                     
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                            <Border Background="#8B8BE8" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
@@ -159,7 +156,7 @@
                     FontWeight="Heavy">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="#5C90FA" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                            <Border Background="#4848B5" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
@@ -167,7 +164,7 @@
                 </Button>
 
                 <Button
-                    Margin="2,10,0,10"
+                    Margin="0,10,0,10"
                     FontSize="11"
                     Content="edit line of goods"
                     Command="{Binding editLineOfGoodsWindowCommand}"
@@ -176,7 +173,7 @@
                     FontWeight="Heavy">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="#5C90FA" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                            <Border Background="#8B8BE8" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
@@ -200,30 +197,34 @@
             </Grid.ColumnDefinitions>
 
             <Button 
-                Margin="10,10,0,10" 
-                Background="DarkRed" 
-                FontSize="80" Content="-" 
+                Margin="10,10,25,10" 
+                Background="Red" 
+                FontSize="50" 
+                Content="-" 
                 Command="{Binding downQuantityCommand}" 
                 Name="minusButton" 
-                Grid.Column="0"/>
+                Grid.Column="1"
+                />
             
             <Button 
-                Margin="0,10,10,10" 
-                Background="DarkGreen" 
-                FontSize="80" 
+                Margin="10, 10, 25, 10" 
+                Background="Green" 
+                FontSize="50" 
                 Content="+" 
                 Command="{Binding upQuantityCommand}" 
                 Name="plusButton" 
-                Grid.Column="1"/>
+                Grid.Column="2"/>
             
             <TextBlock 
                 Name="priceTextBlock" 
                 Text="{Binding shoppingBasketObject.SumPrice}" 
-                Grid.Column="2" 
+                Grid.Column="0" 
                 VerticalAlignment="Center" 
                 HorizontalAlignment="Center" 
                 FontSize="33" 
-                FontWeight="Bold" />
+                FontWeight="Bold"
+                Foreground="White"
+                />
         </Grid>
     </Grid>
     </Border>
