@@ -11,7 +11,6 @@ namespace DetectionLibrary.UnitTests
     [TestFixture]
     class TestDetectionLibrary
     {
-        [Test]
-        
+       
     }
 }
