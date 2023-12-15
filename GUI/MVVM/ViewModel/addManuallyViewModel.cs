@@ -7,26 +7,31 @@ using System.Windows;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GUI.Services;
 
 namespace GUI.MVVM.ViewModel
 {
     public class addManuallyViewModel : ViewModelBase
     {
+        public IaddManuallyService _addManuallyService { get; set; }
 
-
-        public addManuallyViewModel()
+        public addManuallyViewModel(IaddManuallyService addManuallyService)
         {
-            SelectedProduct = new Product("Banane", 23, 2.2, true, null);
+            _addManuallyService = addManuallyService;
 
-            this.AddCommand = new DelegateCommand((o) => { this.Add?.Invoke(this, EventArgs.Empty); });
+            products = new ObservableCollection<Product>(LineOfGoods.getdummi().lineOfGoods);
+
+            this.AddCommand = new DelegateCommand((o) => { 
+                    if(SelectedProduct != null)
+                    addManuallyService.AddArticleManually(SelectedProduct);});
         }
 
-        public ObservableCollection<KeyValuePair<double, Product>> productsAndProbabilitys { get; set; }
+        public ObservableCollection<Product> products { get; set; }
+
+
 
         public Product SelectedProduct { get; set; }
 
         public DelegateCommand AddCommand { get; set; }
-
-        public event EventHandler Add;
     }
 }

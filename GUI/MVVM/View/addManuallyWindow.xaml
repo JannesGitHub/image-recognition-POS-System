@@ -23,11 +23,11 @@
             <TextBox x:Name="searchAddManuallyTextBox" Grid.Column="1" FontSize="20"/>
         </Grid>
 
-        <ListView Margin="0,49,0,0" Grid.RowSpan="2">
+        <ListView ItemsSource="{Binding products}"  SelectedItem="{Binding SelectedProduct}" Margin="0,49,0,0" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding = "{Binding }" Header="Name" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding = "{Binding }" Header="Probability" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding = "{Binding Name}" Header="Name" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding = "{Binding Price}" Header="Probability" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

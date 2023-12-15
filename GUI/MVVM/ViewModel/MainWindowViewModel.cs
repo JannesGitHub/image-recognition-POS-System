@@ -33,10 +33,12 @@ namespace GUI.MVVM.ViewModel
 
             _windowManager = windowManager;
             _viewModelLocator = viewModelLocator;
+
             _addManuallyService = addManuallyService;
 
-
             shoppingBasketObject = new ShoppingBasket();
+
+            _addManuallyService.shoppingBasket = shoppingBasketObject;
 
             lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
 
@@ -106,8 +108,9 @@ namespace GUI.MVVM.ViewModel
 
                 productsAndProbabilitys = testCollection;
 
-                shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
+                _addManuallyService.productsAndProbabilities = testCollection;
 
+                shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>
