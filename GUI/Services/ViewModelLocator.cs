@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GUI.Services
 {
-    internal class ViewModelLocator
+    public class ViewModelLocator
     {
         private readonly IServiceProvider _provider;
 

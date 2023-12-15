@@ -14,15 +14,27 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Printing;
 using GUI.Core;
+using GUI.Services;
 
 namespace GUI.MVVM.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public MainWindowViewModel()
+
+        private readonly IWindowManager _windowManager;
+        private readonly ViewModelLocator _viewModelLocator;
+
+        public IaddManuallyService _addManuallyService { get; set; }
+
+        public MainWindowViewModel(IaddManuallyService addManuallyService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
 
             //////////////////////////////////////////INITIALIZING/////////////////////////////////////////
+
+            _windowManager = windowManager;
+            _viewModelLocator = viewModelLocator;
+            _addManuallyService = addManuallyService;
+
 
             shoppingBasketObject = new ShoppingBasket();
 
@@ -100,17 +112,17 @@ namespace GUI.MVVM.ViewModel
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
-                this.payWindow?.Invoke(this, EventArgs.Empty);
+                
             });
 
             this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
             {
-                this.editLineOfGoodsWindow?.Invoke(this, EventArgs.Empty);
+               
             });
 
             this.addManuallyWindowCommand = new DelegateCommand((o) =>
             {
-                this.addManuallyWindow?.Invoke(this, EventArgs.Empty);
+                _windowManager.ShowWindow(viewModelLocator.addManuallyViewModel);
             });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
@@ -175,14 +187,6 @@ namespace GUI.MVVM.ViewModel
                 }
             }
         }
-
-        //////////////////////////////////////////////EVENTS////////////////////////////////////////////////////// 
-
-        public event EventHandler addManuallyWindow;
-
-        public event EventHandler editLineOfGoodsWindow;
-
-        public event EventHandler payWindow;
 
         ////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////
 
