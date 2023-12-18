@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using GUI.Services;
 using System.Drawing.Printing;
+using System.Xml;
+using System.Collections;
+using System.Windows.Controls;
 
 namespace GUI.MVVM.ViewModel
 {
@@ -18,25 +21,7 @@ namespace GUI.MVVM.ViewModel
 
         public addManuallyViewModel(IaddManuallyService addManuallyService)
         {
-            this.products.CollectionChanged += (s, e) =>
-            {
-                DoFiltering();
-            };
-
-            keyValuePairs = addManuallyService.scanData;
-                /*
-            new SortedDictionary<double, Product>();
-
-            keyValuePairs.Add(0.5, new Product("test2", 0, 0, false, null));
-
-            keyValuePairs.Add(0.1, new Product("test1", 0, 0, false, null));
-
-            keyValuePairs.Add(0.6, new Product("test3", 0, 0, false, null));*/
-
-            //products = new ObservableCollection<Product>(_addManuallyService.lineOfGoods.lineOfGoods);    
-
-
-
+            scanData = addManuallyService.scanData;
 
             DoFiltering(); //Damit das Sortiment sofort angezeigt wird
 
@@ -45,12 +30,22 @@ namespace GUI.MVVM.ViewModel
                     addManuallyService.AddArticleManually(SelectedProduct.Value);});
         }
 
-        public SortedDictionary<double, Product> keyValuePairs { get; set; }
+        private SortedDictionary<double, Product> scanData { get; set; } = new SortedDictionary<double, Product>();
 
-        private ObservableCollection<Product> products { get; set; } = new ObservableCollection<Product> ();
+        private ObservableCollection<KeyValuePair<double, Product>> filteredScanData = new ObservableCollection<KeyValuePair<double, Product>>();
 
-        public ObservableCollection<Product> FilteredProducts { get; set; } = new ObservableCollection<Product>();
-
+        public ObservableCollection<KeyValuePair<double, Product>> FilteredScanData
+        {
+            get { return filteredScanData; }
+            set
+            {
+                if (filteredScanData != value)
+                {
+                    filteredScanData = value;
+                    OnPropertyChanged(nameof(FilteredScanData));
+                }
+            }
+        }
 
         private string filter = "";
 
@@ -62,6 +57,7 @@ namespace GUI.MVVM.ViewModel
                 {
                     filter = value;
                     this.OnPropertyChanged(nameof(Filter));
+                    this.OnPropertyChanged(nameof(FilteredScanData));
                     DoFiltering();
                 }
             }
@@ -69,14 +65,14 @@ namespace GUI.MVVM.ViewModel
 
         private void DoFiltering()
         {
-            this.FilteredProducts.Clear();
+            this.FilteredScanData.Clear();
             string? value = this.filter?.ToLower();
-            foreach(var item in products)
+            foreach(KeyValuePair<double, Product> item in scanData)
             {
                 if(String.IsNullOrEmpty(Filter) ||
-                   item.Name.ToLower().Contains(value) ||
-                   item.Articlenumber.ToString().Contains(value)){
-                    this.FilteredProducts.Add(item);
+                   item.Value.Name.ToLower().Contains(value) ||
+                   item.Value.Articlenumber.ToString().Contains(value)){
+                   this.FilteredScanData.Add(new KeyValuePair<double, Product>(item.Key, item.Value));
                 }
             }
         }
