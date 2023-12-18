@@ -25,7 +25,7 @@ namespace GUI.MVVM.ViewModel
 
             _addManuallyService = addManuallyService;
 
-            products = new ObservableCollection<Product>(LineOfGoods.getdummi().lineOfGoods);    
+            products = new ObservableCollection<Product>(_addManuallyService.lineOfGoods.lineOfGoods);    
 
             DoFiltering(); //Damit das Sortiment sofort angezeigt wird
 

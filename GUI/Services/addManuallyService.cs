@@ -13,20 +13,27 @@ namespace GUI.Services
     {
         public ShoppingBasket shoppingBasket { get; set; }
 
-        public ObservableCollection<KeyValuePair<double, Product>> productsAndProbabilities { get; set; }
+        public LineOfGoods lineOfGoods { get; set; }
 
         public void AddArticleManually(Product product);
+
+        public LineOfGoods GetLineOfGoods();
     }
 
 
     public class addManuallyService : IaddManuallyService
     {
         public ShoppingBasket shoppingBasket { get; set; }
-        public ObservableCollection<KeyValuePair<double, Product>> productsAndProbabilities {get; set; }
+        public LineOfGoods lineOfGoods { get; set; }
 
         public void AddArticleManually(Product product)
         {
             shoppingBasket.AddArticle(product);
+        }
+
+        public LineOfGoods GetLineOfGoods()
+        {
+            return lineOfGoods;
         }
     }
 }

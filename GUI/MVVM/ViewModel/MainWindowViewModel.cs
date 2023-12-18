@@ -40,7 +40,9 @@ namespace GUI.MVVM.ViewModel
 
             _addManuallyService.shoppingBasket = shoppingBasketObject;
 
-            lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
+            _addManuallyService.lineOfGoods = LineOfGoods.getdummi();
+
+            //lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
 
             detectionObject = new Detection();
 
@@ -107,8 +109,6 @@ namespace GUI.MVVM.ViewModel
                 ObservableCollection<KeyValuePair<double, Product>> testCollection = new ObservableCollection<KeyValuePair<double, Product>>(testInput);
 
                 productsAndProbabilitys = testCollection;
-
-                _addManuallyService.productsAndProbabilities = testCollection;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
             });
