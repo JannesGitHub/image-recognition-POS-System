@@ -23,16 +23,29 @@ namespace GUI.MVVM.ViewModel
                 DoFiltering();
             };
 
-            _addManuallyService = addManuallyService;
+            keyValuePairs = addManuallyService.scanData;
+                /*
+            new SortedDictionary<double, Product>();
 
-            products = new ObservableCollection<Product>(_addManuallyService.lineOfGoods.lineOfGoods);    
+            keyValuePairs.Add(0.5, new Product("test2", 0, 0, false, null));
+
+            keyValuePairs.Add(0.1, new Product("test1", 0, 0, false, null));
+
+            keyValuePairs.Add(0.6, new Product("test3", 0, 0, false, null));*/
+
+            //products = new ObservableCollection<Product>(_addManuallyService.lineOfGoods.lineOfGoods);    
+
+
+
 
             DoFiltering(); //Damit das Sortiment sofort angezeigt wird
 
             this.AddCommand = new DelegateCommand((o) => { 
-                    if(SelectedProduct != null)
-                    addManuallyService.AddArticleManually(SelectedProduct);});
+                    if(SelectedProduct.Value != null)
+                    addManuallyService.AddArticleManually(SelectedProduct.Value);});
         }
+
+        public SortedDictionary<double, Product> keyValuePairs { get; set; }
 
         private ObservableCollection<Product> products { get; set; } = new ObservableCollection<Product> ();
 
@@ -68,7 +81,7 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
-        public Product SelectedProduct { get; set; }
+        public KeyValuePair<double, Product> SelectedProduct { get; set; }
 
         public DelegateCommand AddCommand { get; set; }
     }

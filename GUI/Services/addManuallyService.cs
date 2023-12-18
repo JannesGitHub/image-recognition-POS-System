@@ -13,27 +13,28 @@ namespace GUI.Services
     {
         public ShoppingBasket shoppingBasket { get; set; }
 
-        public LineOfGoods lineOfGoods { get; set; }
+        public SortedDictionary<double, Product> scanData { get; set; }
+
+        public SortedDictionary<double, Product> getScanData();
 
         public void AddArticleManually(Product product);
-
-        public LineOfGoods GetLineOfGoods();
     }
 
 
     public class addManuallyService : IaddManuallyService
     {
         public ShoppingBasket shoppingBasket { get; set; }
-        public LineOfGoods lineOfGoods { get; set; }
+
+        public SortedDictionary<double, Product> scanData { get; set; }
+
+        public SortedDictionary<double, Product> getScanData()
+        {
+            return scanData;
+        }
 
         public void AddArticleManually(Product product)
         {
             shoppingBasket.AddArticle(product);
-        }
-
-        public LineOfGoods GetLineOfGoods()
-        {
-            return lineOfGoods;
         }
     }
 }
