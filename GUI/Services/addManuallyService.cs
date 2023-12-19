@@ -20,7 +20,6 @@ namespace GUI.Services
         public void AddArticleManually(Product product);
     }
 
-
     public class addManuallyService : IaddManuallyService
     {
         public ShoppingBasket shoppingBasket { get; set; }

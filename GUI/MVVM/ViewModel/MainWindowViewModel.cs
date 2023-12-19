@@ -116,7 +116,7 @@ namespace GUI.MVVM.ViewModel
 
             this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
             {
-               
+                _windowManager.ShowWindow(viewModelLocator.editLineOfGoodsViewModel);
             });
 
             this.addManuallyWindowCommand = new DelegateCommand((o) =>
