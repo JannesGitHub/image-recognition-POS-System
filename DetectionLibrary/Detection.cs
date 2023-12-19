@@ -15,7 +15,7 @@ namespace DetectionLibrary
             }
         }
         // wird das überhaupt gespeichert ?? bei einer statischen klasse eigentlich nicht möglich?
-        private SmartListForProduct<Product> LastProducts = new SmartListForProduct<Product>();   
+        private SmartListForProduct LastProducts = new SmartListForProduct();   
 
         public (SortedDictionary<double, Product>, Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame)
         {
