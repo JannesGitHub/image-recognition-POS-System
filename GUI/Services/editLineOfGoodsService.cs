@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace GUI.Services
 {
 
-    public interface IeditLineOfFoods
+    public interface IeditLineOfGoods
     {
         public LineOfGoods LineOfGoods { get; set; }
 
@@ -17,13 +17,13 @@ namespace GUI.Services
         public void EditProduct(Product product);
     }
 
-    public class editLineOfGoodsService : IeditLineOfFoods
+    public class editLineOfGoodsService : IeditLineOfGoods
     {
         public LineOfGoods LineOfGoods { get; set; }
 
         public void DeleteProduct(Product product)
         {
-            throw new NotImplementedException();
+            LineOfGoods.Remove(product);
         }
 
         public void EditProduct(Product product)

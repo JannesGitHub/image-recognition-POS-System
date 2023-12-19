@@ -26,7 +26,9 @@ namespace GUI.MVVM.ViewModel
 
         public IaddManuallyService _addManuallyService { get; set; }
 
-        public MainWindowViewModel(IaddManuallyService addManuallyService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
+        public IeditLineOfGoods _editLineOfGoodsService { get; set; }
+
+        public MainWindowViewModel(IaddManuallyService addManuallyService,IeditLineOfGoods editLineOfFoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
 
             //////////////////////////////////////////INITIALIZING/////////////////////////////////////////
@@ -40,7 +42,15 @@ namespace GUI.MVVM.ViewModel
 
             _addManuallyService.shoppingBasket = shoppingBasketObject;
 
-            //lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
+            // Versuch lineOfGoods zu search zu übertragen
+
+            _editLineOfGoodsService = editLineOfFoodsService;
+
+            lineOfGoodsObject = LineOfGoods.getdummi(null); //Sortiment laden
+
+            _editLineOfGoodsService.LineOfGoods = lineOfGoodsObject; 
+
+            //
 
             detectionObject = new Detection();
 
