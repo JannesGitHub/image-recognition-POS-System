@@ -7,10 +7,34 @@ using System.Threading.Tasks;
 
 namespace DetectionLibrary
 {
-	internal class SmartListForProduct<T> : SmartListBase<T> where T : Product
+	internal class SmartListForProduct : SmartListBase<Product>
 	{
+
 		public Product? GetResultProduct(int mindestErkennungsAnzahl = 3)
 		{
+			Dictionary<Product, int> counter = new Dictionary<Product, int>();
+			foreach (Product p in this.LastResults)
+			{
+				if (counter.ContainsKey(p))
+					counter[p]++;
+				else
+					counter[p] = 1;
+			}
+
+			var filteredResults = counter.Where(x => x.Value >= mindestErkennungsAnzahl).ToList();
+
+			if (filteredResults.Any())
+			{
+				// Sort by count and return the product with the highest count
+				return filteredResults.OrderByDescending(x => x.Value).First().Key;
+			}
+			else
+			{
+				// Return null = handle the absence of products meeting the threshold
+				return null;
+			}
+
+			/*
 			Product result = null;
 			int count = 0;
 			if(LastResults != null)
@@ -45,6 +69,7 @@ namespace DetectionLibrary
 				}
 			}			
 			return result;
+			*/
 		}
 	}
 }
