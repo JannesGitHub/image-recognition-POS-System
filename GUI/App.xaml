@@ -9,7 +9,26 @@
         <DataTemplate DataType="{x:Type TypeName=viewModel:MainWindowViewModel}">
             <view:MainWindow/>
         </DataTemplate>
-        
+
+        <DataTemplate DataType="{x:Type TypeName=viewModel:addManuallyViewModel}">
+            <view:addManuallyWindow/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type TypeName=viewModel:editLineOfGoodsViewModel}">
+            <view:editLineOfGoodsWindow/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type TypeName=viewModel:editProductInLineOfGoodsViewModel}">
+            <view:editProductInLineOfGoodsWindow/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type TypeName=viewModel:addProductToLineOfGoodsViewModel}">
+            <view:addProductToLineOfGoodsWindow/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type TypeName=viewModel:searchProductInLineOfGoodsViewModel}">
+            <view:searchProductInLineOfGoodsWindow/>
+        </DataTemplate>
         
     </Application.Resources>
 </Application>

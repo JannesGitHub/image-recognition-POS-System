@@ -37,7 +37,7 @@ namespace GUI.Services
 
         public void CloseWindow()
         {
-            MessageBox.Show("Test!");
+            //MessageBox.Show("Test!");
         }
     }
 }

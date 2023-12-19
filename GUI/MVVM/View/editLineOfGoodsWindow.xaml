@@ -12,8 +12,8 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button Content = "Add" Grid.Column="0" x:Name="addButton"/>
-        <Button Content = "Edit" Grid.Column="1" x:Name="editButton"/>
+        <Button Content = "Add" Command="{Binding AddCommand}" Grid.Column="0" x:Name="addButton"/>
+        <Button Content = "Edit" Command="{Binding EditCommand}" Grid.Column="1" x:Name="editButton"/>
     </Grid>
 
     
