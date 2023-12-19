@@ -166,16 +166,16 @@ namespace KassenmanagementLibrary
         }
 
         //erstellt sortimentobjekt
-        public static LineOfGoods getdummi()
+        public static LineOfGoods getdummi(CLIPVector vector1, CLIPVector vector2, CLIPVector vector3, CLIPVector vector4, CLIPVector vector5)
         {
 
             //vectoren von Can bekommen
 
-            CLIPVector vector1 = new CLIPVector(new double[] {1,5,2,6});
-            CLIPVector vector2 = new CLIPVector(new double[] {6,3,1,8});
-            CLIPVector vector3 = new CLIPVector(new double[] {12,5,23,6});
-            CLIPVector vector4 = new CLIPVector(new double[] {12,26,4,1});
-            CLIPVector vector5 = new CLIPVector(new double[] {1,26,78,9});
+            //CLIPVector vector1 = new CLIPVector(new double[] {1,5,2,6});
+            //CLIPVector vector2 = new CLIPVector(new double[] {6,3,1,8});
+            //CLIPVector vector3 = new CLIPVector(new double[] {12,5,23,6});
+            //CLIPVector vector4 = new CLIPVector(new double[] {12,26,4,1});
+            //CLIPVector vector5 = new CLIPVector(new double[] {1,26,78,9});
 
             List<CLIPVector> vectorsForProduct1 = new List<CLIPVector> { vector1, vector2 };
             Product product1 = new Product("Banane", 1, 19.99, false, vectorsForProduct1);

@@ -29,8 +29,9 @@ namespace GUI
             services.AddSingleton<WindowMapper>();
 
             services.AddSingleton<IWindowManager, WindowManager>();
+            services.AddSingleton<IaddManuallyService, addManuallyService>();
 
-            _serviceProvider = services.BuildServiceProvider(); //CS1061
+            _serviceProvider = services.BuildServiceProvider();
 
         }
 

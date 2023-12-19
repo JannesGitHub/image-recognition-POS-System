@@ -14,19 +14,33 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Printing;
 using GUI.Core;
+using GUI.Services;
 
 namespace GUI.MVVM.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public MainWindowViewModel()
+
+        private readonly IWindowManager _windowManager;
+        private readonly ViewModelLocator _viewModelLocator;
+
+        public IaddManuallyService _addManuallyService { get; set; }
+
+        public MainWindowViewModel(IaddManuallyService addManuallyService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
 
             //////////////////////////////////////////INITIALIZING/////////////////////////////////////////
 
+            _windowManager = windowManager;
+            _viewModelLocator = viewModelLocator;
+
+            _addManuallyService = addManuallyService;
+
             shoppingBasketObject = new ShoppingBasket();
 
-            lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
+            _addManuallyService.shoppingBasket = shoppingBasketObject;
+
+            //lineOfGoodsObject = LineOfGoods.getdummi(); //Sortiment laden
 
             detectionObject = new Detection();
 
@@ -90,27 +104,24 @@ namespace GUI.MVVM.ViewModel
 
                 testInput.Add(0.7, new Product("Khaki", 345, 1, true, null));
 
-                ObservableCollection<KeyValuePair<double, Product>> testCollection = new ObservableCollection<KeyValuePair<double, Product>>(testInput);
-
-                productsAndProbabilitys = testCollection;
+                _addManuallyService.scanData = testInput;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
-
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
-                this.payWindow?.Invoke(this, EventArgs.Empty);
+                
             });
 
             this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
             {
-                this.editLineOfGoodsWindow?.Invoke(this, EventArgs.Empty);
+               
             });
 
             this.addManuallyWindowCommand = new DelegateCommand((o) =>
             {
-                this.addManuallyWindow?.Invoke(this, EventArgs.Empty);
+                _windowManager.ShowWindow(viewModelLocator.addManuallyViewModel);
             });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
@@ -139,7 +150,7 @@ namespace GUI.MVVM.ViewModel
 
         public Product scannedProduct { get; set; }
 
-        public ObservableCollection<KeyValuePair<double, Product>> productsAndProbabilitys {  get; set; }
+        public SortedDictionary<double, Product> scanData {  get; set; }
 
         private string scanStatus;
 
@@ -175,14 +186,6 @@ namespace GUI.MVVM.ViewModel
                 }
             }
         }
-
-        //////////////////////////////////////////////EVENTS////////////////////////////////////////////////////// 
-
-        public event EventHandler addManuallyWindow;
-
-        public event EventHandler editLineOfGoodsWindow;
-
-        public event EventHandler payWindow;
 
         ////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////
 
