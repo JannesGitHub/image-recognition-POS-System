@@ -33,9 +33,9 @@ namespace DetectionLibrary
 				{
 					solution[p] = solution[p] / 10;
 				}
-				// Tauscht Key und Values
-				return new SortedDictionary<double, Product>(solution.ToDictionary(kvp => kvp.Value, kvp => kvp.Key));
+				// Tauscht Key und Values				
 			}
+			return new SortedDictionary<double, Product>(solution.ToDictionary(kvp => kvp.Value, kvp => kvp.Key));
 		}
 	}
 }
