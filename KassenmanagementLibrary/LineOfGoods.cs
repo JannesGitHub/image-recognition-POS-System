@@ -166,21 +166,21 @@ namespace KassenmanagementLibrary
         }
 
         //erstellt sortimentobjekt
-        public static LineOfGoods getdummi()
+        public static LineOfGoods getdummi(List<CLIPVector>vectorsForProduct1)
         {
 
             //vectoren von Can bekommen
 
-            CLIPVector vector1 = new CLIPVector(new double[] {1,5,2,6});
-            CLIPVector vector2 = new CLIPVector(new double[] {6,3,1,8});
-            CLIPVector vector3 = new CLIPVector(new double[] {12,5,23,6});
-            CLIPVector vector4 = new CLIPVector(new double[] {12,26,4,1});
-            CLIPVector vector5 = new CLIPVector(new double[] {1,26,78,9});
+            //CLIPVector vector1 = new CLIPVector(new double[] {1,5,2,6});
+            //CLIPVector vector2 = new CLIPVector(new double[] {6,3,1,8});
+            //CLIPVector vector3 = new CLIPVector(new double[] {12,5,23,6});
+            //CLIPVector vector4 = new CLIPVector(new double[] {12,26,4,1});
+            //CLIPVector vector5 = new CLIPVector(new double[] {1,26,78,9});
 
-            List<CLIPVector> vectorsForProduct1 = new List<CLIPVector> { vector1, vector2 };
-            Product product1 = new Product("Banane", 1, 19.99, false, vectorsForProduct1);
+            //List<CLIPVector> vectorsForProduct1 = new List<CLIPVector> { vector1, vector2 };
+            Product product1 = new Product("Orange", 1, 19.99, false, vectorsForProduct1);
 
-            List<CLIPVector> vectorsForProduct2 = new List<CLIPVector> { vector3, vector4};
+           /* List<CLIPVector> vectorsForProduct2 = new List<CLIPVector> { vector3, vector4};
             Product product2 = new Product("Apfel", 2, 29.99, false, vectorsForProduct2);
 
             List<CLIPVector> vectorsForProduct3 = new List<CLIPVector> { vector5, vector1};
@@ -190,14 +190,15 @@ namespace KassenmanagementLibrary
             Product product4 = new Product("Schokolade", 4, 49.99, true, vectorsForProduct4);
 
             List<CLIPVector> vectorsForProduct5 = new List<CLIPVector> { vector4, vector5};
-            Product product5 = new Product("Kartoffeln", 5, 59.99, false, vectorsForProduct5);
+            Product product5 = new Product("Kartoffeln", 5, 59.99, false, vectorsForProduct5);*/
 
             LineOfGoods line = new LineOfGoods();
             line.Add(product1);
-            line.Add(product2);
+           
+            /* line.Add(product2);
             line.Add(product3);
             line.Add(product4);
-            line.Add(product5);
+            line.Add(product5);*/
 
             return line;
         }

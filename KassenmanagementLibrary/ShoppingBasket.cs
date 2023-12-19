@@ -115,6 +115,7 @@ namespace KassenmanagementLibrary
                 _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice += _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Price;
                 UpdateSumPrice();
             }
+
            
         }
 
@@ -163,16 +164,15 @@ namespace KassenmanagementLibrary
         public void SaveReciept()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(string));
-            string basedirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-                //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
-                if (string.IsNullOrWhiteSpace(basedirectory))
-                {
-                    throw new ArgumentException("Ungültiger Dateipfad.", nameof(basedirectory));
-                }
-
             string fileName = $"Receipt_{DateTime.Now:yyyyMMddHHmmssfff}.xml";
-            string filePath = Path.Combine(basedirectory, fileName);
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+
+            //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
+
+            if (string.IsNullOrWhiteSpace(filePath))
+                {
+                    throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
+                }
 
 
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
