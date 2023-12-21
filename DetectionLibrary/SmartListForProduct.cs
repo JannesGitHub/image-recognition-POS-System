@@ -12,39 +12,44 @@ namespace DetectionLibrary
 
 		public Product? GetResultProduct(int mindestErkennungsAnzahl = 3)
 		{
-			Dictionary<Product, int> counter = new Dictionary<Product, int>();
-			foreach (Product p in this.LastResults)
-			{
-				if (counter.ContainsKey(p))
-					counter[p]++;
-				else
-					counter[p] = 1;
-			}
-
-			var filteredResults = counter.Where(x => x.Value >= mindestErkennungsAnzahl).ToList();
-
-			if (filteredResults.Any())
-			{
-				// Sort by count and return the product with the highest count
-				return filteredResults.OrderByDescending(x => x.Value).First().Key;
-			}
-			else
-			{
-				// Return null = handle the absence of products meeting the threshold
-				return null;
-			}
-
-			/*
 			Product result = null;
-			int count = 0;
-			if(LastResults != null)
+			Dictionary<Product, int> counter = new Dictionary<Product, int>();
+			if (LastResults != null || LastResults.Count() > 9)
 			{
+				foreach (Product p in this.LastResults)
+				{
+					if (counter.ContainsKey(p))
+						counter[p]++;
+					else
+						counter[p] = 1;
+				}
+
+				var filteredResults = counter.Where(x => x.Value >= mindestErkennungsAnzahl).ToList();
+
+				if (filteredResults.Any())
+				{
+					// Sort by count and return the product with the highest count
+					return filteredResults.OrderByDescending(x => x.Value).First().Key;
+				}
+				else
+				{
+					// Return null = handle the absence of products meeting the threshold
+					return null;
+				}
+			}
+			return result;
+
+
+
+
+
+			int count = 0;
+
 			//Den kompletten nächsten Teil als LINQ Ausdruck zusammenführen
 				if (LastResults.Count < 10)
 				{
 					return null;
 				}
-				Dictionary<Product, int> counter = new Dictionary<Product, int>();
 				// erstellen des Dictionary
 				foreach (Product detectedproduct in LastResults)
 				{
@@ -66,10 +71,9 @@ namespace DetectionLibrary
 				{
 					if (count == counter[detectedproduct] && count >= mindestErkennungsAnzahl)
 						result = detectedproduct;
-				}
-			}			
-			return result;
-			*/
+				}			
+
+			
 		}
 	}
 }

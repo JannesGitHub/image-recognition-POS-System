@@ -85,11 +85,11 @@ namespace GUI.MVVM.ViewModel
                 if (SelectedArticle != null)
                     shoppingBasketObject.UpQuantity(SelectedArticle); } );
 
-            
+                                                    
             this.ScanCommand = new DelegateCommand(async (o) => 
             {
                 ScanStatus = "Scanning process is running.";
-                for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
+                for (int i = 0; i < 15; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
                 {
                     await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
 

@@ -11,31 +11,37 @@ namespace DetectionLibrary
 	{
 		public SortedDictionary<double, Product> GetResultProbabilityDictionary()
 		{
-			SortedDictionary<Product,double> solution = new SortedDictionary<Product, double>();
-			//LINQ ausruck für Dictionary finden
-			foreach (SortedDictionary<double, Product> d in LastResults)
+			if(LastResults != null || LastResults.Count > 9)
 			{
-				foreach (KeyValuePair<double, Product> kvp in d)
+				Dictionary<Product, double> solution = new Dictionary<Product, double>();
+				//LINQ ausruck für Dictionary finden
+				foreach (SortedDictionary<double, Product> d in LastResults)
 				{
-					double probability = kvp.Key;
-					Product product = kvp.Value;
+					foreach (KeyValuePair<double, Product> kvp in d)
+					{
+						double probability = kvp.Key;
+						Product product = kvp.Value;
 
-					if (solution.ContainsKey(product))
-					{
-						solution[product] += probability;
-					}
-					else
-					{
-						solution[product] = probability;
+						if (DetectionMathLib.IsInDict(solution, product)) // evtl. auch für die eigene Classification Klasse geeignet
+						{
+							solution[product] += probability;
+						}
+						else
+						{
+							solution[product] = probability;
+						}
 					}
 				}
-				foreach(Product p in solution.Keys)
+				foreach (Product p in solution.Keys)
 				{
-					solution[p] = solution[p] / 10;
+					solution[p] = solution[p] / LastResults.Count();
 				}
-				// Tauscht Key und Values				
+				// Tauscht Key und Values	
+				return new SortedDictionary<double, Product>(solution.ToDictionary(kvp => kvp.Value, kvp => kvp.Key));
 			}
-			return new SortedDictionary<double, Product>(solution.ToDictionary(kvp => kvp.Value, kvp => kvp.Key));
+			// leeres Dictionary Object
+			return(new SortedDictionary<double, Product>());
+
 		}
 	}
 }

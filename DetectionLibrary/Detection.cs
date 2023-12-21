@@ -5,6 +5,10 @@ namespace DetectionLibrary
 {
     public class Detection : IDetection
     {
+        // Sortiment bei Objekterstellung übergeben
+        // potentiell Detection als Statische Klasse einführen
+        //
+
         private Bitmap testBitmap
         {
             get
@@ -20,7 +24,7 @@ namespace DetectionLibrary
 
         public (SortedDictionary<double, Product>, Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame)
         {
-            double minimumProbability = 0.8;
+            double minimumProbability = 0.2;
 
 			//erstellt ein Dictionary mit der nähesten Distanz für jede ProduktvectorListe
 			Dictionary<double, Product> dictOfClosestDistances = new Dictionary<double, Product>();
