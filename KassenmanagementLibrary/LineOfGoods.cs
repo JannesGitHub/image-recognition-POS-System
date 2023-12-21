@@ -82,7 +82,7 @@ namespace KassenmanagementLibrary
 
         }
 
-        //fügt akritel dem sortiment hinzu
+        //fügt artikel dem sortiment hinzu
         public void Add(Product p)
         {
             lineOfGoods.Add(p);
@@ -165,8 +165,10 @@ namespace KassenmanagementLibrary
             return instance;
         }
 
+        
+
         //erstellt sortimentobjekt
-        public static LineOfGoods getdummi(List<CLIPVector>vectorsForProduct1)
+        public static LineOfGoods getdummi(List<CLIPVector> vectorsForProduct1)
         {
 
             //vectoren von Can bekommen
