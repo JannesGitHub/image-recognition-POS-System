@@ -12,6 +12,8 @@ namespace GUI.Services
     {
         public LineOfGoods LineOfGoods { get; set; }
 
+        public Product toEditProduct {  get; set; }
+
         public void DeleteProduct(Product product);
 
         public void EditProduct(Product product);
@@ -20,6 +22,8 @@ namespace GUI.Services
     public class editLineOfGoodsService : IeditLineOfGoods
     {
         public LineOfGoods LineOfGoods { get; set; }
+
+        public Product toEditProduct { get; set; }
 
         public void DeleteProduct(Product product)
         {

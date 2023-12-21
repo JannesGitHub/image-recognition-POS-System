@@ -12,7 +12,7 @@ namespace KassenmanagementLibrary
 {
    
     [Serializable]
-    public class LineOfGoods : ILineOfGoods
+    public class LineOfGoods : ObserveableObject , ILineOfGoods
     {
 
 
@@ -49,7 +49,22 @@ namespace KassenmanagementLibrary
             }
             
         }
-        public List<Product> lineOfGoods { get; set; }
+
+        private List<Product> _lineOfGoods;
+
+        public List<Product> lineOfGoods
+        {
+            get => _lineOfGoods;
+            set
+            {
+                if(_lineOfGoods != value)
+                {
+                    _lineOfGoods = value;
+                    OnPropertyChanged(nameof(lineOfGoods));
+                    OnPropertyChanged(nameof(_lineOfGoods));
+                }
+            }
+        }
 
        
         // prüft ob atrikel im sortiment existiert anhand des namens

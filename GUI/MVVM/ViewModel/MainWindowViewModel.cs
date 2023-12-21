@@ -46,7 +46,7 @@ namespace GUI.MVVM.ViewModel
 
             _editLineOfGoodsService = editLineOfFoodsService;
 
-            lineOfGoodsObject = LineOfGoods.getdummi(null); //Sortiment laden
+            lineOfGoodsObject = LineOfGoods.GetFromXML(); //LineOfGoods.GetDummi(null); //Sortiment laden
 
             _editLineOfGoodsService.LineOfGoods = lineOfGoodsObject; 
 
@@ -88,23 +88,28 @@ namespace GUI.MVVM.ViewModel
             
             this.ScanCommand = new DelegateCommand(async (o) => 
             {
-                /*ScanStatus = "Scanning process is running.";
+                ScanStatus = "Scanning process is running.";
                 for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
                 {
                     await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
 
                     (SortedDictionary<double, Product>, Product?) input = detectionObject.getDetectionOutput(lineOfGoodsObject, currentBitmap);
 
-                    productsAndProbabilitys = input.Item1;
+                    scanData = input.Item1;
+
+                    _addManuallyService.scanData = this.scanData;
 
                     scannedProduct = input.Item2;
 
                     if (scannedProduct != null)
                         shoppingBasketObject.AddArticle(scannedProduct);
-                    
+
+
+                    //nur für Anzeige
+                    shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
                 }
                 ScanStatus = "Press Space to scan your product!";
-                */
+                /*
 
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
@@ -117,6 +122,7 @@ namespace GUI.MVVM.ViewModel
                 _addManuallyService.scanData = testInput;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
+                */
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>

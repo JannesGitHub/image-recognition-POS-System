@@ -17,33 +17,100 @@ namespace GUI.MVVM.ViewModel
 
         public IeditLineOfGoods _editLineOfGoodsService { get; set; }
 
-        public searchProductInLineOfGoodsViewModel(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator) 
+        public searchProductInLineOfGoodsViewModel(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
-            LineOfGoods = editLineOfGoodsService.LineOfGoods;
+            LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
+
+            DoFiltering();
 
             DeleteCommand = new DelegateCommand((o) =>
             {
-                if(SelectedProduct != null)
-                editLineOfGoodsService.DeleteProduct(SelectedProduct);
-                OnPropertyChanged(nameof(LineOfGoods));
+                if (SelectedProduct != null)
+                    editLineOfGoodsService.DeleteProduct(SelectedProduct);
+                LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
+                DoFiltering();
             });
 
-            EditCommand = new DelegateCommand((o) =>
+            EditCommand = new DelegateCommand(execute: (o) =>
             {
-                
-            });
+                editLineOfGoodsService.toEditProduct = SelectedProduct;
+                windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+            }, canExecute: (o) => SelectedProduct != null);
         }
 
-        public Product SelectedProduct { get; set; }
+        private Product selectedProduct;
 
-        private LineOfGoods lineOfGoods;
+        public Product SelectedProduct
+        {
+            get { return selectedProduct; }
+            set
+            {
+                if (value != SelectedProduct)
+                {
+                    selectedProduct = value;
+                    OnPropertyChanged(nameof(EditCommand));
+                }
+            }
+        }
 
-        public LineOfGoods LineOfGoods
+        private ObservableCollection<Product> lineOfGoods;
+
+        public ObservableCollection<Product> LineOfGoods
         {
             get { return lineOfGoods; }
-            set { if(value != null)
+            set
+            {
+                if (value != null)
                     lineOfGoods = value;
-                    OnPropertyChanged(nameof(LineOfGoods));}
+                OnPropertyChanged(nameof(LineOfGoods));
+            }
+        }
+
+        private ObservableCollection<Product> filteredLineOfGoods = new ObservableCollection<Product>();
+
+        public ObservableCollection<Product> FilteredLineOfGoods
+        {
+            get { return filteredLineOfGoods; }
+            set
+            {
+                if (filteredLineOfGoods != value)
+                {
+                    filteredLineOfGoods = value;
+                    OnPropertyChanged(nameof(FilteredLineOfGoods));
+                }
+            }
+        }
+
+        private string filter = "";
+
+        public string Filter
+        {
+            get => filter;
+            set
+            {
+                if (value != filter)
+                {
+                    filter = value;
+                    this.OnPropertyChanged(nameof(Filter));
+                    this.OnPropertyChanged(nameof(FilteredLineOfGoods));
+                    DoFiltering();
+                }
+            }
+        }
+
+        private void DoFiltering()
+        {
+            this.FilteredLineOfGoods.Clear();
+            string? value = this.filter?.ToLower();
+            foreach (Product item in LineOfGoods)
+            {
+                if (String.IsNullOrEmpty(Filter) ||
+                   item.Name.ToLower().Contains(value) ||
+                   item.Articlenumber.ToString().Contains(value))
+                {
+                    this.FilteredLineOfGoods.Add(item);
+                }
+            }
         }
 
         public DelegateCommand DeleteCommand { get; set; }
