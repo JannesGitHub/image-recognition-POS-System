@@ -46,7 +46,7 @@ namespace GUI.MVVM.ViewModel
 
             _editLineOfGoodsService = editLineOfFoodsService;
 
-            lineOfGoodsObject = LineOfGoods.getdummi(null); //Sortiment laden
+            lineOfGoodsObject = LineOfGoods.GetDummi(null); //Sortiment laden
 
             _editLineOfGoodsService.LineOfGoods = lineOfGoodsObject; 
 
