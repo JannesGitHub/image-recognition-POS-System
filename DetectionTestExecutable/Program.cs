@@ -19,7 +19,7 @@ internal class Program
 	public static List<CLIPVector> GetProductVectorsFromFolder(string Ordnername)
 	{
 		List<CLIPVector> resultList = new List<CLIPVector>();
-		string DateipfadmitBildern = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+		string DateipfadmitBildern = Path.Combine(AppDomain.CurrentDomain.BaseDirectory); // geht warsch. nur auf Windows - ".." - Befehl für directory auf hörer Ebene
 		DateipfadmitBildern = DateipfadmitBildern.Substring(0, DateipfadmitBildern.IndexOf("j-kassenscanner"));
 		DateipfadmitBildern += "j-kassenscanner\\TestBilder\\";
 		DateipfadmitBildern += Ordnername;

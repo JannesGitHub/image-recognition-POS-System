@@ -16,7 +16,7 @@ namespace DetectionLibrary
         }
         // wird das überhaupt gespeichert ?? bei einer statischen klasse eigentlich nicht möglich?
         private SmartListForProduct LastProducts = new SmartListForProduct();
-        private SmartListForProbabilityDictionary LastProbailites = new DetectionLibrary.SmartListForProbabilityDictionary();
+        private SmartListForProbabilityDictionary LastProbabilites = new DetectionLibrary.SmartListForProbabilityDictionary();
 
         public (SortedDictionary<double, Product>, Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame)
         {
@@ -29,14 +29,14 @@ namespace DetectionLibrary
                 dictOfClosestDistances.Add(DetectionMathLib.SmallestValueOf(ZeroShot.GetCLIPVector(frame).CompareTo(p.Allproductvectors)),p);
             }
             SortedDictionary<double, Product> dictOfProbabilities = DetectionMathLib.Softmax(dictOfClosestDistances);
-            LastProbailites.Add(dictOfProbabilities);
+            LastProbabilites.Add(dictOfProbabilities);
             //Speichert die letzten 10 Ergbnisse um davon dann die Produkterkennung abhängig zu machen
             if(dictOfProbabilities.Last().Key > minimumProbability)
             {
                 LastProducts.Add(dictOfProbabilities.Last().Value);
             }
             // Problem: resultDict ist nur basierend auf dem letzten Frame
-            return (LastProbailites.GetResultProbabilityDictionary(), LastProducts.GetResultProduct());
+            return (LastProbabilites.GetResultProbabilityDictionary(), LastProducts.GetResultProduct());
 		}
 
 		public static CLIPVector GetCLIPVector(Bitmap frame)
