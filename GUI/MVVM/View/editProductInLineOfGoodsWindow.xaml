@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="editProductInLineOfGoodsWindow" Height="450" Width="800">
+        Title="editProductInLineOfGoodsWindow" Height="350" Width="450">
     <Grid>
-        
+        <StackPanel>
+            <!--Name-->
+            <TextBox /> 
+            <!--ID-->
+            <TextBox/>
+            <!--Price-->
+            <TextBox/>
+            <TextBlock Text=""/>
+            <!--Quantity or Weight-->
+            <TextBlock Text="Product is defined per"/>
+            <RadioButton Content="weight." IsChecked="{Binding IsFirstRadioButtonSelected, Mode=TwoWay}" Margin="0,0,0,10"/>
+            <RadioButton Content="quantity." IsChecked="{Binding IsSecondRadioButtonSelected, Mode=TwoWay}"/>
+            <TextBlock Text=""/>
+            <Button/>
+
+
+
+        </StackPanel>
     </Grid>
 </Window>

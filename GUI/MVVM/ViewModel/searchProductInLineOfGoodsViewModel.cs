@@ -17,7 +17,7 @@ namespace GUI.MVVM.ViewModel
 
         public IeditLineOfGoods _editLineOfGoodsService { get; set; }
 
-        public searchProductInLineOfGoodsViewModel(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator) 
+        public searchProductInLineOfGoodsViewModel(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
             LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
 
@@ -25,19 +25,33 @@ namespace GUI.MVVM.ViewModel
 
             DeleteCommand = new DelegateCommand((o) =>
             {
-                if(SelectedProduct != null)
-                editLineOfGoodsService.DeleteProduct(SelectedProduct);
+                if (SelectedProduct != null)
+                    editLineOfGoodsService.DeleteProduct(SelectedProduct);
                 LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
                 DoFiltering();
             });
 
-            EditCommand = new DelegateCommand((o) =>
+            EditCommand = new DelegateCommand(execute: (o) =>
             {
-                
-            });
+                editLineOfGoodsService.toEditProduct = SelectedProduct;
+                windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+            }, canExecute: (o) => SelectedProduct != null);
         }
 
-        public Product SelectedProduct { get; set; }
+        private Product selectedProduct;
+
+        public Product SelectedProduct
+        {
+            get { return selectedProduct; }
+            set
+            {
+                if (value != SelectedProduct)
+                {
+                    selectedProduct = value;
+                    OnPropertyChanged(nameof(EditCommand));
+                }
+            }
+        }
 
         private ObservableCollection<Product> lineOfGoods;
 
