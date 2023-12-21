@@ -35,9 +35,19 @@ namespace GUI.Services
             }
         }
 
+        public void CloseCurrentWindow(ViewModelBase viewModel) 
+        {
+            var windowType = _windowMapper.GetWindowTypeForViewModel(viewModel.GetType());
+            if (windowType != null)
+            {
+                var window = Activator.CreateInstance(windowType) as Window;
+                window.Close();
+            }
+        }
+
         public void CloseWindow()
         {
-            //MessageBox.Show("Test!");
+            
         }
     }
 }

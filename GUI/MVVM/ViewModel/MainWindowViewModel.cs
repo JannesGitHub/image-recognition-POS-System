@@ -50,7 +50,7 @@ namespace GUI.MVVM.ViewModel
 
             _editLineOfGoodsService.LineOfGoods = lineOfGoodsObject; 
 
-            //
+            //Detection stuff
 
             detectionObject = new Detection();
 
@@ -88,6 +88,7 @@ namespace GUI.MVVM.ViewModel
             
             this.ScanCommand = new DelegateCommand(async (o) => 
             {
+                /*
                 ScanStatus = "Scanning process is running.";
                 for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
                 {
@@ -109,7 +110,7 @@ namespace GUI.MVVM.ViewModel
                     shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
                 }
                 ScanStatus = "Press Space to scan your product!";
-                /*
+                */
 
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
@@ -122,7 +123,7 @@ namespace GUI.MVVM.ViewModel
                 _addManuallyService.scanData = testInput;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
-                */
+                
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>
@@ -212,6 +213,8 @@ namespace GUI.MVVM.ViewModel
                 Bitmap bitmap = camera.GetCurrentBitmap();
 
                 currentBitmap = bitmap; //speichern in lokaler Variable
+
+                _editLineOfGoodsService.currentBitmap = currentBitmap; //weitergeben an Service für add und edit LineOfGoods
 
                 //CHATGPT -> unsicher ob es funktioniert
 
