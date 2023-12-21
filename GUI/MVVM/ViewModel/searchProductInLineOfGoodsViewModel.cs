@@ -23,19 +23,25 @@ namespace GUI.MVVM.ViewModel
 
             DoFiltering();
 
-            DeleteCommand = new DelegateCommand((o) =>
+            DeleteCommand = new DelegateCommand( execute: (o) =>
             {
                 if (SelectedProduct != null)
                     editLineOfGoodsService.DeleteProduct(SelectedProduct);
                 LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
                 DoFiltering();
-            });
+            }, canExecute: (o) => SelectedProduct != null);
 
             EditCommand = new DelegateCommand(execute: (o) =>
             {
                 editLineOfGoodsService.toEditProduct = SelectedProduct;
                 windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
             }, canExecute: (o) => SelectedProduct != null);
+
+            AddCommand = new DelegateCommand(execute: (o) =>
+            {
+                editLineOfGoodsService.toEditProduct = SelectedProduct;
+                windowManager.ShowWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
+            });
         }
 
         private Product selectedProduct;
@@ -116,5 +122,7 @@ namespace GUI.MVVM.ViewModel
         public DelegateCommand DeleteCommand { get; set; }
 
         public DelegateCommand EditCommand { get; set; }
+
+        public DelegateCommand AddCommand { get; set; } 
     }
 }

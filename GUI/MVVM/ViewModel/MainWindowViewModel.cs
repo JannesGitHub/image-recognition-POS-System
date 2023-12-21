@@ -15,6 +15,8 @@ using System.Windows.Threading;
 using System.Printing;
 using GUI.Core;
 using GUI.Services;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace GUI.MVVM.ViewModel
 {
@@ -133,12 +135,19 @@ namespace GUI.MVVM.ViewModel
 
             this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
             {
-                _windowManager.ShowWindow(viewModelLocator.editLineOfGoodsViewModel);
+                _windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
             });
 
             this.addManuallyWindowCommand = new DelegateCommand((o) =>
             {
-                _windowManager.ShowWindow(viewModelLocator.addManuallyViewModel);
+                if (scanData != null)
+                {
+                    _windowManager.ShowWindow(viewModelLocator.addManuallyViewModel);
+                }
+                else
+                {
+                    MessageBox.Show("Please try to scan first!");
+                }
             });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////

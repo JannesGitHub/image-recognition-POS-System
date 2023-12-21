@@ -21,6 +21,8 @@ namespace GUI.Services
         public void DeleteProduct(Product product);
 
         public void EditProduct(Product product);
+
+        public void AddProduct(Product product);
     }
 
     public class editLineOfGoodsService : IeditLineOfGoods
@@ -48,6 +50,11 @@ namespace GUI.Services
             {
                 MessageBox.Show("Nicht enthalten");
             }
+        }
+
+        public void AddProduct(Product product)
+        {
+            LineOfGoods.lineOfGoods.Add(product);
         }
     }
 }
