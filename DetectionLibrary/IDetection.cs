@@ -12,6 +12,6 @@ namespace DetectionLibrary
     {
         //Trennen vom Dictionary und Produkt?
         (SortedDictionary<double, Product>,Product?) getDetectionOutput(LineOfGoods sortiment, Bitmap frame);
-		CLIPVector GetCLIPVector(Bitmap frame);
+		public static CLIPVector GetCLIPVector(Bitmap frame) { return ZeroShot.GetCLIPVector(frame); }
 	}
 }

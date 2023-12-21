@@ -7,12 +7,35 @@ using System.Threading.Tasks;
 
 namespace DetectionLibrary
 {
-	internal class SmartListForProbabilityDictionary<T> : SmartListBase<T> where T : SortedDictionary<double,Product>
+	internal class SmartListForProbabilityDictionary : SmartListBase<SortedDictionary<double, Product>>
 	{
 		public SortedDictionary<double, Product> GetResultProbabilityDictionary()
 		{
+			SortedDictionary<Product,double> solution = new SortedDictionary<Product, double>();
 			//LINQ ausruck für Dictionary finden
-			throw new NotImplementedException();
+			foreach (SortedDictionary<double, Product> d in LastResults)
+			{
+				foreach (KeyValuePair<double, Product> kvp in d)
+				{
+					double probability = kvp.Key;
+					Product product = kvp.Value;
+
+					if (solution.ContainsKey(product))
+					{
+						solution[product] += probability;
+					}
+					else
+					{
+						solution[product] = probability;
+					}
+				}
+				foreach(Product p in solution.Keys)
+				{
+					solution[p] = solution[p] / 10;
+				}
+				// Tauscht Key und Values				
+			}
+			return new SortedDictionary<double, Product>(solution.ToDictionary(kvp => kvp.Value, kvp => kvp.Key));
 		}
 	}
 }

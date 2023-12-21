@@ -12,7 +12,7 @@ namespace KassenmanagementLibrary
 {
    
     [Serializable]
-    public class LineOfGoods : ILineOfGoods
+    public class LineOfGoods : ObserveableObject , ILineOfGoods
     {
 
 
@@ -49,7 +49,22 @@ namespace KassenmanagementLibrary
             }
             
         }
-        public List<Product> lineOfGoods { get; set; }
+
+        private List<Product> _lineOfGoods;
+
+        public List<Product> lineOfGoods
+        {
+            get => _lineOfGoods;
+            set
+            {
+                if(_lineOfGoods != value)
+                {
+                    _lineOfGoods = value;
+                    OnPropertyChanged(nameof(lineOfGoods));
+                    OnPropertyChanged(nameof(_lineOfGoods));
+                }
+            }
+        }
 
        
         // prüft ob atrikel im sortiment existiert anhand des namens
@@ -120,7 +135,9 @@ namespace KassenmanagementLibrary
         public void Safe()
         {
             string fileName = "LineOfGoods.xml";
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+			filePath = filePath.Substring(0, filePath.IndexOf("j-kassenscanner"));
+			filePath += "j-kassenscanner\\"+fileName;
 
             //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
 
@@ -145,13 +162,15 @@ namespace KassenmanagementLibrary
 
 
         //frage: geht es auch ohne static und als void??
-        public static LineOfGoods getFromXML()
+        public static LineOfGoods GetFromXML()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(LineOfGoods));
 
             string fileName = "LineOfGoods.xml";
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-            if (string.IsNullOrWhiteSpace(filePath))
+			string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+			filePath = filePath.Substring(0, filePath.IndexOf("j-kassenscanner"));
+			filePath += "j-kassenscanner\\" + fileName;
+			if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
             }
@@ -168,7 +187,7 @@ namespace KassenmanagementLibrary
         
 
         //erstellt sortimentobjekt
-        public static LineOfGoods getdummi(List<CLIPVector> vectorsForProduct1)
+        public static LineOfGoods GetDummi(List<CLIPVector>vectorsForProduct1)
         {
 
             //vectoren von Can bekommen
