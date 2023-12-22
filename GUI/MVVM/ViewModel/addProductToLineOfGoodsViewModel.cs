@@ -39,8 +39,12 @@ namespace GUI.MVVM.ViewModel
             AddCommand = new DelegateCommand((o) =>
             {
                 editLineOfGoodsService.AddProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, clipVectors));
+                ProductAdded?.Invoke(this, EventArgs.Empty);
             });
         }
+
+
+        public event EventHandler ProductAdded;
 
         public string Name { get; set; }
 
@@ -75,6 +79,15 @@ namespace GUI.MVVM.ViewModel
                     OnPropertyChanged(nameof(IsSecondRadioButtonSelected));
                 }
             }
+        }
+
+        //Update
+
+        public event EventHandler WindowClosed;
+
+        public void CloseWindow()
+        {
+            WindowClosed?.Invoke(this, EventArgs.Empty);
         }
 
         public List<CLIPVector> clipVectors { get; set; } = new List<CLIPVector>();

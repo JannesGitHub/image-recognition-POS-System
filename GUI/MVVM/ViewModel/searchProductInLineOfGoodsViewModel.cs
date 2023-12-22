@@ -4,6 +4,7 @@ using KassenmanagementLibrary;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace GUI.MVVM.ViewModel
 
         public searchProductInLineOfGoodsViewModel(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
-            LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
+            _editLineOfGoodsService = editLineOfGoodsService;
 
             DoFiltering();
 
@@ -27,21 +28,45 @@ namespace GUI.MVVM.ViewModel
             {
                 if (SelectedProduct != null)
                     editLineOfGoodsService.DeleteProduct(SelectedProduct);
-                LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
                 DoFiltering();
+
+                //Hier soll aktuelles Fenster geschlossen werden
+
             }, canExecute: (o) => SelectedProduct != null);
 
             EditCommand = new DelegateCommand(execute: (o) =>
             {
                 editLineOfGoodsService.toEditProduct = SelectedProduct;
                 windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+                DoFiltering();
+
+                //Hier soll aktuelles Fenster geschlossen werden
+                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+
             }, canExecute: (o) => SelectedProduct != null);
 
             AddCommand = new DelegateCommand(execute: (o) =>
             {
                 editLineOfGoodsService.toEditProduct = SelectedProduct;
-                windowManager.ShowWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
+
+                var test = viewModelLocator.addProductToLineOfGoodsViewModel;
+
+                test.ProductAdded += (o,e ) => DoFiltering();
+
+                Window window = windowManager.ShowWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
+
+                window.Closed += (o, e) =>
+                {
+                    test.ProductAdded -= (o, e) => DoFiltering();
+                };
+
+                //Hier soll aktuelles Fenster geschlossen werden
             });
+        }
+
+        private void Test_WindowClosed(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private Product selectedProduct;
@@ -60,6 +85,8 @@ namespace GUI.MVVM.ViewModel
         }
 
         private ObservableCollection<Product> lineOfGoods;
+
+        //ListView Filtering -> googeln!
 
         public ObservableCollection<Product> LineOfGoods
         {
@@ -106,6 +133,7 @@ namespace GUI.MVVM.ViewModel
 
         private void DoFiltering()
         {
+            LineOfGoods = new ObservableCollection<Product>(_editLineOfGoodsService.LineOfGoods.lineOfGoods);
             this.FilteredLineOfGoods.Clear();
             string? value = this.filter?.ToLower();
             foreach (Product item in LineOfGoods)
