@@ -40,6 +40,8 @@ namespace GUI.MVVM.ViewModel
             {
                 editLineOfGoodsService.AddProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, clipVectors));
                 ProductAdded?.Invoke(this, EventArgs.Empty);
+
+                windowManager.CloseWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
             });
         }
 
@@ -79,15 +81,6 @@ namespace GUI.MVVM.ViewModel
                     OnPropertyChanged(nameof(IsSecondRadioButtonSelected));
                 }
             }
-        }
-
-        //Update
-
-        public event EventHandler WindowClosed;
-
-        public void CloseWindow()
-        {
-            WindowClosed?.Invoke(this, EventArgs.Empty);
         }
 
         public List<CLIPVector> clipVectors { get; set; } = new List<CLIPVector>();

@@ -140,7 +140,7 @@ namespace GUI.MVVM.ViewModel
 
             this.addManuallyWindowCommand = new DelegateCommand((o) =>
             {
-                if (scanData != null)
+                if (_addManuallyService.scanData != null)
                 {
                     _windowManager.ShowWindow(viewModelLocator.addManuallyViewModel);
                 }

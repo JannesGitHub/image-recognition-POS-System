@@ -41,6 +41,8 @@ namespace GUI.MVVM.ViewModel
             ApplyCommand = new DelegateCommand((o) =>
             {
                 editLineOfGoodsService.EditProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, clipVectors));
+
+                windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
             });
         }
 

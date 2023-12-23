@@ -19,7 +19,7 @@ namespace GUI.MVVM.ViewModel
     {
         public IaddManuallyService _addManuallyService { get; set; }
 
-        public addManuallyViewModel(IaddManuallyService addManuallyService)
+        public addManuallyViewModel(IaddManuallyService addManuallyService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
             scanData = addManuallyService.scanData;
 
@@ -27,7 +27,9 @@ namespace GUI.MVVM.ViewModel
 
             this.AddCommand = new DelegateCommand((o) => { 
                     if(SelectedProduct.Value != null)
-                    addManuallyService.AddArticleManually(SelectedProduct.Value);});
+                    addManuallyService.AddArticleManually(SelectedProduct.Value);
+                    windowManager.CloseWindow(viewModelLocator.addManuallyViewModel);
+            });
         }
 
         private SortedDictionary<double, Product> scanData { get; set; } = new SortedDictionary<double, Product>();

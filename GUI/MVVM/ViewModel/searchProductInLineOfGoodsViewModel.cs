@@ -31,6 +31,7 @@ namespace GUI.MVVM.ViewModel
                 DoFiltering();
 
                 //Hier soll aktuelles Fenster geschlossen werden
+                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
 
             }, canExecute: (o) => SelectedProduct != null);
 
@@ -61,6 +62,13 @@ namespace GUI.MVVM.ViewModel
                 };
 
                 //Hier soll aktuelles Fenster geschlossen werden
+                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+            });
+
+            CloseCommand = new DelegateCommand(execute: (o) =>
+            {
+                //Hier soll aktuelles Fenster geschlossen werden
+                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
             });
         }
 
@@ -151,6 +159,8 @@ namespace GUI.MVVM.ViewModel
 
         public DelegateCommand EditCommand { get; set; }
 
-        public DelegateCommand AddCommand { get; set; } 
+        public DelegateCommand AddCommand { get; set; }
+
+        public DelegateCommand CloseCommand { get; set; }
     }
 }

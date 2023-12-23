@@ -41,7 +41,9 @@ namespace GUI.Services
             return null;
         }
 
-        public void CloseWindow(ViewModelBase viewModel)
+        
+
+        public void CloseWindow(ViewModelBase viewModel) //Soll auch ausgelöst werden wenn in Fensterleiste X gedrückt wird  
         {
             Type windowType = _windowMapper.GetWindowTypeForViewModel(viewModel.GetType());
             if(windowType != null)
