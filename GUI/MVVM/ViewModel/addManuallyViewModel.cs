@@ -25,10 +25,17 @@ namespace GUI.MVVM.ViewModel
 
             DoFiltering(); //Damit das Sortiment sofort angezeigt wird
 
-            this.AddCommand = new DelegateCommand((o) => { 
-                    if(SelectedProduct.Value != null)
+            this.AddCommand = new DelegateCommand((o) =>
+            {
+                if (SelectedProduct.Value != null)
                     addManuallyService.AddArticleManually(SelectedProduct.Value);
-                    windowManager.CloseWindow(viewModelLocator.addManuallyViewModel);
+                windowManager.CloseWindow(viewModelLocator.addManuallyViewModel);
+            });
+
+            CloseCommand = new DelegateCommand(execute: (o) =>
+            {
+                //Hier soll aktuelles Fenster geschlossen werden
+                windowManager.CloseWindow(viewModelLocator.addManuallyViewModel);
             });
         }
 
@@ -52,10 +59,11 @@ namespace GUI.MVVM.ViewModel
         private string filter = "";
 
         public string Filter
-        {get => filter;
+        {
+            get => filter;
             set
             {
-                if(value != filter)
+                if (value != filter)
                 {
                     filter = value;
                     this.OnPropertyChanged(nameof(Filter));
@@ -69,12 +77,13 @@ namespace GUI.MVVM.ViewModel
         {
             this.FilteredScanData.Clear();
             string? value = this.filter?.ToLower();
-            foreach(KeyValuePair<double, Product> item in scanData)
+            foreach (KeyValuePair<double, Product> item in scanData)
             {
-                if(String.IsNullOrEmpty(Filter) ||
+                if (String.IsNullOrEmpty(Filter) ||
                    item.Value.Name.ToLower().Contains(value) ||
-                   item.Value.Articlenumber.ToString().Contains(value)){
-                   this.FilteredScanData.Add(new KeyValuePair<double, Product>(item.Key, item.Value));
+                   item.Value.Articlenumber.ToString().Contains(value))
+                {
+                    this.FilteredScanData.Add(new KeyValuePair<double, Product>(item.Key, item.Value));
                 }
             }
         }
@@ -82,5 +91,7 @@ namespace GUI.MVVM.ViewModel
         public KeyValuePair<double, Product> SelectedProduct { get; set; }
 
         public DelegateCommand AddCommand { get; set; }
+
+        public DelegateCommand CloseCommand { get; set; }
     }
 }

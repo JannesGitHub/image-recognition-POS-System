@@ -40,20 +40,18 @@ namespace GUI.Services
 
         public void EditProduct(Product product)
         {
-            int indexToChange = LineOfGoods.lineOfGoods.IndexOf(toEditProduct);
+            int indexToChange = LineOfGoods.lineOfGoods.FindIndex(p => p.Articlenumber == product.Articlenumber);
 
-            if (indexToChange != -1)  // Überprüfe, ob toEditProduct in der Liste enthalten ist
-            {
-                LineOfGoods.lineOfGoods[indexToChange] = product;
-            }
-            else
-            {
-                MessageBox.Show("Nicht enthalten");
-            }
+            //Methode um überprüfen, dass Name und ID einzigartig ist
+
+            LineOfGoods.lineOfGoods[indexToChange] = product; //Wenn man Produkt zweimal editiert ohne zu verändern dann wird nicht mehr erkannt
         }
+
 
         public void AddProduct(Product product)
         {
+            //Methode um überprüfen, dass Name und ID einzigartig ist
+
             LineOfGoods.lineOfGoods.Add(product);
         }
     }

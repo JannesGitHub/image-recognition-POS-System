@@ -13,15 +13,26 @@ namespace GUI.MVVM.ViewModel
 {
     public class editProductInLineOfGoodsViewModel : ViewModelBase
     {
-        public editProductInLineOfGoodsViewModel(IWindowManager windowManager,ViewModelLocator viewModelLocator, IeditLineOfGoods editLineOfGoodsService)
+        public editProductInLineOfGoodsViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, IeditLineOfGoods editLineOfGoodsService)
         {
-            productToChange = editLineOfGoodsService.toEditProduct;
+            productToChange = editLineOfGoodsService.toEditProduct; //Holt sich nicht jedes mal neu, sondern nur einmal zu beginn
+
+            Name = productToChange.Name;
+
+            ArticleNumber = productToChange.Articlenumber;
+
+            Price = productToChange.Price;
+
+            if (productToChange.Quantityarticle)
+                IsSecondRadioButtonSelected = true;
+
+            clipVectors = productToChange.Allproductvectors;
 
             NewVectorsCommand = new DelegateCommand(async (o) =>
             {
                 List<Bitmap> bitmaps = new List<Bitmap>();
 
-                for (int i = 0; i < 50; i++) 
+                for (int i = 0; i < 50; i++)
                 {
                     await Task.Delay(30);
 
@@ -30,7 +41,7 @@ namespace GUI.MVVM.ViewModel
 
                 List<CLIPVector> vectors = new List<CLIPVector>();
 
-                foreach(Bitmap bitmap in bitmaps)
+                foreach (Bitmap bitmap in bitmaps)
                 {
                     vectors.Add(Detection.GetCLIPVector(bitmap));
                 }
@@ -42,11 +53,22 @@ namespace GUI.MVVM.ViewModel
             {
                 editLineOfGoodsService.EditProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, clipVectors));
 
+                ProductEdited?.Invoke(this, EventArgs.Empty);
+
+                windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+
+                windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+            });
+
+            CloseCommand = new DelegateCommand(execute: (o) =>
+            {
                 windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
             });
         }
 
-        public Product productToChange { get ; set; }   
+        public event EventHandler ProductEdited;
+
+        public Product productToChange { get; set; }
 
         public string Name { get; set; }
 
@@ -83,10 +105,12 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
-        public List<CLIPVector> clipVectors { get; set; } = new List<CLIPVector>(); 
+        public List<CLIPVector> clipVectors { get; set; } = new List<CLIPVector>();
 
         public DelegateCommand NewVectorsCommand { get; set; }
 
         public DelegateCommand ApplyCommand { get; set; }
+
+        public DelegateCommand CloseCommand { get; set; }
     }
 }

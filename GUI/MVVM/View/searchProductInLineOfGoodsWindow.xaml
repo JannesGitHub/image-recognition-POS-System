@@ -12,7 +12,7 @@
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding CloseCommand}" />
         </i:EventTrigger>
-    </i:Interaction.Triggers>
+    </i:Interaction.Triggers> 
     
     <Grid>
         <Grid.RowDefinitions>

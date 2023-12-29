@@ -39,10 +39,19 @@ namespace GUI.MVVM.ViewModel
             AddCommand = new DelegateCommand((o) =>
             {
                 editLineOfGoodsService.AddProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, clipVectors));
+
                 ProductAdded?.Invoke(this, EventArgs.Empty);
 
                 windowManager.CloseWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
+
+                windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
             });
+
+            CloseCommand = new DelegateCommand(execute: (o) =>
+            {
+                windowManager.CloseWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
+            });
+
         }
 
 
@@ -88,5 +97,7 @@ namespace GUI.MVVM.ViewModel
         public DelegateCommand NewVectorsCommand { get; set; }
 
         public DelegateCommand AddCommand { get; set; }
+
+        public DelegateCommand CloseCommand { get; set; }
     }
 }

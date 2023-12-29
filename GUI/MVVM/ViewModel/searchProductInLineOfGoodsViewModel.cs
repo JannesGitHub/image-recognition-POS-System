@@ -28,27 +28,32 @@ namespace GUI.MVVM.ViewModel
             {
                 if (SelectedProduct != null)
                     editLineOfGoodsService.DeleteProduct(SelectedProduct);
+
                 DoFiltering();
-
-                //Hier soll aktuelles Fenster geschlossen werden
-                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
-
             }, canExecute: (o) => SelectedProduct != null);
 
             EditCommand = new DelegateCommand(execute: (o) =>
             {
-                editLineOfGoodsService.toEditProduct = SelectedProduct;
-                windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
-                DoFiltering();
+               editLineOfGoodsService.toEditProduct = _editLineOfGoodsService.toEditProduct;
 
-                //Hier soll aktuelles Fenster geschlossen werden
-                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel); //wird korrekt übergeben
+
+                var test = viewModelLocator.editProductInLineOfGoodsViewModel;
+
+                test.ProductEdited += (o, e) => DoFiltering();
+
+                Window window = windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+
+                window.Closed += (o, e) =>
+                {
+                    test.ProductEdited -= (o, e) => DoFiltering();
+                };
 
             }, canExecute: (o) => SelectedProduct != null);
 
             AddCommand = new DelegateCommand(execute: (o) =>
             {
-                editLineOfGoodsService.toEditProduct = SelectedProduct;
+                editLineOfGoodsService.toEditProduct = _editLineOfGoodsService.toEditProduct;
 
                 var test = viewModelLocator.addProductToLineOfGoodsViewModel;
 
@@ -60,21 +65,15 @@ namespace GUI.MVVM.ViewModel
                 {
                     test.ProductAdded -= (o, e) => DoFiltering();
                 };
-
-                //Hier soll aktuelles Fenster geschlossen werden
+                
                 windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
             });
 
             CloseCommand = new DelegateCommand(execute: (o) =>
             {
-                //Hier soll aktuelles Fenster geschlossen werden
                 windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
             });
-        }
 
-        private void Test_WindowClosed(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private Product selectedProduct;
@@ -87,14 +86,13 @@ namespace GUI.MVVM.ViewModel
                 if (value != SelectedProduct)
                 {
                     selectedProduct = value;
-                    OnPropertyChanged(nameof(EditCommand));
+                    OnPropertyChanged(nameof(SelectedProduct));
+                    _editLineOfGoodsService.toEditProduct = SelectedProduct;
                 }
             }
         }
 
         private ObservableCollection<Product> lineOfGoods;
-
-        //ListView Filtering -> googeln!
 
         public ObservableCollection<Product> LineOfGoods
         {
