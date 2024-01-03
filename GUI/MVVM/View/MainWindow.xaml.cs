@@ -24,5 +24,24 @@ namespace GUI.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                // Abrufen des DataContext vom Fenster
+                var dataContext = (sender as Window)?.DataContext;
+
+                // Überprüfen, ob der DataContext vom erwarteten Typ ist (z.B. Ihr ViewModel-Typ)
+                if (dataContext is MainWindowViewModel viewModel)
+                {
+                    // Rufen Sie den ScanCommand auf
+                    viewModel.ScanCommand.Execute(null); // Übergabe von null oder anderen erforderlichen Parametern
+
+                    // Verhindern Sie, dass das Ereignis an andere Steuerelemente weitergeleitet wird
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }

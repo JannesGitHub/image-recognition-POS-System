@@ -17,6 +17,7 @@ using GUI.Core;
 using GUI.Services;
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Input;
 
 namespace GUI.MVVM.ViewModel
 {
@@ -29,6 +30,7 @@ namespace GUI.MVVM.ViewModel
         public IaddManuallyService _addManuallyService { get; set; }
 
         public IeditLineOfGoods _editLineOfGoodsService { get; set; }
+
 
         public MainWindowViewModel(IaddManuallyService addManuallyService,IeditLineOfGoods editLineOfFoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
@@ -125,7 +127,9 @@ namespace GUI.MVVM.ViewModel
                 _addManuallyService.scanData = testInput;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
+
                 
+
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>
@@ -212,6 +216,7 @@ namespace GUI.MVVM.ViewModel
                 }
             }
         }
+
 
         ////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////
 

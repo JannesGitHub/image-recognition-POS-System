@@ -6,18 +6,13 @@
         xmlns:local="clr-namespace:GUI.MVVM.ViewModel"
         xmlns:KassenmanagementLibrary="clr-namespace:KassenmanagementLibrary;assembly=KassenmanagementLibrary"
         mc:Ignorable="d"
+        PreviewKeyDown="MainWindow_PreviewKeyDown"
         Title="BarWho" Height="450" Width="800"
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         Background="Black"
         >
-    <Window.InputBindings>
-        <KeyBinding 
-            Key="Space" 
-            Command="{Binding ScanCommand}"/>
-        
-    </Window.InputBindings>
-    
+
     <Border 
         Background="#000020"
         CornerRadius="0,0,15,15">
