@@ -15,18 +15,19 @@ namespace GUI.MVVM.ViewModel
     {
         public editProductInLineOfGoodsViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, IeditLineOfGoods editLineOfGoodsService)
         {
-            productToChange = editLineOfGoodsService.toEditProduct; //Holt sich nicht jedes mal neu, sondern nur einmal zu beginn
 
-            Name = productToChange.Name;
+            var searchVM = viewModelLocator.SearchProductInLineOfGoodsViewModel;
 
-            ArticleNumber = productToChange.Articlenumber;
+            searchVM.ProductEditedEvent += (sender, args) => //wird beim ersten Mal nicht korrekt ausgeführt. Warum?
+            {
+                productToChange = args.EditedProduct;
 
-            Price = productToChange.Price;
-
-            if (productToChange.Quantityarticle)
-                IsSecondRadioButtonSelected = true;
-
-            clipVectors = productToChange.Allproductvectors;
+                Name = productToChange.Name;
+                ArticleNumber = productToChange.Articlenumber;
+                Price = productToChange.Price;
+                IsSecondRadioButtonSelected = productToChange.Quantityarticle;
+                clipVectors = productToChange.Allproductvectors;
+            };
 
             NewVectorsCommand = new DelegateCommand(async (o) =>
             {
@@ -65,6 +66,8 @@ namespace GUI.MVVM.ViewModel
                 windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
             });
         }
+
+
 
         public event EventHandler ProductEdited;
 
