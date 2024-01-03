@@ -127,9 +127,6 @@ namespace GUI.MVVM.ViewModel
                 _addManuallyService.scanData = testInput;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
-
-                
-
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>

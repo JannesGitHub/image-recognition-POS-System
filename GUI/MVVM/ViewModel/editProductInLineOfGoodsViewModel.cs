@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using DetectionLibrary;
+using System.Windows.Controls;
+using System.Windows;
+using System.Diagnostics;
 
 namespace GUI.MVVM.ViewModel
 {
@@ -31,23 +34,35 @@ namespace GUI.MVVM.ViewModel
 
             NewVectorsCommand = new DelegateCommand(async (o) =>
             {
+
+                clipVectors.Clear();
+
+                Stopwatch watch = new Stopwatch();
+
+                watch.Start();
+
                 List<Bitmap> bitmaps = new List<Bitmap>();
 
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 100; i++)
                 {
-                    await Task.Delay(30);
+                    await Task.Delay(20);
 
                     bitmaps.Add(editLineOfGoodsService.currentBitmap);
                 }
 
-                List<CLIPVector> vectors = new List<CLIPVector>();
+                List<Task> allTasks = new List<Task>(); //vielleicht noch nicht optimal aber kann ich erst richtig testen wenn mit Internet verbunden
 
                 foreach (Bitmap bitmap in bitmaps)
                 {
-                    vectors.Add(Detection.GetCLIPVector(bitmap));
+                    //allTasks.Add(Task.Run(() => clipVectors.Add(Detection.GetCLIPVector(bitmap))));
+                    allTasks.Add(Task.Run(() => clipVectors.Add(new CLIPVector()))); //kriege ich hier schon einen Zeitvorteil?
                 }
 
-                clipVectors = vectors;
+                await Task.WhenAll(allTasks);
+
+                watch.Stop();
+
+                MessageBox.Show($"{watch.ElapsedMilliseconds}");
             });
 
             ApplyCommand = new DelegateCommand((o) =>
@@ -66,8 +81,6 @@ namespace GUI.MVVM.ViewModel
                 windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
             });
         }
-
-
 
         public event EventHandler ProductEdited;
 
