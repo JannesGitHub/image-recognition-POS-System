@@ -41,14 +41,5 @@ namespace Camera
         {
             return currentBitmap;
         }
-
-        public void StopCapture() //??
-        {
-            if (videoSource != null && videoSource.IsRunning)
-            {
-                videoSource.SignalToStop();
-                videoSource.WaitForStop();
-            }
-        }
     }
 }

@@ -4,21 +4,65 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="PayWindow" Height="450" Width="800">
+        Title="PayWindow" Height="155" Width="300"
+        ResizeMode="NoResize">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding CloseCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers> 
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <!-- Letzte Zeile nimmt den verbleibenden Platz -->
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Gesamtpreis:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="33" FontWeight="Bold" Margin="190,0,0,0"/>
+        <!--Gesamtpreis-->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
 
-        <TextBlock Name="PriceToPay" Text="{Binding MainWindow.priceTextBlock}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="33" FontWeight="Bold" Margin="190,0,0,0"/>
+            <TextBlock Grid.Column="0" Text="Total Price:" FontSize="20"/>
+            <TextBlock Grid.Column="1" Text="{Binding TotalPrice}" FontSize="20"/>
+            <TextBlock Grid.Column="2" Text="€" FontSize="20"/>
+        </Grid>
+        
+        <!--Bezahlt-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
 
+            <TextBlock Grid.Column="0" Text="Paid Amount:" FontSize="20"/>
+            <TextBox Grid.Column="1" Text="{Binding PaidAmount}" FontSize="20"/>
+            <TextBlock Grid.Column="2" Text="€" FontSize="20"/>
+        </Grid>
+        <!--Rückgeld-->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Change:" FontSize="20"/>
+            <TextBlock Grid.Column="1" Text="{Binding Change}" FontSize="20"/>
+            <TextBlock Grid.Column="2" Text="€" FontSize="20"/>
+        </Grid>
+
+        <!--Button, der den verbleibenden Platz einnimmt-->
+        <Button Grid.Row="3" Content="Kunden abschließen" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
     </Grid>
 </Window>

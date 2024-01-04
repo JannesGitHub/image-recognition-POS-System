@@ -28,5 +28,16 @@ namespace DetectionLibrary
 		{
 			return list.Min();
 		}
+
+		public static bool IsInDict(Dictionary<Product, double> dict, Product prod)
+		{
+			bool solution = false;
+			foreach (Product p in dict.Keys)
+			{
+				if (p.Name == prod.Name)
+					solution = true;
+			}
+			return solution;
+		}
 	}
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace KassenmanagementLibrary
 {
     [Serializable]
-    public class Product
+    public class Product : IComparable<Product>
     {
         public string Name { get; set; }
 
@@ -38,6 +38,13 @@ namespace KassenmanagementLibrary
             this.Quantityarticle = quantityarticle;
             this.Allproductvectors = allproductvectors;
         }
-        
-    }
+
+		public int CompareTo(Product? other)
+		{
+			if (this.Name.CompareTo(other.Name) < 0 ) return -1;
+            if (this.Name.CompareTo(other.Name) == 0 ) return 0;
+			if (this.Name.CompareTo(other.Name) > 0 ) return 1;
+            return 0;
+        }
+	}
 }

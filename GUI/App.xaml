@@ -14,10 +14,6 @@
             <view:addManuallyWindow/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type TypeName=viewModel:editLineOfGoodsViewModel}">
-            <view:editLineOfGoodsWindow/>
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type TypeName=viewModel:editProductInLineOfGoodsViewModel}">
             <view:editProductInLineOfGoodsWindow/>
         </DataTemplate>
@@ -29,6 +25,10 @@
         <DataTemplate DataType="{x:Type TypeName=viewModel:searchProductInLineOfGoodsViewModel}">
             <view:searchProductInLineOfGoodsWindow/>
         </DataTemplate>
-        
+
+        <DataTemplate DataType="{x:Type TypeName=viewModel:PayWindowViewModel}">
+            <view:PayWindow/>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>

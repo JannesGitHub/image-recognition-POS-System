@@ -3,24 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="editProductInLineOfGoodsWindow" Height="350" Width="450">
+        Title="editProductInLineOfGoodsWindow" Height="400" Width="450">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding CloseCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <StackPanel>
-            <!--Name-->
-            <TextBox /> 
-            <!--ID-->
-            <TextBox/>
-            <!--Price-->
-            <TextBox/>
-            <TextBlock Text=""/>
+            
+            <Label Content="Name:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+            <TextBox  Text="{Binding Name}" />
+            <Label Content="Article Number:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+            <TextBox Text="{Binding ArticleNumber}"/>
+            <Label Content="Price:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+            <TextBox Text="{Binding Price}"/>
+            
             <!--Quantity or Weight-->
+            
             <TextBlock Text="Product is defined per"/>
+            
             <RadioButton Content="weight." IsChecked="{Binding IsFirstRadioButtonSelected, Mode=TwoWay}" Margin="0,0,0,10"/>
             <RadioButton Content="quantity." IsChecked="{Binding IsSecondRadioButtonSelected, Mode=TwoWay}"/>
-            <TextBlock Text=""/>
-            <Button/>
+
+            <Button Command="{Binding NewVectorsCommand}" Content="Press ( wait 2 seconds) for new vectors for your product." Height="50" Margin="10"/>
+            
+            <Button Command="{Binding ApplyCommand}" Content="Apply" Height="50" Margin="10"/>
 
 
 

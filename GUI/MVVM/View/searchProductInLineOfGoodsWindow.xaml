@@ -3,9 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
         Title="Search Product" Height="450" Width="300">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding CloseCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers> 
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="7*"/>
@@ -36,9 +44,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
+                
             </Grid.ColumnDefinitions>
             <Button Content = "Delete" Command="{Binding DeleteCommand}" Grid.Column="0"/>
             <Button Content = "Edit" Command="{Binding EditCommand}" Grid.Column="1"/>
+            <Button Content = "Add" Command="{Binding AddCommand}" Grid.Column="2"/>
         </Grid>
         
     </Grid>

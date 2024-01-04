@@ -5,19 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI.MVVM.ViewModel"
         xmlns:KassenmanagementLibrary="clr-namespace:KassenmanagementLibrary;assembly=KassenmanagementLibrary"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
+        PreviewKeyDown="MainWindow_PreviewKeyDown"
         Title="BarWho" Height="450" Width="800"
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         Background="Black"
         >
-    <Window.InputBindings>
-        <KeyBinding 
-            Key="Space" 
-            Command="{Binding ScanCommand}"/>
-        
-    </Window.InputBindings>
-    
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding CloseCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Border 
         Background="#000020"
         CornerRadius="0,0,15,15">
@@ -51,7 +53,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock 
                     Text="{Binding ScanStatus}" 
-                    x:Name="statusTextBox"/>
+                    x:Name="statusTextBox"
+                    Foreground="White"
+                    />
             
                 <Border 
                     Margin="5,0,0,0"
@@ -193,10 +197,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                
             </Grid.ColumnDefinitions>
 
-                
             <Button 
                 Margin="10,10,25,10" 
                 Background="Red" 

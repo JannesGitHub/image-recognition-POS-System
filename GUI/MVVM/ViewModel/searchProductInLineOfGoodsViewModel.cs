@@ -4,6 +4,7 @@ using KassenmanagementLibrary;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -19,23 +20,61 @@ namespace GUI.MVVM.ViewModel
 
         public searchProductInLineOfGoodsViewModel(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
-            LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
+            _editLineOfGoodsService = editLineOfGoodsService;
 
             DoFiltering();
 
-            DeleteCommand = new DelegateCommand((o) =>
+            DeleteCommand = new DelegateCommand( execute: (o) =>
             {
                 if (SelectedProduct != null)
                     editLineOfGoodsService.DeleteProduct(SelectedProduct);
-                LineOfGoods = new ObservableCollection<Product>(editLineOfGoodsService.LineOfGoods.lineOfGoods);
+
                 DoFiltering();
-            });
+            }, canExecute: (o) => SelectedProduct != null);
 
             EditCommand = new DelegateCommand(execute: (o) =>
             {
-                editLineOfGoodsService.toEditProduct = SelectedProduct;
-                windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+               editLineOfGoodsService.toEditProduct = _editLineOfGoodsService.toEditProduct;
+
+                ProductEditedEvent?.Invoke(this, EventArgs.Empty);
+
+                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel); 
+
+                var test = viewModelLocator.editProductInLineOfGoodsViewModel;
+
+                test.ProductEdited += (o, e) => DoFiltering();
+
+                Window window = windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+
+                window.Closed += (o, e) =>
+                {
+                    test.ProductEdited -= (o, e) => DoFiltering();
+                };
             }, canExecute: (o) => SelectedProduct != null);
+
+            AddCommand = new DelegateCommand(execute: (o) =>
+            {
+                editLineOfGoodsService.toEditProduct = _editLineOfGoodsService.toEditProduct;
+
+                var test = viewModelLocator.addProductToLineOfGoodsViewModel;
+
+                test.ProductAdded += (o,e ) => DoFiltering();
+
+                Window window = windowManager.ShowWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
+
+                window.Closed += (o, e) =>
+                {
+                    test.ProductAdded -= (o, e) => DoFiltering();
+                };
+                
+                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+            });
+
+            CloseCommand = new DelegateCommand(execute: (o) =>
+            {
+                windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+            });
+
         }
 
         private Product selectedProduct;
@@ -48,7 +87,8 @@ namespace GUI.MVVM.ViewModel
                 if (value != SelectedProduct)
                 {
                     selectedProduct = value;
-                    OnPropertyChanged(nameof(EditCommand));
+                    OnPropertyChanged(nameof(SelectedProduct));
+                    _editLineOfGoodsService.toEditProduct = SelectedProduct;
                 }
             }
         }
@@ -100,6 +140,7 @@ namespace GUI.MVVM.ViewModel
 
         private void DoFiltering()
         {
+            LineOfGoods = new ObservableCollection<Product>(_editLineOfGoodsService.LineOfGoods.lineOfGoods);
             this.FilteredLineOfGoods.Clear();
             string? value = this.filter?.ToLower();
             foreach (Product item in LineOfGoods)
@@ -113,8 +154,16 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
+        //Um neue ausgewählte produkte direkt anzuzeigen
+
+        public event EventHandler ProductEditedEvent;
+
         public DelegateCommand DeleteCommand { get; set; }
 
         public DelegateCommand EditCommand { get; set; }
+
+        public DelegateCommand AddCommand { get; set; }
+
+        public DelegateCommand CloseCommand { get; set; }
     }
 }

@@ -15,6 +15,9 @@ using System.Windows.Threading;
 using System.Printing;
 using GUI.Core;
 using GUI.Services;
+using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Input;
 
 namespace GUI.MVVM.ViewModel
 {
@@ -27,6 +30,7 @@ namespace GUI.MVVM.ViewModel
         public IaddManuallyService _addManuallyService { get; set; }
 
         public IeditLineOfGoods _editLineOfGoodsService { get; set; }
+
 
         public MainWindowViewModel(IaddManuallyService addManuallyService,IeditLineOfGoods editLineOfFoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
@@ -50,7 +54,7 @@ namespace GUI.MVVM.ViewModel
 
             _editLineOfGoodsService.LineOfGoods = lineOfGoodsObject; 
 
-            //
+            //Detection stuff
 
             detectionObject = new Detection();
 
@@ -85,11 +89,12 @@ namespace GUI.MVVM.ViewModel
                 if (SelectedArticle != null)
                     shoppingBasketObject.UpQuantity(SelectedArticle); } );
 
-            
+                                                    
             this.ScanCommand = new DelegateCommand(async (o) => 
             {
+                /*
                 ScanStatus = "Scanning process is running.";
-                for (int i = 0; i < 5; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
+                for (int i = 0; i < 15; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
                 {
                     await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
 
@@ -109,7 +114,7 @@ namespace GUI.MVVM.ViewModel
                     shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
                 }
                 ScanStatus = "Press Space to scan your product!";
-                /*
+                */
 
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
@@ -122,23 +127,34 @@ namespace GUI.MVVM.ViewModel
                 _addManuallyService.scanData = testInput;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
-                */
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
-                
+                _windowManager.ShowWindow(viewModelLocator.PayWindowViewModel);
             });
 
             this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
             {
-                _windowManager.ShowWindow(viewModelLocator.editLineOfGoodsViewModel);
+                _windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
             });
 
             this.addManuallyWindowCommand = new DelegateCommand((o) =>
             {
-                _windowManager.ShowWindow(viewModelLocator.addManuallyViewModel);
+                if (_addManuallyService.scanData != null)
+                {
+                    _windowManager.ShowWindow(viewModelLocator.addManuallyViewModel);
+                }
+                else
+                {
+                    MessageBox.Show("Please try to scan first!");
+                }
             });
+
+
+            this.CloseCommand = new DelegateCommand((o) => {_editLineOfGoodsService.LineOfGoods.Safe();
+                                                            Environment.Exit(0);
+                                                            });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
         
@@ -203,6 +219,7 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
+
         ////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////
 
         public virtual void OnNewFrame(object sender, EventArgs e)
@@ -212,6 +229,8 @@ namespace GUI.MVVM.ViewModel
                 Bitmap bitmap = camera.GetCurrentBitmap();
 
                 currentBitmap = bitmap; //speichern in lokaler Variable
+
+                _editLineOfGoodsService.currentBitmap = currentBitmap; //weitergeben an Service für add und edit LineOfGoods
 
                 //CHATGPT -> unsicher ob es funktioniert
 
@@ -276,5 +295,7 @@ namespace GUI.MVVM.ViewModel
         public DelegateCommand addManuallyWindowCommand { get; set; }
 
         public DelegateCommand ScanCommand { get; set; }
+
+        public DelegateCommand CloseCommand { get; set; }
     }
 }

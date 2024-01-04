@@ -11,33 +11,46 @@ namespace GUI.Services
 
     public interface IWindowManager
     {
-        void ShowWindow(ViewModelBase viewModel);
-        void CloseWindow();
+        Window ShowWindow(ViewModelBase viewModel);
+        void CloseWindow(ViewModelBase viewModel);
     }
     public class WindowManager : IWindowManager
     {
         private WindowMapper _windowMapper;
+
+        public Dictionary<Type, Window> Windows { get; set; } = new Dictionary<Type, Window>();   
 
         public WindowManager(WindowMapper windowMapper)
         {
             _windowMapper = windowMapper;
         }  
 
-        public void ShowWindow(ViewModelBase viewModel)
+        public Window ShowWindow(ViewModelBase viewModel)
         {
-            var windowType = _windowMapper.GetWindowTypeForViewModel(viewModel.GetType());
+            Type windowType = _windowMapper.GetWindowTypeForViewModel(viewModel.GetType());
             if(windowType != null)
             {
                 var window = Activator.CreateInstance(windowType) as Window;
+                Windows.Add(windowType,window);
                 window.DataContext = viewModel;
                 window.Show();
-                window.Closed += (sender, args) => CloseWindow();
+
+                return window;
             }
+
+            return null;
         }
 
-        public void CloseWindow()
+        
+
+        public void CloseWindow(ViewModelBase viewModel) //Soll auch ausgelöst werden wenn in Fensterleiste X gedrückt wird  
         {
-            //MessageBox.Show("Test!");
+            Type windowType = _windowMapper.GetWindowTypeForViewModel(viewModel.GetType());
+            if(windowType != null)
+            {
+                Windows[windowType].Close();
+                Windows.Remove(windowType);
+            }
         }
     }
 }
