@@ -56,8 +56,6 @@ namespace GUI.MVVM.ViewModel
 
             //Detection stuff
 
-            detectionObject = new Detection();
-
             ScanStatus = "Press Space to scan your product!";
 
             ////////////////////////////////////////////CAMERA/////////////////////////////////////////////
@@ -92,30 +90,29 @@ namespace GUI.MVVM.ViewModel
                                                     
             this.ScanCommand = new DelegateCommand(async (o) => 
             {
-                /*
+                List<Bitmap> bitmapsToScan = new List<Bitmap>();
                 ScanStatus = "Scanning process is running.";
                 for (int i = 0; i < 15; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
                 {
-                    await Task.Delay(500); //Warten hat also Kamerabild also keinen Effekt
-
-                    (SortedDictionary<double, Product>, Product?) input = detectionObject.getDetectionOutput(lineOfGoodsObject, currentBitmap);
-
-                    scanData = input.Item1;
-
-                    _addManuallyService.scanData = this.scanData;
-
-                    scannedProduct = input.Item2;
-
-                    if (scannedProduct != null)
-                        shoppingBasketObject.AddArticle(scannedProduct);
-
-
+                    await Task.Delay(50); //Warten hat also Kamerabild also keinen Effekt
+                    bitmapsToScan.Add(currentBitmap);
                     //nur für Anzeige
-                    shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
+                    //shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
                 }
-                ScanStatus = "Press Space to scan your product!";
-                */
+				(SortedDictionary<double, Product>, Product?) input = Detection.getDetectionOutput(_editLineOfGoodsService.LineOfGoods, bitmapsToScan);
 
+				scanData = input.Item1;
+
+				_addManuallyService.scanData = this.scanData;
+
+				scannedProduct = input.Item2;
+
+				if (scannedProduct != null)
+					shoppingBasketObject.AddArticle(scannedProduct);
+
+				ScanStatus = "Press Space to scan your product!";
+                
+                /*
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
                 testInput.Add(0.5, new Product("Banane",123,1,true, null));
@@ -127,6 +124,7 @@ namespace GUI.MVVM.ViewModel
                 _addManuallyService.scanData = testInput;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
+                */
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>
@@ -176,9 +174,6 @@ namespace GUI.MVVM.ViewModel
             }
         }
         public LineOfGoods lineOfGoodsObject { get; set; }
-
-        //Detection Objects
-        private Detection detectionObject { get; set; }
 
         public Product scannedProduct { get; set; }
 
