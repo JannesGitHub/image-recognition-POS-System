@@ -35,6 +35,7 @@ namespace GUI
             services.AddSingleton<IWindowManager, WindowManager>();
             services.AddSingleton<IaddManuallyService, addManuallyService>();
             services.AddSingleton<IeditLineOfGoods, editLineOfGoodsService>();
+            services.AddSingleton<IPayService, PayService>();
 
             _serviceProvider = services.BuildServiceProvider();
 

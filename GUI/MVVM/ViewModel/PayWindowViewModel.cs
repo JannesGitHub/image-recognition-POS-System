@@ -10,22 +10,54 @@ namespace GUI.MVVM.ViewModel
 {
     public class PayWindowViewModel : ViewModelBase
     {
-        public PayWindowViewModel(ViewModelLocator viewModelLocator, IWindowManager windowManager)     
+        public PayWindowViewModel(IPayService payservice,ViewModelLocator viewModelLocator, IWindowManager windowManager)     
         {
+            var mainVM = viewModelLocator.MainWindowViewModel;
+
+            mainVM.PayEvent += (sender, args) => { TotalPrice = payservice.TotalPrice;
+                PaidAmount = 0.1;
+            };
+            
+            //gleiches Problem wie bei editProdcutLineOfGoods
+
+            TotalPrice = payservice.TotalPrice;
+
+            PaidAmount = 0.1; //damit man Preis ändern kann
 
 
+            CashInCommand = new DelegateCommand((o) =>
+            {
+                mainVM.shoppingBasketObject.Clear();
+                windowManager.CloseWindow(viewModelLocator.PayWindowViewModel);
+            });
 
-            CashInCommand = new DelegateCommand((o) => windowManager.CloseWindow(viewModelLocator.PayWindowViewModel));
             CloseCommand = new DelegateCommand((o) => windowManager.CloseWindow(viewModelLocator.PayWindowViewModel));
         }
 
         public double TotalPrice { get; set; }
 
-        public double PaidAmount { get; set; }  
+        private double _paidAmount;
+        public double PaidAmount
+        {
+            get => _paidAmount;
+            set
+            {
+                if (_paidAmount != value)
+                {
+                    _paidAmount = value;
+                    OnPropertyChanged(nameof(PaidAmount)); 
+                    CalculateChange(); 
+                }
+            }
+        }
 
+        private void CalculateChange()
+        {
+            Change = Math.Round(PaidAmount - TotalPrice,2);
+            OnPropertyChanged(nameof(Change)); // Benachrichtigen Sie über die Änderung
+        }
         public double Change { get; set; }
 
-        //Service für Übertragung von Gesamtpreis
 
         ////////////////////////////////////////COMMANDS////////////////////////////////////////
 

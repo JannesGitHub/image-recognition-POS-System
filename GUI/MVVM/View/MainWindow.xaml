@@ -23,56 +23,56 @@
     <Border 
         Background="#000020"
         CornerRadius="0,0,15,15">
-        
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition 
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition 
                 Height="160*"/>
-           
-            <RowDefinition 
+
+                <RowDefinition 
                 Height="60*"/>
-            
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        
-        
-        <Grid 
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+
+            <Grid 
             Grid.Row="0" 
             Grid.Column="0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition 
                         Height="39*"/>
-                    
+
                     <RowDefinition 
                         Height="277*"/>
-                    
+
                 </Grid.RowDefinitions>
                 <TextBlock 
                     Text="{Binding ScanStatus}" 
                     x:Name="statusTextBox"
                     Foreground="White"
                     />
-            
+
                 <Border 
                     Margin="5,0,0,0"
                     Grid.Row="1" 
                     CornerRadius="10" 
                     BorderThickness="5" 
                     BorderBrush="#0000AF">
-                    
+
                     <Image 
                         x:Name="anzeigeBild" 
                         Stretch="UniformToFill" 
                         Source="{Binding CurrentSource}"/>
-                    
+
                 </Border>
             </Grid>
 
-        <!--Warenkorb-->
+            <!--Warenkorb-->
             <Grid 
             Grid.Row="0" 
             Grid.Column="1">
@@ -93,7 +93,7 @@
                     Width="30" Height="30" 
                     HorizontalAlignment="Right"/>
 
-                <ListView 
+                    <ListView 
                     ItemsSource="{Binding shoppingBasketObject._ShoppingBasket}" 
                     SelectedItem="{Binding SelectedArticle}" 
                     Grid.Row="1" 
@@ -101,30 +101,30 @@
                     BorderThickness="1"
                     BorderBrush="BlueViolet" Margin="0,0,0,0"
                     >
-                    
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn 
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn 
                                 DisplayMemberBinding="{Binding Quantity}" 
                                 Header="X" Width="50"
                                 />
-                            
-                            <GridViewColumn 
+
+                                <GridViewColumn 
                                 DisplayMemberBinding="{Binding Name}" 
                                 Header="Name" Width="200"/>
-                            
-                            <GridViewColumn 
+
+                                <GridViewColumn 
                                 DisplayMemberBinding="{Binding TotalPrice}" 
                                 Header="Preis" Width="100"/>
-                            
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+
             </Grid>
 
-        </Grid>
-
-        <!--Sonstige Funktionen-->
+            <!--Sonstige Funktionen-->
             <Grid Grid.Row="1" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -140,7 +140,7 @@
                     Name="addManuallyButton"
                     Grid.Column="0"
                     FontWeight="Heavy">
-                    
+
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="#8B8BE8" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
@@ -189,17 +189,17 @@
 
             <!--Warenkorb bearbeiten und Preis-->
 
-        <Grid 
+            <Grid 
             Grid.Row="1" 
             Grid.Column="1">
-            
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
 
-            <Button 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button 
                 Margin="10,10,25,10" 
                 Background="Red" 
                 FontSize="50" 
@@ -208,8 +208,8 @@
                 Name="minusButton" 
                 Grid.Column="1"
                 />
-            
-            <Button 
+
+                <Button 
                 Margin="10, 10, 25, 10" 
                 Background="Green" 
                 FontSize="50" 
@@ -217,19 +217,55 @@
                 Command="{Binding upQuantityCommand}" 
                 Name="plusButton" 
                 Grid.Column="2"/>
-            
-            <TextBlock 
+
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="29*"/>
+                        <RowDefinition Height="89*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="93*"/>
+                        <ColumnDefinition Width="40*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                      Text="Total Price:"
+                      Grid.Column="0"
+                      Grid.Row="0"
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Center" 
+                      FontSize="13" 
+                      FontWeight="Bold"
+                      Foreground="White"
+                    /> 
+
+                    <TextBlock 
                 Name="priceTextBlock" 
                 Text="{Binding shoppingBasketObject.SumPrice}" 
-                Grid.Column="0" 
+                Grid.Column="0"
+                Grid.Row="1"
                 VerticalAlignment="Center" 
                 HorizontalAlignment="Center" 
                 FontSize="33" 
                 FontWeight="Bold"
                 Foreground="White"
                 />
+
+                <TextBlock
+                      Text="€"
+                      Grid.Column="1"
+                      Grid.Row="1"
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Center" 
+                      FontSize="33" 
+                      FontWeight="Bold"
+                      Foreground="White"
+              />
+
+                </Grid>
+
+            </Grid>
         </Grid>
-    </Grid>
     </Border>
 </Window>
 

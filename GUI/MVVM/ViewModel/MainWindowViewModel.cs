@@ -32,7 +32,7 @@ namespace GUI.MVVM.ViewModel
         public IeditLineOfGoods _editLineOfGoodsService { get; set; }
 
 
-        public MainWindowViewModel(IaddManuallyService addManuallyService,IeditLineOfGoods editLineOfFoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
+        public MainWindowViewModel(IaddManuallyService addManuallyService, IeditLineOfGoods editLineOfFoodsService, IPayService payService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
 
             //////////////////////////////////////////INITIALIZING/////////////////////////////////////////
@@ -115,11 +115,11 @@ namespace GUI.MVVM.ViewModel
                 /*
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
-                testInput.Add(0.5, new Product("Banane",123,1,true, null));
+                testInput.Add(0.5, new Product("Banane",123,1.2,true, null));
 
-                testInput.Add(0.2, new Product("Apfel", 234, 1, true, null));
+                testInput.Add(0.2, new Product("Apfel", 234, 2.2, true, null));
 
-                testInput.Add(0.7, new Product("Khaki", 345, 1, true, null));
+                testInput.Add(0.7, new Product("Khaki", 345, 3.4, true, null));
 
                 _addManuallyService.scanData = testInput;
 
@@ -129,6 +129,8 @@ namespace GUI.MVVM.ViewModel
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
+                payService.TotalPrice = shoppingBasketObject.SumPrice;
+                PayEvent?.Invoke(this, EventArgs.Empty);
                 _windowManager.ShowWindow(viewModelLocator.PayWindowViewModel);
             });
 
@@ -151,8 +153,7 @@ namespace GUI.MVVM.ViewModel
 
 
             this.CloseCommand = new DelegateCommand((o) => {_editLineOfGoodsService.LineOfGoods.Safe();
-                                                            Environment.Exit(0);
-                                                            });
+                                                            Environment.Exit(0); });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
         
@@ -271,7 +272,7 @@ namespace GUI.MVVM.ViewModel
         }
 
 
-        ////////////////////////////////////////////Commands//////////////////////////////////////////////////////
+        ////////////////////////////////////////////COMMANDS//////////////////////////////////////////////////////
 
         public DelegateCommand ClearCommand { get; set; }
 
@@ -292,5 +293,9 @@ namespace GUI.MVVM.ViewModel
         public DelegateCommand ScanCommand { get; set; }
 
         public DelegateCommand CloseCommand { get; set; }
+
+        ////////////////////////////////////////////EVENTS//////////////////////////////////////////////////////
+
+        public event EventHandler PayEvent;
     }
 }
