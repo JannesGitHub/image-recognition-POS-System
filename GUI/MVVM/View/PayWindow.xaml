@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:GUI"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="PayWindow" Height="450" Width="800">
+        Title="PayWindow" Height="150" Width="300"
+        ResizeMode="NoResize">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -15,18 +16,14 @@
     </i:Interaction.Triggers> 
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <TextBlock Text="Gesamtpreis:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="33" FontWeight="Bold" Margin="190,0,0,0"/>
-
-        <TextBlock Name="PriceToPay" Text="{Binding MainWindow.priceTextBlock}" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="33" FontWeight="Bold" Margin="190,0,0,0"/>
-
+        <StackPanel>
+            <!--Gesamtpreis-->
+            <TextBlock Height="30"/> 
+            <!--Bezahlt--> 
+            <TextBox Height="30"/>
+            <!--Rückgeld-->
+            <TextBlock Height="30"/>
+            <Button Content="Kunden abschießen" Height="30"/>
+        </StackPanel>
     </Grid>
 </Window>

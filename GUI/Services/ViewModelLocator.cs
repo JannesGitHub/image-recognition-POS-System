@@ -27,5 +27,7 @@ namespace GUI.Services
 
         public searchProductInLineOfGoodsViewModel SearchProductInLineOfGoodsViewModel => _provider.GetRequiredService<searchProductInLineOfGoodsViewModel>();
 
+        public PayWindowViewModel PayWindowViewModel => _provider.GetRequiredService<PayWindowViewModel>();
+
     }
 }

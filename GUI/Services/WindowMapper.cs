@@ -20,6 +20,7 @@ namespace GUI.Services
             RegisterMapping<editProductInLineOfGoodsViewModel, editProductInLineOfGoodsWindow>();
             RegisterMapping<addProductToLineOfGoodsViewModel, addProductToLineOfGoodsWindow>();
             RegisterMapping<searchProductInLineOfGoodsViewModel, searchProductInLineOfGoodsWindow>();
+            RegisterMapping<PayWindowViewModel, PayWindow>();
         }
 
         public void RegisterMapping<TViewModel, TWindow>() where TViewModel : ViewModelBase where TWindow : Window

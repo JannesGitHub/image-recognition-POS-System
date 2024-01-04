@@ -131,7 +131,7 @@ namespace GUI.MVVM.ViewModel
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
-                
+                _windowManager.ShowWindow(viewModelLocator.PayWindowViewModel);
             });
 
             this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
@@ -149,6 +149,11 @@ namespace GUI.MVVM.ViewModel
                 {
                     MessageBox.Show("Please try to scan first!");
                 }
+            });
+
+
+            this.CloseCommand = new DelegateCommand((o) => { camera.NewFrame -= OnNewFrame;
+                                                             Application.Current.Shutdown();
             });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
@@ -290,5 +295,7 @@ namespace GUI.MVVM.ViewModel
         public DelegateCommand addManuallyWindowCommand { get; set; }
 
         public DelegateCommand ScanCommand { get; set; }
+
+        public DelegateCommand CloseCommand { get; set; }
     }
 }
