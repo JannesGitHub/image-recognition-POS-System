@@ -25,7 +25,11 @@ namespace GUI.MVVM.ViewModel
             PaidAmount = 0.1; //damit man Preis ändern kann
 
 
-            CashInCommand = new DelegateCommand((o) => windowManager.CloseWindow(viewModelLocator.PayWindowViewModel));
+            CashInCommand = new DelegateCommand((o) =>
+            {
+                mainVM.shoppingBasketObject.Clear();
+                windowManager.CloseWindow(viewModelLocator.PayWindowViewModel);
+            });
 
             CloseCommand = new DelegateCommand((o) => windowManager.CloseWindow(viewModelLocator.PayWindowViewModel));
         }
