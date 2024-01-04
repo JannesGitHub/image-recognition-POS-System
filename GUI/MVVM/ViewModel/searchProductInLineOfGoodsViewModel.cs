@@ -36,7 +36,7 @@ namespace GUI.MVVM.ViewModel
             {
                editLineOfGoodsService.toEditProduct = _editLineOfGoodsService.toEditProduct;
 
-                ProductEditedEvent?.Invoke(this, new ProductEditedEventArgs { EditedProduct = _editLineOfGoodsService.toEditProduct }); //Hier wird richtig weitergegeben
+                ProductEditedEvent?.Invoke(this, EventArgs.Empty);
 
                 windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel); 
 
@@ -50,9 +50,6 @@ namespace GUI.MVVM.ViewModel
                 {
                     test.ProductEdited -= (o, e) => DoFiltering();
                 };
-
-               
-
             }, canExecute: (o) => SelectedProduct != null);
 
             AddCommand = new DelegateCommand(execute: (o) =>
@@ -159,12 +156,7 @@ namespace GUI.MVVM.ViewModel
 
         //Um neue ausgewählte produkte direkt anzuzeigen
 
-        public event EventHandler<ProductEditedEventArgs> ProductEditedEvent;
-
-        public class ProductEditedEventArgs : EventArgs
-        {
-            public Product EditedProduct { get; set; }
-        }
+        public event EventHandler ProductEditedEvent;
 
         public DelegateCommand DeleteCommand { get; set; }
 

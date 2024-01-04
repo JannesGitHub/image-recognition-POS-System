@@ -21,20 +21,12 @@ namespace GUI.MVVM.ViewModel
 
             var searchVM = viewModelLocator.SearchProductInLineOfGoodsViewModel;
 
-            searchVM.ProductEditedEvent += (sender, args) => //wird beim ersten Mal nicht korrekt ausgeführt. Warum?
-            {
-                productToChange = args.EditedProduct;
+            searchVM.ProductEditedEvent += (sender, args) => { TransferSelectedProduct(editLineOfGoodsService.toEditProduct); };
 
-                Name = productToChange.Name;
-                ArticleNumber = productToChange.Articlenumber;
-                Price = productToChange.Price;
-                IsSecondRadioButtonSelected = productToChange.Quantityarticle;
-                clipVectors = productToChange.Allproductvectors;
-            };
+            TransferSelectedProduct(editLineOfGoodsService.toEditProduct); //unschön aber muss beim ersten Mal noch manuell gecallt werden, weil sich Eventhandler erst nur registriert
 
             NewVectorsCommand = new DelegateCommand(async (o) =>
             {
-
                 clipVectors.Clear();
 
                 Stopwatch watch = new Stopwatch();
@@ -82,6 +74,8 @@ namespace GUI.MVVM.ViewModel
             });
         }
 
+        /////////////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////////////////
+
         public event EventHandler ProductEdited;
 
         public Product productToChange { get; set; }
@@ -120,6 +114,20 @@ namespace GUI.MVVM.ViewModel
                 }
             }
         }
+
+        /////////////////////////////////////////////////////ÜBERTRAGUNG///////////////////////////////////////////////////////////
+
+        private void TransferSelectedProduct(Product product)
+        {
+            Name = product.Name;
+            ArticleNumber = product.Articlenumber;
+            Price = product.Price;
+            IsFirstRadioButtonSelected = !product.Quantityarticle;
+            IsSecondRadioButtonSelected = product.Quantityarticle;
+            clipVectors = product.Allproductvectors;
+        }
+
+        /////////////////////////////////////////////////////COMMANDS///////////////////////////////////////////////////////////
 
         public List<CLIPVector> clipVectors { get; set; } = new List<CLIPVector>();
 
