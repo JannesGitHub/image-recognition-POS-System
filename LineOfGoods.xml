@@ -7757,5 +7757,12 @@
         </CLIPVector>
       </Allproductvectors>
     </Product>
+    <Product>
+      <Name>Test</Name>
+      <Articlenumber>0</Articlenumber>
+      <Price>0</Price>
+      <Quantityarticle>false</Quantityarticle>
+      <Allproductvectors />
+    </Product>
   </lineOfGoods>
 </LineOfGoods>

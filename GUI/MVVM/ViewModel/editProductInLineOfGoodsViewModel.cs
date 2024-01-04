@@ -35,9 +35,9 @@ namespace GUI.MVVM.ViewModel
 
                 List<Bitmap> bitmaps = new List<Bitmap>();
 
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < 20; i++)
                 {
-                    await Task.Delay(20);
+                    await Task.Delay(50);
 
                     bitmaps.Add(editLineOfGoodsService.currentBitmap);
                 }
@@ -46,8 +46,8 @@ namespace GUI.MVVM.ViewModel
 
                 foreach (Bitmap bitmap in bitmaps)
                 {
-                    //allTasks.Add(Task.Run(() => clipVectors.Add(Detection.GetCLIPVector(bitmap))));
-                    allTasks.Add(Task.Run(() => clipVectors.Add(new CLIPVector()))); //kriege ich hier schon einen Zeitvorteil?
+                    allTasks.Add(Task.Run(() => clipVectors.Add(Detection.GetCLIPVector(bitmap))));
+                   // allTasks.Add(Task.Run(() => clipVectors.Add(new CLIPVector()))); //kriege ich hier schon einen Zeitvorteil?
                 }
 
                 await Task.WhenAll(allTasks);

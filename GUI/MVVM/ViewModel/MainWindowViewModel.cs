@@ -152,9 +152,9 @@ namespace GUI.MVVM.ViewModel
             });
 
 
-            this.CloseCommand = new DelegateCommand((o) => { camera.NewFrame -= OnNewFrame;
-                                                                        Environment.Exit(0);
-            });
+            this.CloseCommand = new DelegateCommand((o) => {_editLineOfGoodsService.LineOfGoods.Safe();
+                                                            Environment.Exit(0);
+                                                            });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
         
