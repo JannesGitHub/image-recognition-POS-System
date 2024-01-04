@@ -118,11 +118,11 @@ namespace GUI.MVVM.ViewModel
 
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
-                testInput.Add(0.5, new Product("Banane",123,1,true, null));
+                testInput.Add(0.5, new Product("Banane",123,1.2,true, null));
 
-                testInput.Add(0.2, new Product("Apfel", 234, 1, true, null));
+                testInput.Add(0.2, new Product("Apfel", 234, 2.2, true, null));
 
-                testInput.Add(0.7, new Product("Khaki", 345, 1, true, null));
+                testInput.Add(0.7, new Product("Khaki", 345, 3.4, true, null));
 
                 _addManuallyService.scanData = testInput;
 

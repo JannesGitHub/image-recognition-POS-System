@@ -14,9 +14,16 @@ namespace GUI.MVVM.ViewModel
         {
             var mainVM = viewModelLocator.MainWindowViewModel;
 
-            mainVM.PayEvent += (sender, args) => { TotalPrice = payservice.TotalPrice; };
+            mainVM.PayEvent += (sender, args) => { TotalPrice = payservice.TotalPrice;
+                PaidAmount = 0.1;
+            };
+            
+            //gleiches Problem wie bei editProdcutLineOfGoods
 
             TotalPrice = payservice.TotalPrice;
+
+            PaidAmount = 0.1; //damit man Preis ändern kann
+
 
             CashInCommand = new DelegateCommand((o) => windowManager.CloseWindow(viewModelLocator.PayWindowViewModel));
 
@@ -34,15 +41,15 @@ namespace GUI.MVVM.ViewModel
                 if (_paidAmount != value)
                 {
                     _paidAmount = value;
-                    OnPropertyChanged(nameof(PaidAmount)); // Benachrichtigen Sie über die Änderung
-                    CalculateChange(); // Berechnen Sie den Wechsel
+                    OnPropertyChanged(nameof(PaidAmount)); 
+                    CalculateChange(); 
                 }
             }
         }
 
         private void CalculateChange()
         {
-            Change = PaidAmount - TotalPrice;
+            Change = Math.Round(PaidAmount - TotalPrice,2);
             OnPropertyChanged(nameof(Change)); // Benachrichtigen Sie über die Änderung
         }
         public double Change { get; set; }
