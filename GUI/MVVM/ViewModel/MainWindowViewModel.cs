@@ -153,7 +153,7 @@ namespace GUI.MVVM.ViewModel
 
 
             this.CloseCommand = new DelegateCommand((o) => { camera.NewFrame -= OnNewFrame;
-                                                             Application.Current.Shutdown();
+                                                                        Environment.Exit(0);
             });
         }
         ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
