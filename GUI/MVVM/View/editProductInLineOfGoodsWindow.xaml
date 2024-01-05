@@ -20,7 +20,7 @@
             <Label Content="Name:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
             <TextBox  Text="{Binding Name}" />
             <Label Content="Article Number:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
-            <TextBox Text="{Binding ArticleNumber}"/>
+            <TextBlock Text="{Binding ArticleNumber}"/>
             <Label Content="Price:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
             <TextBox Text="{Binding Price}"/>
             

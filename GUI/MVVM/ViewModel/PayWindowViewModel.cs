@@ -14,16 +14,7 @@ namespace GUI.MVVM.ViewModel
         {
             var mainVM = viewModelLocator.MainWindowViewModel;
 
-            mainVM.PayEvent += (sender, args) => { TotalPrice = payservice.TotalPrice;
-                PaidAmount = 0.1;
-            };
-            
-            //gleiches Problem wie bei editProdcutLineOfGoods
-
-            TotalPrice = payservice.TotalPrice;
-
-            PaidAmount = 0.1; //damit man Preis ändern kann
-
+            mainVM.PayEvent += (sender, args) => { TotalPrice = payservice.TotalPrice;  PaidAmount = 0.1; };
 
             CashInCommand = new DelegateCommand((o) =>
             {
@@ -34,12 +25,24 @@ namespace GUI.MVVM.ViewModel
             CloseCommand = new DelegateCommand((o) => windowManager.CloseWindow(viewModelLocator.PayWindowViewModel));
         }
 
-        public double TotalPrice { get; set; }
+        private double _totalPrice;
+
+        public double TotalPrice {
+            get {return _totalPrice;}
+            set
+            {
+                if (_totalPrice != value)
+                {
+                    _totalPrice = value;
+                    OnPropertyChanged(nameof(TotalPrice));
+                }
+            }
+        }
 
         private double _paidAmount;
         public double PaidAmount
         {
-            get => _paidAmount;
+            get { return _paidAmount; }
             set
             {
                 if (_paidAmount != value)
@@ -54,7 +57,7 @@ namespace GUI.MVVM.ViewModel
         private void CalculateChange()
         {
             Change = Math.Round(PaidAmount - TotalPrice,2);
-            OnPropertyChanged(nameof(Change)); // Benachrichtigen Sie über die Änderung
+            OnPropertyChanged(nameof(Change)); 
         }
         public double Change { get; set; }
 

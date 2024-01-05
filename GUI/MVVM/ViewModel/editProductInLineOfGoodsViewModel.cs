@@ -23,11 +23,9 @@ namespace GUI.MVVM.ViewModel
 
             searchVM.ProductEditedEvent += (sender, args) => { TransferSelectedProduct(editLineOfGoodsService.toEditProduct); };
 
-            TransferSelectedProduct(editLineOfGoodsService.toEditProduct); //unschön aber muss beim ersten Mal noch manuell gecallt werden, weil sich Eventhandler erst nur registriert
-
             NewVectorsCommand = new DelegateCommand(async (o) =>
             {
-                clipVectors.Clear();
+                ClipVectors.Clear();
 
                 Stopwatch watch = new Stopwatch();
 
@@ -42,13 +40,11 @@ namespace GUI.MVVM.ViewModel
                     bitmaps.Add(editLineOfGoodsService.currentBitmap);
                 }
 
-                List<Task> allTasks = new List<Task>(); //vielleicht noch nicht optimal aber kann ich erst richtig testen wenn mit Internet verbunden
+                List<Task> allTasks = new List<Task>();
 
                 foreach (Bitmap bitmap in bitmaps)
-                {
-                    allTasks.Add(Task.Run(() => clipVectors.Add(Detection.GetCLIPVector(bitmap))));
-                   // allTasks.Add(Task.Run(() => clipVectors.Add(new CLIPVector()))); //kriege ich hier schon einen Zeitvorteil?
-                }
+                    allTasks.Add(Task.Run(() => ClipVectors.Add(Detection.GetCLIPVector(bitmap))));
+
 
                 await Task.WhenAll(allTasks);
 
@@ -59,13 +55,13 @@ namespace GUI.MVVM.ViewModel
 
             ApplyCommand = new DelegateCommand((o) =>
             {
-                editLineOfGoodsService.EditProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, clipVectors));
+                    editLineOfGoodsService.EditProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, ClipVectors));
 
-                ProductEdited?.Invoke(this, EventArgs.Empty);
+                    ProductEdited?.Invoke(this, EventArgs.Empty);
 
-                windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+                    windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
 
-                windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+                    windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
             });
 
             CloseCommand = new DelegateCommand(execute: (o) =>
@@ -80,11 +76,46 @@ namespace GUI.MVVM.ViewModel
 
         public Product productToChange { get; set; }
 
-        public string Name { get; set; }
+        private string _name;
+        public string Name {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
+            }
+        }
 
-        public uint ArticleNumber { get; set; }
+        private uint _articleNumber;
 
-        public double Price { get; set; }
+        public uint ArticleNumber {
+            get { return _articleNumber; }
+            set
+            {
+                if (_articleNumber != value)
+                {
+                    _articleNumber = value;
+                    OnPropertyChanged(nameof(ArticleNumber));
+                }
+            }
+        }
+
+        private double _price;
+
+        public double Price {
+            get { return _price; }
+            set
+            {
+                if (_price != value)
+                {
+                    _price = value;
+                    OnPropertyChanged(nameof(Price));
+                }
+            }
+        }
 
         private bool _isFirstRadioButtonSelected = true;
         private bool _isSecondRadioButtonSelected;
@@ -115,6 +146,20 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
+        private List<CLIPVector> _clipVectors = new List<CLIPVector>();
+
+        public List<CLIPVector> ClipVectors {
+            get { return _clipVectors; }
+            set
+            {
+                if (_clipVectors != value)
+                {
+                    _clipVectors = value;
+                    OnPropertyChanged(nameof(ClipVectors));
+                }
+            }
+         }
+
         /////////////////////////////////////////////////////ÜBERTRAGUNG///////////////////////////////////////////////////////////
 
         private void TransferSelectedProduct(Product product)
@@ -124,12 +169,10 @@ namespace GUI.MVVM.ViewModel
             Price = product.Price;
             IsFirstRadioButtonSelected = !product.Quantityarticle;
             IsSecondRadioButtonSelected = product.Quantityarticle;
-            clipVectors = product.Allproductvectors;
+            ClipVectors = product.Allproductvectors;
         }
 
         /////////////////////////////////////////////////////COMMANDS///////////////////////////////////////////////////////////
-
-        public List<CLIPVector> clipVectors { get; set; } = new List<CLIPVector>();
 
         public DelegateCommand NewVectorsCommand { get; set; }
 

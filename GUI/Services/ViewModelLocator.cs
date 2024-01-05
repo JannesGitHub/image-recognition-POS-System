@@ -19,7 +19,7 @@ namespace GUI.Services
 
         public MainWindowViewModel MainWindowViewModel => _provider.GetRequiredService<MainWindowViewModel>();
 
-        public addManuallyViewModel addManuallyViewModel => _provider.GetRequiredService<addManuallyViewModel>();
+        public AddManuallyVM AddManuallyVM => _provider.GetRequiredService<AddManuallyVM>();
 
         public addProductToLineOfGoodsViewModel addProductToLineOfGoodsViewModel => _provider.GetRequiredService<addProductToLineOfGoodsViewModel>();
 

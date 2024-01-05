@@ -23,7 +23,7 @@ namespace GUI
         public App()
         {
             services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<addManuallyViewModel>();
+            services.AddSingleton<AddManuallyVM>();
             services.AddSingleton<editProductInLineOfGoodsViewModel>();
             services.AddSingleton<addProductToLineOfGoodsViewModel>();
             services.AddSingleton<searchProductInLineOfGoodsViewModel>();

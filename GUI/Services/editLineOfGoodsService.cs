@@ -23,6 +23,8 @@ namespace GUI.Services
         public void EditProduct(Product product);
 
         public void AddProduct(Product product);
+
+        public bool IsIDUnique(uint id);
     }
 
     public class editLineOfGoodsService : IeditLineOfGoods
@@ -41,18 +43,18 @@ namespace GUI.Services
         public void EditProduct(Product product)
         {
             int indexToChange = LineOfGoods.lineOfGoods.FindIndex(p => p.Articlenumber == product.Articlenumber);
-
-            //Methode um überprüfen, dass Name und ID einzigartig ist
-
-            LineOfGoods.lineOfGoods[indexToChange] = product; //Wenn man Produkt zweimal editiert ohne zu verändern dann wird nicht mehr erkannt
+            LineOfGoods.lineOfGoods[indexToChange] = product; 
         }
 
 
         public void AddProduct(Product product)
         {
-            //Methode um überprüfen, dass Name und ID einzigartig ist
-
             LineOfGoods.lineOfGoods.Add(product);
+        }
+
+        public bool IsIDUnique(uint id)
+        {
+            return !LineOfGoods.lineOfGoods.Any((p) => p.Articlenumber == id);
         }
     }
 }

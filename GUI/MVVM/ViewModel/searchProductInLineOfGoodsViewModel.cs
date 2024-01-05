@@ -36,8 +36,6 @@ namespace GUI.MVVM.ViewModel
             {
                editLineOfGoodsService.toEditProduct = _editLineOfGoodsService.toEditProduct;
 
-                ProductEditedEvent?.Invoke(this, EventArgs.Empty);
-
                 windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel); 
 
                 var test = viewModelLocator.editProductInLineOfGoodsViewModel;
@@ -50,6 +48,8 @@ namespace GUI.MVVM.ViewModel
                 {
                     test.ProductEdited -= (o, e) => DoFiltering();
                 };
+
+                ProductEditedEvent?.Invoke(this, EventArgs.Empty);
             }, canExecute: (o) => SelectedProduct != null);
 
             AddCommand = new DelegateCommand(execute: (o) =>

@@ -1,5 +1,6 @@
 ﻿using Camera;
 using DetectionLibrary;
+using GUI.MVVM.ViewModel;
 using KassenmanagementLibrary;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,7 @@ namespace GUI.MVVM.ViewModel
                                                     
             this.ScanCommand = new DelegateCommand(async (o) => 
             {
+                /*
                 List<Bitmap> bitmapsToScan = new List<Bitmap>();
                 ScanStatus = "Scanning process is running.";
                 for (int i = 0; i < 15; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
@@ -112,7 +114,7 @@ namespace GUI.MVVM.ViewModel
 
 				ScanStatus = "Press Space to scan your product!";
                 
-                /*
+                */
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
                 testInput.Add(0.5, new Product("Banane",123,1.2,true, null));
@@ -124,14 +126,16 @@ namespace GUI.MVVM.ViewModel
                 _addManuallyService.scanData = testInput;
 
                 shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
-                */
+                
             });
 
             this.payWindowCommand = new DelegateCommand((o) =>
             {
                 payService.TotalPrice = shoppingBasketObject.SumPrice;
-                PayEvent?.Invoke(this, EventArgs.Empty);
+               
                 _windowManager.ShowWindow(viewModelLocator.PayWindowViewModel);
+
+                PayEvent?.Invoke(this, EventArgs.Empty);
             });
 
             this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
@@ -143,7 +147,7 @@ namespace GUI.MVVM.ViewModel
             {
                 if (_addManuallyService.scanData != null)
                 {
-                    _windowManager.ShowWindow(viewModelLocator.addManuallyViewModel);
+                    _windowManager.ShowWindow(viewModelLocator.AddManuallyVM);
                 }
                 else
                 {

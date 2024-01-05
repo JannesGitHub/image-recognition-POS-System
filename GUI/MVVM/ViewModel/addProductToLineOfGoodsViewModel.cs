@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using DetectionLibrary;
+using System.Windows;
 
 namespace GUI.MVVM.ViewModel
 {
     public class addProductToLineOfGoodsViewModel : ViewModelBase
     {
-        public addProductToLineOfGoodsViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, IeditLineOfGoods editLineOfGoodsService)
+        public addProductToLineOfGoodsViewModel(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
             NewVectorsCommand = new DelegateCommand(async (o) =>
             {
@@ -33,18 +34,32 @@ namespace GUI.MVVM.ViewModel
                     vectors.Add(Detection.GetCLIPVector(bitmap));
                 }
 
-                clipVectors = vectors;
+                ClipVectors = vectors;
             });
 
             AddCommand = new DelegateCommand((o) =>
             {
-                editLineOfGoodsService.AddProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, clipVectors));
+                if (!editLineOfGoodsService.IsIDUnique(ArticleNumber))
+                {
+                    MessageBox.Show("This ID is already taken.\nPlease change to apply change.");
+                }
+                else
+                {
+                    editLineOfGoodsService.AddProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, ClipVectors));
 
-                ProductAdded?.Invoke(this, EventArgs.Empty);
+                    ProductAdded?.Invoke(this, EventArgs.Empty);
 
-                windowManager.CloseWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
+                    windowManager.CloseWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
 
-                windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+                    windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+
+                    //Clear the Values after added:
+                    Name = null;
+                    ArticleNumber = 0;
+                    Price = 0;
+                    IsFirstRadioButtonSelected = true;
+                    ClipVectors = new List<CLIPVector>();
+                }
             });
 
             CloseCommand = new DelegateCommand(execute: (o) =>
@@ -54,6 +69,8 @@ namespace GUI.MVVM.ViewModel
 
         }
 
+
+        /////////////////////////////////////////////////////////ATTRIBUTES/////////////////////////////////////////////////////////////////
 
         public event EventHandler ProductAdded;
 
@@ -92,7 +109,11 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
-        public List<CLIPVector> clipVectors { get; set; } = new List<CLIPVector>();
+        public List<CLIPVector> ClipVectors { get; set; } = new List<CLIPVector>();
+
+
+
+        /////////////////////////////////////////////////////////////COMMANDS//////////////////////////////////////////////////////////
 
         public DelegateCommand NewVectorsCommand { get; set; }
 
