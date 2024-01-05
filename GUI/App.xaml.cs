@@ -25,7 +25,7 @@ namespace GUI
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<AddManuallyVM>();
             services.AddSingleton<editProductInLineOfGoodsViewModel>();
-            services.AddSingleton<addProductToLineOfGoodsViewModel>();
+            services.AddSingleton<AddProductToLineOfGoodsVM>();
             services.AddSingleton<searchProductInLineOfGoodsViewModel>();
             services.AddSingleton<PayWindowViewModel>();
 

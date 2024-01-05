@@ -56,11 +56,11 @@ namespace GUI.MVVM.ViewModel
             {
                 editLineOfGoodsService.toEditProduct = _editLineOfGoodsService.toEditProduct;
 
-                var test = viewModelLocator.addProductToLineOfGoodsViewModel;
+                var test = viewModelLocator.AddProductToLineOfGoodsVM;
 
                 test.ProductAdded += (o,e ) => DoFiltering();
 
-                Window window = windowManager.ShowWindow(viewModelLocator.addProductToLineOfGoodsViewModel);
+                Window window = windowManager.ShowWindow(viewModelLocator.AddProductToLineOfGoodsVM);
 
                 window.Closed += (o, e) =>
                 {

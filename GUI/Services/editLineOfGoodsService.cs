@@ -24,7 +24,7 @@ namespace GUI.Services
 
         public void AddProduct(Product product);
 
-        public bool IsIDUnique(uint id);
+        public bool IsIdUnique(uint id);
     }
 
     public class editLineOfGoodsService : IeditLineOfGoods
@@ -52,7 +52,7 @@ namespace GUI.Services
             LineOfGoods.lineOfGoods.Add(product);
         }
 
-        public bool IsIDUnique(uint id)
+        public bool IsIdUnique(uint id)
         {
             return !LineOfGoods.lineOfGoods.Any((p) => p.Articlenumber == id);
         }

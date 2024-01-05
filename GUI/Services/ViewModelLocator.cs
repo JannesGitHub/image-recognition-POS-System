@@ -21,7 +21,7 @@ namespace GUI.Services
 
         public AddManuallyVM AddManuallyVM => _provider.GetRequiredService<AddManuallyVM>();
 
-        public addProductToLineOfGoodsViewModel addProductToLineOfGoodsViewModel => _provider.GetRequiredService<addProductToLineOfGoodsViewModel>();
+        public AddProductToLineOfGoodsVM AddProductToLineOfGoodsVM => _provider.GetRequiredService<AddProductToLineOfGoodsVM>();
 
         public editProductInLineOfGoodsViewModel editProductInLineOfGoodsViewModel => _provider.GetRequiredService<editProductInLineOfGoodsViewModel>();
 

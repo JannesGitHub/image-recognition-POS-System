@@ -27,30 +27,21 @@ namespace GUI.MVVM.ViewModel
             {
                 ClipVectors.Clear();
 
-                Stopwatch watch = new Stopwatch();
-
-                watch.Start();
-
                 List<Bitmap> bitmaps = new List<Bitmap>();
 
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 20; i++) //für 2 Sekunden alle 1/10te Sekunde wird Frame gespeichert (insgesamt 20 Bitmaps)
                 {
-                    await Task.Delay(50);
+                    await Task.Delay(100); 
 
                     bitmaps.Add(editLineOfGoodsService.currentBitmap);
                 }
 
-                List<Task> allTasks = new List<Task>();
+                List<Task> allTasks = new List<Task>(); //Task List um mehrere Bitmaps asynchron zu tranformieren zu Vektoren
 
                 foreach (Bitmap bitmap in bitmaps)
                     allTasks.Add(Task.Run(() => ClipVectors.Add(Detection.GetCLIPVector(bitmap))));
 
-
                 await Task.WhenAll(allTasks);
-
-                watch.Stop();
-
-                MessageBox.Show($"{watch.ElapsedMilliseconds}");
             });
 
             ApplyCommand = new DelegateCommand((o) =>
