@@ -16,12 +16,12 @@ namespace GUI.MVVM.ViewModel
 {
     public class EditProductInLineOfGoodsVM: ViewModelBase
     {
-        public EditProductInLineOfGoodsVM(IWindowManager windowManager, ViewModelLocator viewModelLocator, IeditLineOfGoods editLineOfGoodsService)
+        public EditProductInLineOfGoodsVM(IWindowManager windowManager, ViewModelLocator viewModelLocator, IEditLineOfGoods editLineOfGoodsService)
         {
             // Registering for the event to make the selected product visible in the Search window for this VM.
-            searchProductInLineOfGoodsViewModel searchVM = viewModelLocator.SearchProductInLineOfGoodsViewModel;
+            SearchProductInLineOfGoodsVM searchVM = viewModelLocator.SearchProductInLineOfGoodsVM;
 
-            searchVM.ProductEditedEvent += (sender, args) => { TransferSelectedProduct(editLineOfGoodsService.toEditProduct); };
+            searchVM.ProductEditedEvent += (sender, args) => { TransferSelectedProduct(EditLineOfGoodsService.SelectedProduct); };
 
             NewVectorsCommand = new DelegateCommand(execute: async (o) =>
             {
@@ -33,7 +33,7 @@ namespace GUI.MVVM.ViewModel
                 {
                     await Task.Delay(100);
 
-                    bitmaps.Add(editLineOfGoodsService.currentBitmap);
+                    bitmaps.Add(EditLineOfGoodsService.CurrentBitmap);
                 }
 
                 List<Task> allTasks = new List<Task>(); // List of tasks to asynchronously transform multiple bitmaps into vectors.
@@ -52,7 +52,7 @@ namespace GUI.MVVM.ViewModel
 
                     windowManager.CloseWindow(viewModelLocator.EditProductInLineOfGoodsVM);
 
-                    windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+                    windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsVM);
             });
 
             CloseCommand = new DelegateCommand(execute: (o) => { windowManager.CloseWindow(viewModelLocator.EditProductInLineOfGoodsVM);});

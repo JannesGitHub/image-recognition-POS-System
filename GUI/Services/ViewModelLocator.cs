@@ -25,9 +25,9 @@ namespace GUI.Services
 
         public EditProductInLineOfGoodsVM EditProductInLineOfGoodsVM => _provider.GetRequiredService<EditProductInLineOfGoodsVM>();
 
-        public searchProductInLineOfGoodsViewModel SearchProductInLineOfGoodsViewModel => _provider.GetRequiredService<searchProductInLineOfGoodsViewModel>();
+        public SearchProductInLineOfGoodsVM SearchProductInLineOfGoodsVM => _provider.GetRequiredService<SearchProductInLineOfGoodsVM>();
 
-        public PayWindowViewModel PayWindowViewModel => _provider.GetRequiredService<PayWindowViewModel>();
+        public PayVM PayVM => _provider.GetRequiredService<PayVM>();
 
     }
 }

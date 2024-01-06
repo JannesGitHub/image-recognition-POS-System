@@ -14,7 +14,7 @@ namespace GUI.MVVM.ViewModel
 {
     public class AddProductToLineOfGoodsVM : ViewModelBase
     {
-        public AddProductToLineOfGoodsVM(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
+        public AddProductToLineOfGoodsVM(IEditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
 
             NewVectorsCommand = new DelegateCommand(execute: async (o) =>
@@ -27,7 +27,7 @@ namespace GUI.MVVM.ViewModel
                 {
                     await Task.Delay(100);
 
-                    bitmaps.Add(editLineOfGoodsService.currentBitmap);
+                    bitmaps.Add(EditLineOfGoodsService.CurrentBitmap);
                 }
 
                 List<Task> allTasks = new List<Task>(); // List of tasks to asynchronously transform multiple bitmaps into vectors.
@@ -53,7 +53,7 @@ namespace GUI.MVVM.ViewModel
 
                     windowManager.CloseWindow(viewModelLocator.AddProductToLineOfGoodsVM);
 
-                    windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
+                    windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsVM);
 
                     // Clears the values after theyre added:
                     Name = ""; ArticleNumber = 0; Price = 0; WeightBased = true; ClipVectors = new List<CLIPVector>();

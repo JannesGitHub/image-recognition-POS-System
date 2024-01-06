@@ -17,9 +17,9 @@ namespace GUI.MVVM.ViewModel
 {
     public class AddManuallyVM : ViewModelBase
     {
-        public AddManuallyVM(IaddManuallyService addManuallyService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
+        public AddManuallyVM(IAddManuallyService addManuallyService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
-            ScanData = addManuallyService.scanData;
+            ScanData = addManuallyService.ScanData;
 
             this.AddCommand = new DelegateCommand(execute: (o) =>{ addManuallyService.AddArticleManually(SelectedProduct.Value);
                                                                       windowManager.CloseWindow(viewModelLocator.AddManuallyVM);},

@@ -10,13 +10,13 @@ using System.Windows;
 namespace GUI.Services
 {
 
-    public interface IeditLineOfGoods
+    public interface IEditLineOfGoods //VIELLEICHT static für MainVM
     {
-        public LineOfGoods LineOfGoods { get; set; }
+        public static LineOfGoods LineOfGoods { get; set; }
 
-        public Product toEditProduct {  get; set; }
+        public static Product SelectedProduct {  get; set; }
 
-        public Bitmap currentBitmap { get; set; }
+        public static Bitmap CurrentBitmap { get; set; }
 
         public void DeleteProduct(Product product);
 
@@ -27,13 +27,13 @@ namespace GUI.Services
         public bool IsIdUnique(uint id);
     }
 
-    public class editLineOfGoodsService : IeditLineOfGoods
+    public class EditLineOfGoodsService : IEditLineOfGoods
     {
-        public LineOfGoods LineOfGoods { get; set; }
+        public static LineOfGoods LineOfGoods { get; set; }
 
-        public Product toEditProduct { get; set; }
+        public static Product SelectedProduct { get; set; }
 
-        public Bitmap currentBitmap { get; set; }
+        public static Bitmap CurrentBitmap { get; set; }
 
         public void DeleteProduct(Product product)
         {

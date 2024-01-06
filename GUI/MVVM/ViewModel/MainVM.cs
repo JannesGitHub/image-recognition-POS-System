@@ -24,130 +24,83 @@ namespace GUI.MVVM.ViewModel
 {
     public class MainVM : ViewModelBase
     {
-
-        private readonly IWindowManager _windowManager;
-        private readonly ViewModelLocator _viewModelLocator;
-
-        public IaddManuallyService _addManuallyService { get; set; }
-
-        public IeditLineOfGoods _editLineOfGoodsService { get; set; }
-
-
-        public MainVM(IaddManuallyService addManuallyService, IeditLineOfGoods editLineOfFoodsService, IPayService payService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
+        public MainVM(IAddManuallyService addManuallyService, IPayService payService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
+            addManuallyService.ShoppingBasket = ShoppingBasket;
 
-            //////////////////////////////////////////INITIALIZING/////////////////////////////////////////
+            EditLineOfGoodsService.LineOfGoods = LineOfGoods.GetFromXML();
 
-            _windowManager = windowManager;
-            _viewModelLocator = viewModelLocator;
+            Camera.NewFrame += OnNewFrame;
 
-            _addManuallyService = addManuallyService;
-
-            shoppingBasketObject = new ShoppingBasket();
-
-            _addManuallyService.shoppingBasket = shoppingBasketObject;
-
-            // Versuch lineOfGoods zu search zu übertragen
-
-            _editLineOfGoodsService = editLineOfFoodsService;
-
-            lineOfGoodsObject = LineOfGoods.GetFromXML(); //LineOfGoods.GetDummi(null); //Sortiment laden
-
-            _editLineOfGoodsService.LineOfGoods = lineOfGoodsObject; 
-
-            //Detection stuff
-
-            ScanStatus = "Press Space to scan your product!";
-
-            ////////////////////////////////////////////CAMERA/////////////////////////////////////////////
-
-            camera = new Cam();
-
-            camera.NewFrame += OnNewFrame;
-
-            ///////////////////////////////////////////Commands////////////////////////////////////////////
-
-            this.ClearCommand = new DelegateCommand((o) => shoppingBasketObject._ShoppingBasket.Count >= 0
-                                                   ,(o) => shoppingBasketObject.Clear());
-
-            this.AddCommand = new DelegateCommand((o) => { shoppingBasketObject.AddArticle(new Product("Banane", 23, 2.2, true, null)); }); 
-
-            this.RemoveCommand = new DelegateCommand((o) => { shoppingBasketObject._ShoppingBasket.Remove(SelectedArticle); });
-
-            this.downQuantityCommand = new DelegateCommand((o) => 
-            {
-                if (SelectedArticle != null)
-                {
-                    shoppingBasketObject.DownQuantity(SelectedArticle);
-                    if (shoppingBasketObject._ShoppingBasket[shoppingBasketObject._ShoppingBasket.IndexOf(SelectedArticle)].Quantity == 0)
-                        shoppingBasketObject._ShoppingBasket.Remove(SelectedArticle);
-                }
-            });
-
-            this.upQuantityCommand = new DelegateCommand((o) => {
-                if (SelectedArticle != null)
-                    shoppingBasketObject.UpQuantity(SelectedArticle); } );
-
-                                                    
-            this.ScanCommand = new DelegateCommand(async (o) => 
+            ScanCommand = new DelegateCommand(execute: async (o) =>
             {
                 /*
                 List<Bitmap> bitmapsToScan = new List<Bitmap>();
+
                 ScanStatus = "Scanning process is running.";
-                for (int i = 0; i < 15; i++) // Kamerabild leidet 0 drunter bei ganz vielen Bildern (ohne Internet connection)
+
+                for (int i = 0; i < 15; i++) 
                 {
-                    await Task.Delay(50); //Warten hat also Kamerabild also keinen Effekt
-                    bitmapsToScan.Add(currentBitmap);
-                    //nur für Anzeige
-                    //shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
+                    await Task.Delay(50); 
+                    
+                    if(CurrentBitmap != null)
+                    bitmapsToScan.Add(CurrentBitmap);
                 }
-				(SortedDictionary<double, Product>, Product?) input = Detection.getDetectionOutput(_editLineOfGoodsService.LineOfGoods, bitmapsToScan);
 
-				scanData = input.Item1;
+				(SortedDictionary<double, Product>, Product?) input = Detection.getDetectionOutput(EditLineOfGoodsService.LineOfGoods,bitmapsToScan);
 
-				_addManuallyService.scanData = this.scanData;
+				addManuallyService.ScanData = input.Item1;
 
-				scannedProduct = input.Item2;
+                if (input.Item2 != null)
+					ShoppingBasket.AddArticle(input.Item2);
 
-				if (scannedProduct != null)
-					shoppingBasketObject.AddArticle(scannedProduct);
-
-				ScanStatus = "Press Space to scan your product!";
+				ScanStatus = "Press Space to scan your product!";*/
                 
-                */
+                
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
-                testInput.Add(0.5, new Product("Banane",123,1.2,true, null));
+                testInput.Add(0.5, new Product("Banane", 123, 1.2, true, null));
 
                 testInput.Add(0.2, new Product("Apfel", 234, 2.2, true, null));
 
                 testInput.Add(0.7, new Product("Khaki", 345, 3.4, true, null));
 
-                _addManuallyService.scanData = testInput;
+                addManuallyService.ScanData = testInput;
 
-                shoppingBasketObject.AddArticle(new Product("TestCase", 1, 1, true, null));
+                ShoppingBasket.AddArticle(new Product("TestCase", 1, 1, true, null));
+
+                ShoppingBasket.AddArticle(new Product("TestCas2", 1, 1, true, null));
                 
-            });
+            }, canExecute: (o) => CurrentBitmap != null);    
 
-            this.payWindowCommand = new DelegateCommand((o) =>
+
+            DownQuantityCommand = new DelegateCommand(execute: (o) => 
             {
-                payService.TotalPrice = shoppingBasketObject.SumPrice;
+                    ShoppingBasket.DownQuantity(SelectedArticle);
+
+                    if (ShoppingBasket._ShoppingBasket[ShoppingBasket._ShoppingBasket.IndexOf(SelectedArticle)].Quantity == 0)
+                        ShoppingBasket._ShoppingBasket.Remove(SelectedArticle);
+            }, canExecute: (o) => SelectedArticle != null);
+
+            UpQuantityCommand = new DelegateCommand(execute: (o) => {ShoppingBasket.UpQuantity(SelectedArticle); },  canExecute: (o) => SelectedArticle != null);
+
+
+            ClearCommand = new DelegateCommand(execute: (o) => { ShoppingBasket.Clear(); }, canExecute: (o) => ShoppingBasket._ShoppingBasket.Count >= 0);
+
+            PayWindowCommand = new DelegateCommand((o) =>
+            {
+                payService.TotalPrice = ShoppingBasket.SumPrice;
                
-                _windowManager.ShowWindow(viewModelLocator.PayWindowViewModel);
+                windowManager.ShowWindow(viewModelLocator.PayVM);
 
                 PayEvent?.Invoke(this, EventArgs.Empty);
             });
 
-            this.editLineOfGoodsWindowCommand = new DelegateCommand((o) =>
+            AddManuallyWindowCommand = new DelegateCommand((o) =>
             {
-                _windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
-            });
-
-            this.addManuallyWindowCommand = new DelegateCommand((o) =>
-            {
-                if (_addManuallyService.scanData != null)
+                if (addManuallyService.ScanData != null)
                 {
-                    _windowManager.ShowWindow(viewModelLocator.AddManuallyVM);
+                    windowManager.ShowWindow(viewModelLocator.AddManuallyVM);
                 }
                 else
                 {
@@ -155,36 +108,19 @@ namespace GUI.MVVM.ViewModel
                 }
             });
 
+            EditLineOfGoodsWindowCommand = new DelegateCommand((o) => { windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsVM); });
 
-            this.CloseCommand = new DelegateCommand((o) => {_editLineOfGoodsService.LineOfGoods.Safe();
-                                                            Environment.Exit(0); });
+            CloseCommand = new DelegateCommand((o) => {EditLineOfGoodsService.LineOfGoods.Safe(); Environment.Exit(0); });
         }
-        ////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////
+
+        ////////////////////////////////////////////////////////ATTRIBUTES FOR SHOOPING BASKET//////////////////////////////////////////////////////////////
         
-        //Kassenmanagement Objects
-        public ShoppingBasket shoppingBasketObject { get; set; }
+        public ShoppingBasket ShoppingBasket { get; set; } = new ShoppingBasket();
 
-        private Article selectedArticle;
+        public Article? SelectedArticle { get; set; }
 
-        public Article SelectedArticle
-        {
-            get { return selectedArticle; }
-            set
-            {
-                if (selectedArticle != value)
-                {
-                    selectedArticle = value;
-                    OnPropertyChanged(nameof(SelectedArticle));
-                }
-            }
-        }
-        public LineOfGoods lineOfGoodsObject { get; set; }
-
-        public Product scannedProduct { get; set; }
-
-        public SortedDictionary<double, Product> scanData {  get; set; }
-
-        private string scanStatus;
+        
+        private string scanStatus = "Press Space to scan your product!";
 
         public string ScanStatus {
             get { return scanStatus; }
@@ -198,11 +134,11 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
-        //Camera Objects
+        ////////////////////////////////////////////////////////////ATTRIBUTES FOR CAMERA//////////////////////////////////////////////////////////////
 
-        public Cam camera { get; set; }
+        public Cam Camera { get; set; } = new Cam();
 
-        public Bitmap currentBitmap { get; set; }
+        public Bitmap CurrentBitmap { get; set; }
 
         private BitmapSource _currentSource;
 
@@ -219,20 +155,17 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
+        //////////////////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////////////////////////////
 
-        ////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////
-
-        public virtual void OnNewFrame(object sender, EventArgs e)
+        public virtual void OnNewFrame(object? sender, EventArgs e)
         {
-            if (camera != null)
+            if (Camera != null)
             {
-                Bitmap bitmap = camera.GetCurrentBitmap();
+                Bitmap bitmap = Camera.GetCurrentBitmap();
 
-                currentBitmap = bitmap; //speichern in lokaler Variable
+                CurrentBitmap = bitmap; //speichern in lokaler Variable
 
-                _editLineOfGoodsService.currentBitmap = currentBitmap; //weitergeben an Service für add und edit LineOfGoods
-
-                //CHATGPT -> unsicher ob es funktioniert
+                EditLineOfGoodsService.CurrentBitmap = CurrentBitmap; //weitergeben an Service für add und edit LineOfGoods
 
                 if (bitmap != null)
                 {
@@ -276,30 +209,26 @@ namespace GUI.MVVM.ViewModel
         }
 
 
-        ////////////////////////////////////////////COMMANDS//////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////COMMANDS////////////////////////////////////////////////////////////////////
 
-        public DelegateCommand ClearCommand { get; set; }
+        public DelegateCommand UpQuantityCommand { get; set; }
 
-        public DelegateCommand AddCommand { get; set;}
+        public DelegateCommand DownQuantityCommand { get; set; }
 
-        public DelegateCommand RemoveCommand { get; set;}
+        public DelegateCommand PayWindowCommand { get; set; }
 
-        public DelegateCommand upQuantityCommand { get; set; }
+        public DelegateCommand EditLineOfGoodsWindowCommand { get; set;}
 
-        public DelegateCommand downQuantityCommand { get; set; }
-
-        public DelegateCommand payWindowCommand { get; set; }
-
-        public DelegateCommand editLineOfGoodsWindowCommand { get; set;}
-
-        public DelegateCommand addManuallyWindowCommand { get; set; }
+        public DelegateCommand AddManuallyWindowCommand { get; set; }
 
         public DelegateCommand ScanCommand { get; set; }
 
         public DelegateCommand CloseCommand { get; set; }
 
-        ////////////////////////////////////////////EVENTS//////////////////////////////////////////////////////
+        public DelegateCommand ClearCommand { get; set; }
 
-        public event EventHandler PayEvent;
+        ////////////////////////////////////////////////////////////////EVENTS/////////////////////////////////////////////////////////////////////
+
+        public event EventHandler PayEvent = delegate { };
     }
 }

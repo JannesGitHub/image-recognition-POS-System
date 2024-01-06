@@ -19,8 +19,8 @@ namespace GUI.Services
             RegisterMapping<AddManuallyVM, addManuallyWindow>();
             RegisterMapping<EditProductInLineOfGoodsVM, editProductInLineOfGoodsWindow>();
             RegisterMapping<AddProductToLineOfGoodsVM, addProductToLineOfGoodsWindow>();
-            RegisterMapping<searchProductInLineOfGoodsViewModel, searchProductInLineOfGoodsWindow>();
-            RegisterMapping<PayWindowViewModel, PayWindow>();
+            RegisterMapping<SearchProductInLineOfGoodsVM, searchProductInLineOfGoodsWindow>();
+            RegisterMapping<PayVM, PayWindow>();
         }
 
         public void RegisterMapping<TViewModel, TWindow>() where TViewModel : ViewModelBase where TWindow : Window

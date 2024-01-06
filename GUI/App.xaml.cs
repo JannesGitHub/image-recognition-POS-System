@@ -26,15 +26,15 @@ namespace GUI
             services.AddSingleton<AddManuallyVM>();
             services.AddSingleton<EditProductInLineOfGoodsVM>();
             services.AddSingleton<AddProductToLineOfGoodsVM>();
-            services.AddSingleton<searchProductInLineOfGoodsViewModel>();
-            services.AddSingleton<PayWindowViewModel>();
+            services.AddSingleton<SearchProductInLineOfGoodsVM>();
+            services.AddSingleton<PayVM>();
 
             services.AddSingleton<ViewModelLocator>();
             services.AddSingleton<WindowMapper>();
 
             services.AddSingleton<IWindowManager, WindowManager>();
-            services.AddSingleton<IaddManuallyService, addManuallyService>();
-            services.AddSingleton<IeditLineOfGoods, editLineOfGoodsService>();
+            services.AddSingleton<IAddManuallyService, AddManuallyService>();
+            services.AddSingleton<IEditLineOfGoods, EditLineOfGoodsService>();
             services.AddSingleton<IPayService, PayService>();
 
             _serviceProvider = services.BuildServiceProvider();
