@@ -17,7 +17,7 @@ namespace GUI.MVVM.ViewModel
         public AddProductToLineOfGoodsVM(IeditLineOfGoods editLineOfGoodsService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
 
-            NewVectorsCommand = new DelegateCommand(async (o) =>
+            NewVectorsCommand = new DelegateCommand(execute: async (o) =>
             {
                 ClipVectors.Clear();
 
@@ -49,7 +49,7 @@ namespace GUI.MVVM.ViewModel
                 {
                     editLineOfGoodsService.AddProduct(new Product(Name, ArticleNumber, Price, QuantityBased, ClipVectors));
 
-                    ProductAdded?.Invoke(this, EventArgs.Empty);
+                    ProductAddedEvent?.Invoke(this, EventArgs.Empty);
 
                     windowManager.CloseWindow(viewModelLocator.AddProductToLineOfGoodsVM);
 
@@ -66,7 +66,7 @@ namespace GUI.MVVM.ViewModel
 
         /////////////////////////////////////////////////////////ATTRIBUTES/////////////////////////////////////////////////////////////////
 
-        public event EventHandler ProductAdded = delegate { }; 
+        public event EventHandler ProductAddedEvent = delegate { }; 
 
         public string Name { get; set; } = "";
 

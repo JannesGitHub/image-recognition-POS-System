@@ -17,13 +17,13 @@ namespace GUI.Services
             _provider = provider;
         }
 
-        public MainWindowViewModel MainWindowViewModel => _provider.GetRequiredService<MainWindowViewModel>();
+        public MainVM MainVM => _provider.GetRequiredService<MainVM>();
 
         public AddManuallyVM AddManuallyVM => _provider.GetRequiredService<AddManuallyVM>();
 
         public AddProductToLineOfGoodsVM AddProductToLineOfGoodsVM => _provider.GetRequiredService<AddProductToLineOfGoodsVM>();
 
-        public editProductInLineOfGoodsViewModel editProductInLineOfGoodsViewModel => _provider.GetRequiredService<editProductInLineOfGoodsViewModel>();
+        public EditProductInLineOfGoodsVM EditProductInLineOfGoodsVM => _provider.GetRequiredService<EditProductInLineOfGoodsVM>();
 
         public searchProductInLineOfGoodsViewModel SearchProductInLineOfGoodsViewModel => _provider.GetRequiredService<searchProductInLineOfGoodsViewModel>();
 

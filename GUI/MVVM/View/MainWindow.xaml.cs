@@ -33,7 +33,7 @@ namespace GUI.MVVM.View
                 var dataContext = (sender as Window)?.DataContext;
 
                 // Überprüfen, ob der DataContext vom erwarteten Typ ist (z.B. Ihr ViewModel-Typ)
-                if (dataContext is MainWindowViewModel viewModel)
+                if (dataContext is MainVM viewModel)
                 {
                     // Rufen Sie den ScanCommand auf
                     viewModel.ScanCommand.Execute(null); // Übergabe von null oder anderen erforderlichen Parametern

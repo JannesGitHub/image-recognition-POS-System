@@ -22,9 +22,9 @@ namespace GUI
 
         public App()
         {
-            services.AddSingleton<MainWindowViewModel>();
+            services.AddSingleton<MainVM>();
             services.AddSingleton<AddManuallyVM>();
-            services.AddSingleton<editProductInLineOfGoodsViewModel>();
+            services.AddSingleton<EditProductInLineOfGoodsVM>();
             services.AddSingleton<AddProductToLineOfGoodsVM>();
             services.AddSingleton<searchProductInLineOfGoodsViewModel>();
             services.AddSingleton<PayWindowViewModel>();
@@ -44,7 +44,7 @@ namespace GUI
         protected override void OnStartup(StartupEventArgs e)
         {
             var windowManager = _serviceProvider.GetRequiredService<IWindowManager>();
-            windowManager.ShowWindow(viewModel: _serviceProvider.GetRequiredService<MainWindowViewModel>());
+            windowManager.ShowWindow(viewModel: _serviceProvider.GetRequiredService<MainVM>());
             base.OnStartup(e);
         }
 

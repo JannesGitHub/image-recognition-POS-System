@@ -14,60 +14,55 @@ using System.Diagnostics;
 
 namespace GUI.MVVM.ViewModel
 {
-    public class editProductInLineOfGoodsViewModel : ViewModelBase
+    public class EditProductInLineOfGoodsVM: ViewModelBase
     {
-        public editProductInLineOfGoodsViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, IeditLineOfGoods editLineOfGoodsService)
+        public EditProductInLineOfGoodsVM(IWindowManager windowManager, ViewModelLocator viewModelLocator, IeditLineOfGoods editLineOfGoodsService)
         {
-
-            var searchVM = viewModelLocator.SearchProductInLineOfGoodsViewModel;
+            // Registering for the event to make the selected product visible in the Search window for this VM.
+            searchProductInLineOfGoodsViewModel searchVM = viewModelLocator.SearchProductInLineOfGoodsViewModel;
 
             searchVM.ProductEditedEvent += (sender, args) => { TransferSelectedProduct(editLineOfGoodsService.toEditProduct); };
 
-            NewVectorsCommand = new DelegateCommand(async (o) =>
+            NewVectorsCommand = new DelegateCommand(execute: async (o) =>
             {
                 ClipVectors.Clear();
 
                 List<Bitmap> bitmaps = new List<Bitmap>();
 
-                for (int i = 0; i < 20; i++) //für 2 Sekunden alle 1/10te Sekunde wird Frame gespeichert (insgesamt 20 Bitmaps)
+                for (int i = 0; i < 20; i++) // For 2 seconds, a frame is saved every 1/10th of a second (a total of 20 bitmaps).
                 {
-                    await Task.Delay(100); 
+                    await Task.Delay(100);
 
                     bitmaps.Add(editLineOfGoodsService.currentBitmap);
                 }
 
-                List<Task> allTasks = new List<Task>(); //Task List um mehrere Bitmaps asynchron zu tranformieren zu Vektoren
+                List<Task> allTasks = new List<Task>(); // List of tasks to asynchronously transform multiple bitmaps into vectors.
 
                 foreach (Bitmap bitmap in bitmaps)
                     allTasks.Add(Task.Run(() => ClipVectors.Add(Detection.GetCLIPVector(bitmap))));
 
-                await Task.WhenAll(allTasks);
+                await Task.WhenAll(allTasks); // Waits until all tasks are completed.
             });
 
-            ApplyCommand = new DelegateCommand((o) =>
+            ApplyCommand = new DelegateCommand(execute: (o) =>
             {
-                    editLineOfGoodsService.EditProduct(new Product(Name, ArticleNumber, Price, IsSecondRadioButtonSelected, ClipVectors));
+                    editLineOfGoodsService.EditProduct(new Product(Name, ArticleNumber, Price, QuantityBased, ClipVectors));
 
-                    ProductEdited?.Invoke(this, EventArgs.Empty);
+                    ProductEditedEvent?.Invoke(this, EventArgs.Empty);
 
-                    windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+                    windowManager.CloseWindow(viewModelLocator.EditProductInLineOfGoodsVM);
 
                     windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);
             });
 
-            CloseCommand = new DelegateCommand(execute: (o) =>
-            {
-                windowManager.CloseWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
-            });
+            CloseCommand = new DelegateCommand(execute: (o) => { windowManager.CloseWindow(viewModelLocator.EditProductInLineOfGoodsVM);});
         }
 
         /////////////////////////////////////////////////////ATTRIBUTES///////////////////////////////////////////////////////////
 
-        public event EventHandler ProductEdited;
+        public event EventHandler ProductEditedEvent = delegate { };
 
-        public Product productToChange { get; set; }
-
-        private string _name;
+        private string _name = "";
         public string Name {
             get { return _name; }
             set
@@ -108,31 +103,31 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
-        private bool _isFirstRadioButtonSelected = true;
-        private bool _isSecondRadioButtonSelected;
+        private bool _weightBased = true;
+        private bool _quantityBased;
 
-        public bool IsFirstRadioButtonSelected
+        public bool WeightBased
         {
-            get { return _isFirstRadioButtonSelected; }
+            get { return _weightBased; }
             set
             {
-                if (_isFirstRadioButtonSelected != value)
+                if (_weightBased != value)
                 {
-                    _isFirstRadioButtonSelected = value;
-                    OnPropertyChanged(nameof(IsFirstRadioButtonSelected));
+                    _weightBased = value;
+                    OnPropertyChanged(nameof(WeightBased));
                 }
             }
         }
 
-        public bool IsSecondRadioButtonSelected
+        public bool QuantityBased
         {
-            get { return _isSecondRadioButtonSelected; }
+            get { return _quantityBased; }
             set
             {
-                if (_isSecondRadioButtonSelected != value)
+                if (_quantityBased != value)
                 {
-                    _isSecondRadioButtonSelected = value;
-                    OnPropertyChanged(nameof(IsSecondRadioButtonSelected));
+                    _quantityBased = value;
+                    OnPropertyChanged(nameof(QuantityBased));
                 }
             }
         }
@@ -151,15 +146,14 @@ namespace GUI.MVVM.ViewModel
             }
          }
 
-        /////////////////////////////////////////////////////ÜBERTRAGUNG///////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////METHODS/////////////////////////////////////////////////////////////
 
         private void TransferSelectedProduct(Product product)
         {
             Name = product.Name;
             ArticleNumber = product.Articlenumber;
             Price = product.Price;
-            IsFirstRadioButtonSelected = !product.Quantityarticle;
-            IsSecondRadioButtonSelected = product.Quantityarticle;
+            QuantityBased = product.Quantityarticle;
             ClipVectors = product.Allproductvectors;
         }
 

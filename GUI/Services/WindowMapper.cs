@@ -15,9 +15,9 @@ namespace GUI.Services
 
         public WindowMapper()
         {
-            RegisterMapping<MainWindowViewModel, MainWindow>();
+            RegisterMapping<MainVM, MainWindow>();
             RegisterMapping<AddManuallyVM, addManuallyWindow>();
-            RegisterMapping<editProductInLineOfGoodsViewModel, editProductInLineOfGoodsWindow>();
+            RegisterMapping<EditProductInLineOfGoodsVM, editProductInLineOfGoodsWindow>();
             RegisterMapping<AddProductToLineOfGoodsVM, addProductToLineOfGoodsWindow>();
             RegisterMapping<searchProductInLineOfGoodsViewModel, searchProductInLineOfGoodsWindow>();
             RegisterMapping<PayWindowViewModel, PayWindow>();

@@ -38,15 +38,15 @@ namespace GUI.MVVM.ViewModel
 
                 windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel); 
 
-                var test = viewModelLocator.editProductInLineOfGoodsViewModel;
+                var test = viewModelLocator.EditProductInLineOfGoodsVM;
 
-                test.ProductEdited += (o, e) => DoFiltering();
+                test.ProductEditedEvent += (o, e) => DoFiltering();
 
-                Window window = windowManager.ShowWindow(viewModelLocator.editProductInLineOfGoodsViewModel);
+                Window window = windowManager.ShowWindow(viewModelLocator.EditProductInLineOfGoodsVM);
 
                 window.Closed += (o, e) =>
                 {
-                    test.ProductEdited -= (o, e) => DoFiltering();
+                    test.ProductEditedEvent -= (o, e) => DoFiltering();
                 };
 
                 ProductEditedEvent?.Invoke(this, EventArgs.Empty);
@@ -58,13 +58,13 @@ namespace GUI.MVVM.ViewModel
 
                 var test = viewModelLocator.AddProductToLineOfGoodsVM;
 
-                test.ProductAdded += (o,e ) => DoFiltering();
+                test.ProductAddedEvent += (o,e ) => DoFiltering();
 
                 Window window = windowManager.ShowWindow(viewModelLocator.AddProductToLineOfGoodsVM);
 
                 window.Closed += (o, e) =>
                 {
-                    test.ProductAdded -= (o, e) => DoFiltering();
+                    test.ProductAddedEvent -= (o, e) => DoFiltering();
                 };
                 
                 windowManager.CloseWindow(viewModelLocator.SearchProductInLineOfGoodsViewModel);

@@ -22,7 +22,7 @@ using System.Windows.Input;
 
 namespace GUI.MVVM.ViewModel
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainVM : ViewModelBase
     {
 
         private readonly IWindowManager _windowManager;
@@ -33,7 +33,7 @@ namespace GUI.MVVM.ViewModel
         public IeditLineOfGoods _editLineOfGoodsService { get; set; }
 
 
-        public MainWindowViewModel(IaddManuallyService addManuallyService, IeditLineOfGoods editLineOfFoodsService, IPayService payService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
+        public MainVM(IaddManuallyService addManuallyService, IeditLineOfGoods editLineOfFoodsService, IPayService payService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
 
             //////////////////////////////////////////INITIALIZING/////////////////////////////////////////

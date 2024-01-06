@@ -12,7 +12,7 @@ namespace GUI.MVVM.ViewModel
     {
         public PayWindowViewModel(IPayService payservice,ViewModelLocator viewModelLocator, IWindowManager windowManager)     
         {
-            var mainVM = viewModelLocator.MainWindowViewModel;
+            MainVM mainVM = viewModelLocator.MainVM;
 
             mainVM.PayEvent += (sender, args) => { TotalPrice = payservice.TotalPrice;  PaidAmount = 0.1; };
 
