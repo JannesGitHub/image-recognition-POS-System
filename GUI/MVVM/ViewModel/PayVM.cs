@@ -3,7 +3,9 @@ using GUI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace GUI.MVVM.ViewModel
@@ -19,10 +21,21 @@ namespace GUI.MVVM.ViewModel
             CashInCommand = new DelegateCommand((o) =>
             {
                 mainVM.ShoppingBasket.Clear();
+
+                _soundPlayer.Play();
+
                 windowManager.CloseWindow(viewModelLocator.PayVM);
             });
 
             CloseCommand = new DelegateCommand((o) => windowManager.CloseWindow(viewModelLocator.PayVM));
+
+            //get path for Sound
+            string fileName = "ChaChing.wav";
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            filePath = filePath.Substring(0, filePath.IndexOf("j-kassenscanner"));
+            filePath += "j-kassenscanner\\Sounds\\" + fileName;
+
+            _soundPlayer = new SoundPlayer(filePath);
         }
 
         ////////////////////////////////////////ATTRIBUTES////////////////////////////////////////
@@ -63,6 +76,9 @@ namespace GUI.MVVM.ViewModel
         }
         public double Change { get; set; }
 
+        //CHA CHING SOUND
+
+        private readonly SoundPlayer _soundPlayer;
 
         ////////////////////////////////////////COMMANDS////////////////////////////////////////
 

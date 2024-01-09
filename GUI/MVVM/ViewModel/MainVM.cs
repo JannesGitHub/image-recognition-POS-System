@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Timers;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
@@ -19,6 +20,7 @@ using GUI.Services;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
+using System.Media;
 
 namespace GUI.MVVM.ViewModel
 {
@@ -34,6 +36,7 @@ namespace GUI.MVVM.ViewModel
 
             ScanCommand = new DelegateCommand(execute: async (o) =>
             {
+                /*
                 List<Bitmap> bitmapsToScan = new List<Bitmap>();
 
                 ScanStatus = "Scanning process is running.";
@@ -53,7 +56,7 @@ namespace GUI.MVVM.ViewModel
                 if (input.Item2 != null)
 					ShoppingBasket.AddArticle(input.Item2);
 
-				ScanStatus = "Press Space to scan your product!";/*
+				ScanStatus = "Press Space to scan your product!";*/
                 
                 
                 SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
@@ -66,11 +69,13 @@ namespace GUI.MVVM.ViewModel
 
                 addManuallyService.ScanData = testInput;
 
+                _notDetectedSound.Play();
+
                 ShoppingBasket.AddArticle(new Product("TestCase", 1, 1, true, null));
 
                 ShoppingBasket.AddArticle(new Product("TestCas2", 1, 1, true, null));
                 
-                */
+                
             }, canExecute: (o) => CurrentBitmap != null);    
 
 
@@ -111,6 +116,21 @@ namespace GUI.MVVM.ViewModel
             EditLineOfGoodsWindowCommand = new DelegateCommand((o) => { windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsVM); });
 
             CloseCommand = new DelegateCommand((o) => {EditLineOfGoodsService.LineOfGoods.Safe(); Environment.Exit(0); });
+
+            /////////////////////////////////////////////////////SOUND INITIALIZING//////////////////////////////////////////////////
+            string fileNameDetected = "Detected.wav";
+            string filePathDetected = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            filePathDetected = filePathDetected.Substring(0, filePathDetected.IndexOf("j-kassenscanner"));
+            filePathDetected += "j-kassenscanner\\Sounds\\" + fileNameDetected;
+
+            _detectedSound = new SoundPlayer(filePathDetected);
+
+            string fileNameNotDetected = "NotDetected.wav";
+            string filePathNotDetected = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            filePathNotDetected = filePathNotDetected.Substring(0, filePathNotDetected.IndexOf("j-kassenscanner"));
+            filePathNotDetected += "j-kassenscanner\\Sounds\\" + fileNameNotDetected;
+
+            _notDetectedSound = new SoundPlayer(filePathNotDetected);
         }
 
         ////////////////////////////////////////////////////////ATTRIBUTES FOR SHOOPING BASKET//////////////////////////////////////////////////////////////
@@ -154,6 +174,12 @@ namespace GUI.MVVM.ViewModel
                 }
             }
         }
+
+        //Sounds
+
+        private readonly SoundPlayer _detectedSound;
+
+        private readonly SoundPlayer _notDetectedSound;
 
         //////////////////////////////////////////////////////////CAMERA METHODS////////////////////////////////////////////////////////////////////////
 
