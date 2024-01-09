@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:GUI"
+        WindowStyle="ToolWindow"
         mc:Ignorable="d"
-        Title="editProductInLineOfGoodsWindow" Height="400" Width="450">
+        Title="editProductInLineOfGoodsWindow" Height="400" Width="450"
+        Background="#4b3832"
+        Foreground="#fff4e6">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -16,24 +19,24 @@
 
     <Grid>
         <StackPanel>
-            
-            <Label Content="Name:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+
+            <Label Content="Name:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="#fff4e6" />
             <TextBox  Text="{Binding Name}" />
-            <Label Content="Article Number:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+            <Label Content="Article Number:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="#fff4e6" />
             <TextBlock Text="{Binding ArticleNumber}"/>
-            <Label Content="Price:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+            <Label Content="Price:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="#fff4e6" />
             <TextBox Text="{Binding Price}"/>
             
             <!--Quantity or Weight-->
             
             <TextBlock Text="Product is defined per"/>
-            
-            <RadioButton Content="weight." IsChecked="{Binding WeightBased, Mode=TwoWay}" Margin="0,0,0,10"/>
-            <RadioButton Content="quantity." IsChecked="{Binding QuantityBased, Mode=TwoWay}"/>
+
+            <RadioButton Content="weight." IsChecked="{Binding WeightBased, Mode=TwoWay}" Margin="0,0,0,10" Foreground="#fff4e6"/>
+            <RadioButton Content="quantity." IsChecked="{Binding QuantityBased, Mode=TwoWay}" Foreground="#fff4e6"/>
 
             <Button Command="{Binding NewVectorsCommand}" Background="{Binding ButtonBackgroundColor}" Content="{Binding VectorUpdateStatus}" Height="50" Margin="10"/>
 
-            <Button Command="{Binding ApplyCommand}" Content="Apply" Height="50" Margin="10"/>
+            <Button Command="{Binding ApplyCommand}" Content="Apply" Background="#fff4e6" Height="50" Margin="10" Foreground="Black"/>
 
 
 
