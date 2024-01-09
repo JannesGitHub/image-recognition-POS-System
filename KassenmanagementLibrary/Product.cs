@@ -30,7 +30,7 @@ namespace KassenmanagementLibrary
         }
 
         //konstruktor
-        public Product(string name, uint atriclenumber, double price, bool quantityarticle,List<CLIPVector> allproductvectors)
+        public Product(string name, uint atriclenumber, double price, bool quantityarticle, List<CLIPVector> allproductvectors)
         {
             this.Name = name;
             this.Articlenumber = atriclenumber;
@@ -39,12 +39,12 @@ namespace KassenmanagementLibrary
             this.Allproductvectors = allproductvectors;
         }
 
-		public int CompareTo(Product? other)
-		{
-			if (this.Name.CompareTo(other.Name) < 0 ) return -1;
-            if (this.Name.CompareTo(other.Name) == 0 ) return 0;
-			if (this.Name.CompareTo(other.Name) > 0 ) return 1;
+        public int CompareTo(Product? other)
+        {
+            if (this.Name.CompareTo(other.Name) < 0) return -1;
+            if (this.Name.CompareTo(other.Name) == 0) return 0;
+            if (this.Name.CompareTo(other.Name) > 0) return 1;
             return 0;
         }
-	}
+    }
 }

@@ -8,6 +8,6 @@ namespace KassenmanagementLibrary
 {
     internal interface ILineOfGoods
     {
-       LineOfGoods GetLineOfGoods();
+        LineOfGoods GetLineOfGoods();
     }
 }

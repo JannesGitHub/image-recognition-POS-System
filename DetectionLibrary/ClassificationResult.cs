@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DetectionLibrary
 {
-	internal class ClassificationResult
-	{
-	}
+    internal class ClassificationResult
+    {
+    }
 }

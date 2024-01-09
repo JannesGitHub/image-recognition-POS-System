@@ -9,18 +9,18 @@ namespace DetectionLibrary
 {
     internal class ZeroShotPostBody
     {
-        public HttpContent HttpBody 
+        public HttpContent HttpBody
         {
             get
             {
                 return new ByteArrayContent(ImageBLOB);
             }
-                
+
         }
         private byte[] ImageBLOB;
-        public ZeroShotPostBody(Bitmap image) 
+        public ZeroShotPostBody(Bitmap image)
         {
-            if(image == null) throw new ArgumentNullException("image is Null");
+            if (image == null) throw new ArgumentNullException("image is Null");
             ImageBLOB = GetBytesOfImage(image);
         }
         private static byte[] GetBytesOfImage(Bitmap img)

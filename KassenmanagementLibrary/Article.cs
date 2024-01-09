@@ -29,14 +29,15 @@ namespace KassenmanagementLibrary
             Source = _product;
         }
 
+        //gesamtpreis des Artikels im warenkorb
         public double TotalPrice
         {
             get { return totalPrice; }
             set
             {
-                if (totalPrice!= value)
+                if (totalPrice != value)
                 {
-                    totalPrice = Math.Round(value,2); //Bugfix für zuviele Nachkommastellen und falsche Berechnung
+                    totalPrice = Math.Round(value, 2); //Bugfix für zuviele Nachkommastellen und falsche Berechnung
 
                     OnPropertyChanged(nameof(TotalPrice));
                 }
@@ -56,6 +57,7 @@ namespace KassenmanagementLibrary
             }
         }
 
+        //einzelpreis des Artikels
         public double Price
         {
             get { return price; }
