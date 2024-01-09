@@ -11,7 +11,7 @@ using KassenmanagementLibrary;
 
 namespace KassenmanagementLibrary
 {
-    
+
     public class ShoppingBasket : ObserveableObject, IShoppingBasket
     {
 
@@ -24,15 +24,17 @@ namespace KassenmanagementLibrary
         {
             return this;
         }
-  
+
 
         private ObservableCollection<Article> shoppingBasket = new ObservableCollection<Article>();  //ShoppingBasket
 
         public ObservableCollection<Article> _ShoppingBasket
         {
             get { return shoppingBasket; }
-            
-            set {shoppingBasket = value;     
+
+            set
+            {
+                shoppingBasket = value;
                 OnPropertyChanged(nameof(_ShoppingBasket));
                 shoppingBasket.CollectionChanged += (sender, e) => UpdateSumPrice();
             }
@@ -53,6 +55,8 @@ namespace KassenmanagementLibrary
             }
         }
 
+
+        //summiert preise des selben Artikels auf 
         private void UpdateSumPrice()
         {
             double price = 0;
@@ -62,22 +66,23 @@ namespace KassenmanagementLibrary
                 price += ar.TotalPrice;
             }
 
-            price = Math.Round(price, 2); // nur 2 Nachkommastellen anzeigen
+            price = Math.Round(price, 2);
 
             SumPrice = price;
         }
+        // gesamtpreis der articlellist 
         public double GetTotalPrice(ObservableCollection<Article> articlelist)
         {
             double totalPrice = 0;
 
             foreach (var item in articlelist)
             {
-              totalPrice += item.TotalPrice;
+                totalPrice += item.TotalPrice;
             }
             return totalPrice;
 
         }
-
+        //fügt Artikel dem Shoppingpasket hinzu, wenn er schon im warenkorb vorhanden ist, wird die Menge erhöht.
         public void AddArticle(Product product)
         {
             Article article = new Article(product);
@@ -86,7 +91,7 @@ namespace KassenmanagementLibrary
 
             bool containsArticleName = false;
 
-            foreach(Article a in _ShoppingBasket)
+            foreach (Article a in _ShoppingBasket)
             {
                 if (a.Name == articleName)
                 {
@@ -96,12 +101,13 @@ namespace KassenmanagementLibrary
             }
 
 
-            if(!containsArticleName)
+            if (!containsArticleName)
             {
                 _ShoppingBasket.Add(article);
             }
         }
 
+        // leert den Shoppingbasket
         public void Clear()
         {
             _ShoppingBasket.Clear();
@@ -116,7 +122,7 @@ namespace KassenmanagementLibrary
                 UpdateSumPrice();
             }
 
-           
+
         }
 
         public void DownQuantity(Article article)
@@ -132,20 +138,20 @@ namespace KassenmanagementLibrary
         public void NewQuantity(Article article, double quantity) //for change in wheigths
         {
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity = quantity;
-           UpdateSumPrice();
+            UpdateSumPrice();
         }
 
 
-        public  string generateReciept() 
-       {
-           StringBuilder receiptBuilder = new StringBuilder();
+        public string GenerateReciept()
+        {
+            StringBuilder receiptBuilder = new StringBuilder();
             receiptBuilder.AppendLine("Kassenbeleg");
             receiptBuilder.AppendLine();
             receiptBuilder.AppendLine("--------------------------------------------");
 
             foreach (Article item in _ShoppingBasket)
-            {       
-                    receiptBuilder.AppendLine($"Produkt:{item.Name,-20} {item.Quantity}x  {item.Price,10}");
+            {
+                receiptBuilder.AppendLine($"Produkt:{item.Name,-20} {item.Quantity}x  {item.Price,10}");
             }
 
             receiptBuilder.AppendLine();
@@ -153,33 +159,37 @@ namespace KassenmanagementLibrary
             receiptBuilder.AppendLine();
 
             double totalprice = GetTotalPrice(_ShoppingBasket);
-            receiptBuilder.AppendLine($"SUMME EUR  {Math.Round(totalprice,2)}");
+            receiptBuilder.AppendLine($"SUMME EUR  {Math.Round(totalprice, 2)}");
 
             Console.WriteLine(receiptBuilder.ToString());
-            
-            return receiptBuilder.ToString();
-       }
 
-       // speichert den beleg als neue datei ab
+            return receiptBuilder.ToString();
+        }
+
+        // speichert den beleg als neue datei ab
         public void SaveReciept()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(string));
-            string fileName = $"Receipt_{DateTime.Now:yyyyMMddHHmmssfff}.xml";
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+
+            string fileName = "Reciepts.xml";
+            string date = $"Receipt_{DateTime.Now:yyyyMMddHHmmssfff}.xml";
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            filePath = filePath.Substring(0, filePath.IndexOf("j-kassenscanner"));
+            filePath += "j-kassenscanner\\" + fileName + date;
 
             //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
 
             if (string.IsNullOrWhiteSpace(filePath))
-                {
-                    throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
-                }
+            {
+                throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
+            }
 
 
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
-                {
-                    serializer.Serialize(fs, this);
-                }
-            
+            {
+                serializer.Serialize(fs, this);
+            }
+
         }
 
     }

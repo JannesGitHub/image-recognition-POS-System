@@ -10,11 +10,11 @@ namespace KassenmanagementLibrary
     public class CLIPVector
     {
         public double[] Vector;
-        public CLIPVector(double[] vector) 
+        public CLIPVector(double[] vector)
         {
             Vector = new double[vector.Length];
 
-            vector.CopyTo(Vector,0); 
+            vector.CopyTo(Vector, 0);
         }
 
         //Parameterloser Konstruktor war nötig zur Serialisierung
@@ -24,7 +24,7 @@ namespace KassenmanagementLibrary
         public List<double> CompareTo(List<CLIPVector> cLIPVectors)
         {
             List<double> result = new List<double>();
-            foreach(CLIPVector cLIP in cLIPVectors)
+            foreach (CLIPVector cLIP in cLIPVectors)
             {
                 result.Add(GetMagnitude(this.Subtract(cLIP)));
             }
@@ -44,16 +44,16 @@ namespace KassenmanagementLibrary
         /// </summary>
         /// <param name="cLIPVector">Vector To be subtracted</param>
         /// <returns></returns>
-        private CLIPVector Subtract (CLIPVector cLIPVector)
+        private CLIPVector Subtract(CLIPVector cLIPVector)
         {
             List<double> result = new List<double>();
-            for(int i = 0; i < cLIPVector.Vector.Length; i++)
+            for (int i = 0; i < cLIPVector.Vector.Length; i++)
             {
                 result.Add(this.Vector[i] - cLIPVector.Vector[i]);
             }
             return new CLIPVector(result.ToArray());
         }
-        
+
     }
 
 }

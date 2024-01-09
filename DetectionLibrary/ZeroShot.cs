@@ -26,7 +26,7 @@ namespace DetectionLibrary
             //Bypassing Error: "The SSL connection could not be established"
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            
+
             using (var client = new HttpClient(clientHandler))
             {
                 Uri endpoint = new Uri("https://127.0.0.1:5000/vector/image");

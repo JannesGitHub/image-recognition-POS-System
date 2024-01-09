@@ -11,7 +11,7 @@ namespace DetectionLibrary
     internal interface IDetection
     {
         //Trennen vom Dictionary und Produkt?
-        (SortedDictionary<double, Product>,Product?) getDetectionOutput(LineOfGoods sortiment, List<Bitmap> frames);
-		public static CLIPVector GetCLIPVector(Bitmap frame) { return ZeroShot.GetCLIPVector(frame); }
-	}
+        (SortedDictionary<double, Product>, Product?) getDetectionOutput(LineOfGoods sortiment, List<Bitmap> frames);
+        public static CLIPVector GetCLIPVector(Bitmap frame) { return ZeroShot.GetCLIPVector(frame); }
+    }
 }
