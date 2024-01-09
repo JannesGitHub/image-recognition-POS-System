@@ -11,6 +11,7 @@ using DetectionLibrary;
 using System.Windows.Controls;
 using System.Windows;
 using System.Diagnostics;
+using System.Windows.Media;
 
 namespace GUI.MVVM.ViewModel
 {
@@ -29,6 +30,9 @@ namespace GUI.MVVM.ViewModel
 
                 List<Bitmap> bitmaps = new List<Bitmap>();
 
+                ButtonBackgroundColor = System.Windows.Media.Brushes.Yellow;
+                VectorUpdateStatus = "Images are loaded from the camera";
+
                 for (int i = 0; i < 20; i++) // For 2 seconds, a frame is saved every 1/10th of a second (a total of 20 bitmaps).
                 {
                     await Task.Delay(100);
@@ -36,12 +40,18 @@ namespace GUI.MVVM.ViewModel
                     bitmaps.Add(EditLineOfGoodsService.CurrentBitmap);
                 }
 
+                ButtonBackgroundColor = System.Windows.Media.Brushes.Orange;
+                VectorUpdateStatus = "Images are converted to vectors";
+
                 List<Task> allTasks = new List<Task>(); // List of tasks to asynchronously transform multiple bitmaps into vectors.
 
                 foreach (Bitmap bitmap in bitmaps)
                     allTasks.Add(Task.Run(() => ClipVectors.Add(Detection.GetCLIPVector(bitmap))));
 
-                await Task.WhenAll(allTasks); // Waits until all tasks are completed.
+                await Task.WhenAll(allTasks); // Waits until all tasks are completed.*/
+
+                ButtonBackgroundColor = System.Windows.Media.Brushes.Gray;
+                VectorUpdateStatus = "Press ( wait 2 seconds) for new vectors for your product.";
             });
 
             ApplyCommand = new DelegateCommand(execute: (o) =>
@@ -145,6 +155,37 @@ namespace GUI.MVVM.ViewModel
                 }
             }
          }
+
+        //ANZEIGE FÜR VEKTOR AKTUALISIERUNGSZUSTAND
+
+        private SolidColorBrush _buttonBackgroundColor = System.Windows.Media.Brushes.Gray; // Standardfarbe
+        public SolidColorBrush ButtonBackgroundColor
+        {
+            get { return _buttonBackgroundColor; }
+            set
+            {
+                if (_buttonBackgroundColor != value)
+                {
+                    _buttonBackgroundColor = value;
+                    OnPropertyChanged(nameof(ButtonBackgroundColor));
+                }
+            }
+        }
+
+        private string _vectorUpdateStatus = "Press ( wait 2 seconds) for new vectors for your product.";
+
+        public string VectorUpdateStatus
+        {
+            get { return _vectorUpdateStatus; }
+            set
+            {
+                if (_vectorUpdateStatus != value)
+                {
+                    _vectorUpdateStatus = value;
+                    OnPropertyChanged(nameof(VectorUpdateStatus));
+                }
+            }
+        }
 
         /////////////////////////////////////////////////////METHODS/////////////////////////////////////////////////////////////
 
