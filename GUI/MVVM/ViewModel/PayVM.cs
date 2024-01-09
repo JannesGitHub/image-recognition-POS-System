@@ -29,7 +29,7 @@ namespace GUI.MVVM.ViewModel
 
             CloseCommand = new DelegateCommand((o) => windowManager.CloseWindow(viewModelLocator.PayVM));
 
-            //get path for Sound
+            /////////////////////////////////////////////////////SOUND INITIALIZING//////////////////////////////////////////////////
             string fileName = "ChaChing.wav";
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
             filePath = filePath.Substring(0, filePath.IndexOf("j-kassenscanner"));

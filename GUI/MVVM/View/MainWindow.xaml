@@ -21,7 +21,7 @@
     </i:Interaction.Triggers>
 
     <Border 
-        Background="#000020"
+        Background="#3c2f2f"
         CornerRadius="0,0,15,15">
 
         <Grid>
@@ -62,7 +62,7 @@
                     Grid.Row="1" 
                     CornerRadius="10" 
                     BorderThickness="5" 
-                    BorderBrush="#0000AF">
+                    BorderBrush="#854442">
 
                     <Image 
                         x:Name="anzeigeBild" 
@@ -93,17 +93,26 @@
                     Width="30" Height="30" 
                     HorizontalAlignment="Right"/>
 
+                    
                     <ListView 
                     ItemsSource="{Binding ShoppingBasket._ShoppingBasket}" 
                     SelectedItem="{Binding SelectedArticle}" 
                     Grid.Row="1" 
                     x:Name="ShoppingBasketViewList" 
                     BorderThickness="1"
-                    BorderBrush="BlueViolet" Margin="0,0,0,0"
+                    BorderBrush="#854442" Margin="0,0,0,0"
+                    Background="#fff4e6"
                     >
 
                         <ListView.View>
                             <GridView>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="Background" Value="#854442"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
                                 <GridViewColumn 
                                 DisplayMemberBinding="{Binding Quantity}" 
                                 Header="X" Width="50"
@@ -143,7 +152,7 @@
 
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="#8B8BE8" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                            <Border Background="#be9b7b" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
@@ -160,7 +169,7 @@
                     FontWeight="Heavy">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="#4848B5" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                            <Border Background="#fff4e6" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
@@ -177,7 +186,7 @@
                     FontWeight="Heavy">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="#8B8BE8" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                            <Border Background="#be9b7b" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
