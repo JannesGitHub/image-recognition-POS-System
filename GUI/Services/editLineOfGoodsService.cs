@@ -10,28 +10,30 @@ using System.Windows;
 namespace GUI.Services
 {
 
-    public interface IeditLineOfGoods
+    public interface IEditLineOfGoods //VIELLEICHT static für MainVM
     {
-        public LineOfGoods LineOfGoods { get; set; }
+        public static LineOfGoods LineOfGoods { get; set; }
 
-        public Product toEditProduct {  get; set; }
+        public static Product SelectedProduct {  get; set; }
 
-        public Bitmap currentBitmap { get; set; }
+        public static Bitmap CurrentBitmap { get; set; }
 
         public void DeleteProduct(Product product);
 
         public void EditProduct(Product product);
 
         public void AddProduct(Product product);
+
+        public bool IsIdUnique(uint id);
     }
 
-    public class editLineOfGoodsService : IeditLineOfGoods
+    public class EditLineOfGoodsService : IEditLineOfGoods
     {
-        public LineOfGoods LineOfGoods { get; set; }
+        public static LineOfGoods LineOfGoods { get; set; }
 
-        public Product toEditProduct { get; set; }
+        public static Product SelectedProduct { get; set; }
 
-        public Bitmap currentBitmap { get; set; }
+        public static Bitmap CurrentBitmap { get; set; }
 
         public void DeleteProduct(Product product)
         {
@@ -41,18 +43,18 @@ namespace GUI.Services
         public void EditProduct(Product product)
         {
             int indexToChange = LineOfGoods.lineOfGoods.FindIndex(p => p.Articlenumber == product.Articlenumber);
-
-            //Methode um überprüfen, dass Name und ID einzigartig ist
-
-            LineOfGoods.lineOfGoods[indexToChange] = product; //Wenn man Produkt zweimal editiert ohne zu verändern dann wird nicht mehr erkannt
+            LineOfGoods.lineOfGoods[indexToChange] = product; 
         }
 
 
         public void AddProduct(Product product)
         {
-            //Methode um überprüfen, dass Name und ID einzigartig ist
-
             LineOfGoods.lineOfGoods.Add(product);
+        }
+
+        public bool IsIdUnique(uint id)
+        {
+            return !LineOfGoods.lineOfGoods.Any((p) => p.Articlenumber == id);
         }
     }
 }

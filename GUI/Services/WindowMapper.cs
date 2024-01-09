@@ -15,12 +15,12 @@ namespace GUI.Services
 
         public WindowMapper()
         {
-            RegisterMapping<MainWindowViewModel, MainWindow>();
-            RegisterMapping<addManuallyViewModel, addManuallyWindow>();
-            RegisterMapping<editProductInLineOfGoodsViewModel, editProductInLineOfGoodsWindow>();
-            RegisterMapping<addProductToLineOfGoodsViewModel, addProductToLineOfGoodsWindow>();
-            RegisterMapping<searchProductInLineOfGoodsViewModel, searchProductInLineOfGoodsWindow>();
-            RegisterMapping<PayWindowViewModel, PayWindow>();
+            RegisterMapping<MainVM, MainWindow>();
+            RegisterMapping<AddManuallyVM, addManuallyWindow>();
+            RegisterMapping<EditProductInLineOfGoodsVM, editProductInLineOfGoodsWindow>();
+            RegisterMapping<AddProductToLineOfGoodsVM, addProductToLineOfGoodsWindow>();
+            RegisterMapping<SearchProductInLineOfGoodsVM, searchProductInLineOfGoodsWindow>();
+            RegisterMapping<PayVM, PayWindow>();
         }
 
         public void RegisterMapping<TViewModel, TWindow>() where TViewModel : ViewModelBase where TWindow : Window

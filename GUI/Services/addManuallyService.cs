@@ -9,31 +9,31 @@ using System.Threading.Tasks;
 namespace GUI.Services
 {
 
-    public interface IaddManuallyService
+    public interface IAddManuallyService
     {
-        public ShoppingBasket shoppingBasket { get; set; }
+        public ShoppingBasket ShoppingBasket { get; set; }
 
-        public SortedDictionary<double, Product> scanData { get; set; }
+        public SortedDictionary<double, Product> ScanData { get; set; }
 
-        public SortedDictionary<double, Product> getScanData();
+        public SortedDictionary<double, Product> GetScanData();
 
         public void AddArticleManually(Product product);
     }
 
-    public class addManuallyService : IaddManuallyService
+    public class AddManuallyService : IAddManuallyService
     {
-        public ShoppingBasket shoppingBasket { get; set; }
+        public ShoppingBasket ShoppingBasket { get; set; }
 
-        public SortedDictionary<double, Product> scanData { get; set; }
+        public SortedDictionary<double, Product> ScanData { get; set; }
 
-        public SortedDictionary<double, Product> getScanData()
+        public SortedDictionary<double, Product> GetScanData()
         {
-            return scanData;
+            return ScanData;
         }
 
         public void AddArticleManually(Product product)
         {
-            shoppingBasket.AddArticle(product);
+            ShoppingBasket.AddArticle(product);
         }
     }
 }
