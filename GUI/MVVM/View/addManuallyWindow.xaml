@@ -6,7 +6,9 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:GUI.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="Add Manually" Height="450" Width="300">
+        Title="Add Manually" Height="450" Width="300"
+        Background="#4b3832"
+        Foreground="#fff4e6">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -28,10 +30,10 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Search" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-            <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" FontSize="20"/>
+            <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" FontSize="20" Background="#4b3832"/>
         </Grid>
 
-        <ListView ItemsSource="{Binding FilteredScanData}"  SelectedItem="{Binding SelectedProduct}" Margin="0,49,0,0" Grid.RowSpan="2">
+        <ListView ItemsSource="{Binding FilteredScanData}"  Background=" 	#4b3832" SelectedItem="{Binding SelectedProduct}" Margin="0,49,0,0" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding = "{Binding Value.Name}" Header="Name" Width="200"/>
@@ -40,6 +42,6 @@
             </ListView.View>
         </ListView>
 
-        <Button Content = "Add" Grid.Row="2" Command="{Binding AddCommand}"/>
+        <Button Content = "Add" Background=" 	#be9b7b" Grid.Row="2" Command="{Binding AddCommand}"/>
     </Grid>
 </Window>
