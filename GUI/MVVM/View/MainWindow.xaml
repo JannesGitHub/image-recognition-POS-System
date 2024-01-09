@@ -78,22 +78,25 @@
             Grid.Column="1">
 
                 <Grid 
-                Margin="25,25,25,25">
+                Margin="15">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition 
-                        Height="30"/>
-
-                        <RowDefinition/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="220"/>
+                        <RowDefinition Height="25"/>
                     </Grid.RowDefinitions>
 
                     <Button 
                     Name="deleteShoppingBasketButton" 
+                    Content="🗑"
+                    FontSize="20"
+                    Background="#854442"
+                    Foreground="White"
                     Command="{Binding ClearCommand}"  
                     Width="30" Height="30" 
                     HorizontalAlignment="Right"/>
 
-                    
+
                     <ListView 
                     ItemsSource="{Binding ShoppingBasket._ShoppingBasket}" 
                     SelectedItem="{Binding SelectedArticle}" 
@@ -129,8 +132,20 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                </Grid>
 
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="265"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" BorderThickness="1" BorderBrush="#854442">
+                            <TextBlock Text="Total Price:" FontSize="15" FontWeight="bold" Foreground="#854442" Background="#fff4e6"/>
+                        </Border>
+                        <Border Grid.Column="1" BorderThickness="1" BorderBrush="#854442">
+                            <TextBlock Text="{Binding ShoppingBasket.SumPrice}" FontSize="15" FontWeight="bold" Foreground="#854442" Background="#fff4e6"/>
+                        </Border>
+                    </Grid>
+                </Grid>
             </Grid>
 
             <!--Sonstige Funktionen-->
@@ -192,11 +207,9 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-
             </Grid>
-
-
-            <!--Warenkorb bearbeiten und Preis-->
+            
+            <!--Warenkorb-->
 
             <Grid 
             Grid.Row="1" 
@@ -205,73 +218,29 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
-                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
                 <Button 
-                Margin="10,10,25,10" 
-                Background="Red" 
+                Margin="25,15,25,10" 
+                Background="#740001" 
                 FontSize="50" 
-                Content="-" 
+                FontWeight="Bold"
+                Foreground="White"
+                Content="➖" 
                 Command="{Binding DownQuantityCommand}" 
                 Name="minusButton" 
-                Grid.Column="1"
+                Grid.Column="0"
                 />
 
                 <Button 
-                Margin="10, 10, 25, 10" 
-                Background="Green" 
+                Margin="25,15,25,10" 
+                Background="#1a472a" 
                 FontSize="50" 
-                Content="+" 
+                Content="➕" 
+                Foreground="White"
                 Command="{Binding UpQuantityCommand}" 
                 Name="plusButton" 
-                Grid.Column="2"/>
-
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="29*"/>
-                        <RowDefinition Height="89*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="93*"/>
-                        <ColumnDefinition Width="40*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock
-                      Text="Total Price:"
-                      Grid.Column="0"
-                      Grid.Row="0"
-                      VerticalAlignment="Center" 
-                      HorizontalAlignment="Center" 
-                      FontSize="13" 
-                      FontWeight="Bold"
-                      Foreground="White"
-                    /> 
-
-                    <TextBlock 
-                Name="priceTextBlock" 
-                Text="{Binding ShoppingBasket.SumPrice}" 
-                Grid.Column="0"
-                Grid.Row="1"
-                VerticalAlignment="Center" 
-                HorizontalAlignment="Center" 
-                FontSize="33" 
-                FontWeight="Bold"
-                Foreground="White"
-                />
-
-                <TextBlock
-                      Text="€"
-                      Grid.Column="1"
-                      Grid.Row="1"
-                      VerticalAlignment="Center" 
-                      HorizontalAlignment="Center" 
-                      FontSize="33" 
-                      FontWeight="Bold"
-                      Foreground="White"
-              />
-
-                </Grid>
+                Grid.Column="1"/>
 
             </Grid>
         </Grid>
