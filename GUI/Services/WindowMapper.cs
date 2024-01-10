@@ -9,6 +9,10 @@ using System.Windows;
 
 namespace GUI.Services
 {
+    /// <summary>
+    /// Service um ViewModel und View zu verknüpfen 
+    /// -> Wird später verwendet um WindowType über ViewModel anzusteuern
+    /// </summary>
     public class WindowMapper
     {
         private readonly Dictionary<Type, Type> _mappings = new();

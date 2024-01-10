@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace GUI.Services
 {
+    /// <summary>
+    /// Holt sich die gefordertet registrierten Services automatisch per GetRequiredService()
+    /// -> registrierte Services sind in App.xaml.cs deklariert
+    /// </summary>
     public class ViewModelLocator
     {
         private readonly IServiceProvider _provider;

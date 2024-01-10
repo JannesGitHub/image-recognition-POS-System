@@ -14,6 +14,11 @@ namespace GUI.Services
         Window ShowWindow(ViewModelBase viewModel);
         void CloseWindow(ViewModelBase viewModel);
     }
+    /// <summary>
+    /// - Service der zum Öffnen und Schließen von Fenstern über Command zuständig ist.
+    /// - verwendet WindowMapper um Fenster über zugehöriges ViewModel anzustuern
+    /// - Windows -> alle laufenden Fenster -> ermöglicht Kommunikation zwischen ViewModels
+    /// </summary>
     public class WindowManager : IWindowManager
     {
         private WindowMapper _windowMapper;
@@ -41,7 +46,7 @@ namespace GUI.Services
             return null;
         }
 
-        public void CloseWindow(ViewModelBase viewModel) //Soll auch ausgelöst werden wenn in Fensterleiste X gedrückt wird  
+        public void CloseWindow(ViewModelBase viewModel) 
         {
             Type windowType = _windowMapper.GetWindowTypeForViewModel(viewModel.GetType());
             if(windowType != null)
