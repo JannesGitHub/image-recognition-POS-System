@@ -30,7 +30,7 @@ namespace GUI.MVVM.ViewModel
 
                 List<Bitmap> bitmaps = new List<Bitmap>();
 
-                ButtonBackgroundColor = System.Windows.Media.Brushes.Yellow;
+                ButtonBackgroundColor = System.Windows.Media.Brushes.RosyBrown;
                 VectorUpdateStatus = "Images are loaded from the camera";
 
                 for (int i = 0; i < 20; i++) // For 2 seconds, a frame is saved every 1/10th of a second (a total of 20 bitmaps).
@@ -40,7 +40,7 @@ namespace GUI.MVVM.ViewModel
                     bitmaps.Add(EditLineOfGoodsService.CurrentBitmap);
                 }
 
-                ButtonBackgroundColor = System.Windows.Media.Brushes.Orange;
+                ButtonBackgroundColor = System.Windows.Media.Brushes.BurlyWood;
                 VectorUpdateStatus = "Images are converted to vectors";
 
                 List<Task> allTasks = new List<Task>(); // List of tasks to asynchronously transform multiple bitmaps into vectors.
@@ -50,8 +50,8 @@ namespace GUI.MVVM.ViewModel
 
                 await Task.WhenAll(allTasks); // Waits until all tasks are completed.*/
 
-                ButtonBackgroundColor = System.Windows.Media.Brushes.Gray;
-                VectorUpdateStatus = "Press ( wait 2 seconds) for new vectors for your product.";
+                ButtonBackgroundColor = System.Windows.Media.Brushes.SandyBrown;
+                VectorUpdateStatus = "Succesfully added!";
             });
 
             ApplyCommand = new DelegateCommand(execute: (o) =>
@@ -158,7 +158,7 @@ namespace GUI.MVVM.ViewModel
 
         //ANZEIGE FÜR VEKTOR AKTUALISIERUNGSZUSTAND
 
-        private SolidColorBrush _buttonBackgroundColor = System.Windows.Media.Brushes.Gray; // Standardfarbe
+        private SolidColorBrush _buttonBackgroundColor = System.Windows.Media.Brushes.SandyBrown; // Standardfarbe
         public SolidColorBrush ButtonBackgroundColor
         {
             get { return _buttonBackgroundColor; }
@@ -172,7 +172,7 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
-        private string _vectorUpdateStatus = "Press ( wait 2 seconds) for new vectors for your product.";
+        private string _vectorUpdateStatus = "Add Images to Product";
 
         public string VectorUpdateStatus
         {

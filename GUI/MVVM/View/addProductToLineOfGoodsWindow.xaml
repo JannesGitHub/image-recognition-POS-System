@@ -6,9 +6,11 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
-        Title="addProductToLineOfGoodsWindow" Height="450" Width="800"
-        Background=" 	#4b3832"
-        Foreground="#fff4e6">
+        Title="Add product to line of goods" Height="425" Width="300"
+        Background="#4b3832"
+        Foreground="#fff4e6"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -19,23 +21,21 @@
     <Grid>
         <StackPanel>
 
-            <Label Content="Name:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+            <Label Content="Name:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="#fff4e6" FontSize="20" FontWeight="Bold"/>
             <TextBox  Text="{Binding Name}" />
-            <Label Content="Article Number:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+            <Label Content="Article Number:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="#be9b7b" FontSize="20" FontWeight="Bold" />
             <TextBox Text="{Binding ArticleNumber}"/>
-            <Label Content="Price:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="Gray" />
+            <Label Content="Price:" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="#fff4e6" FontSize="20" FontWeight="Bold" />
             <TextBox Text="{Binding Price}"/>
 
-            <!--Quantity or Weight-->
+            <TextBlock Text="Product is defined per" Foreground="#be9b7b" FontSize="12" FontWeight="Bold"/>
 
-            <TextBlock Text="Product is defined per"/>
+            <RadioButton Content="weight." IsChecked="{Binding WeightBased, Mode=TwoWay}" Margin="0,0,0,10" Foreground="White" FontSize="12" FontWeight="Bold"/>
+            <RadioButton Content="quantity." IsChecked="{Binding QuantityBased, Mode=TwoWay}" Foreground="White" FontSize="12" FontWeight="Bold"/>
 
-            <RadioButton Content="weight." IsChecked="{Binding WeightBased, Mode=TwoWay}" Margin="0,0,0,10" Foreground="#fff4e6"/>
-            <RadioButton Content="quantity." IsChecked="{Binding QuantityBased, Mode=TwoWay}" Foreground="#fff4e6"/>
+            <Button Command="{Binding NewVectorsCommand}" Background="{Binding ButtonBackgroundColor}" Content="{Binding VectorUpdateStatus}" Height="50" Margin="10" Foreground="#4b3832" FontSize="12" FontWeight="Bold"/>
 
-            <Button Command="{Binding NewVectorsCommand}" Background="{Binding ButtonBackgroundColor}" Content="{Binding VectorUpdateStatus}" Height="50" Margin="10"/>
-
-            <Button Command="{Binding AddCommand}" Content="Add" Height="50" Margin="10"/>
+            <Button Command="{Binding AddCommand}" Content="Add" Height="50" Margin="10" Background="#854442" Foreground="#fff4e6" FontSize="20" FontWeight="Bold"/>
         </StackPanel>
     </Grid>
 </Window>
