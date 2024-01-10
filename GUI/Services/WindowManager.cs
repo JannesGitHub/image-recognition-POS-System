@@ -35,11 +35,15 @@ namespace GUI.Services
             Type windowType = _windowMapper.GetWindowTypeForViewModel(viewModel.GetType());
             if(windowType != null)
             {
-                var window = Activator.CreateInstance(windowType) as Window;
-                Windows.Add(windowType,window);
-                window.DataContext = viewModel;
-                window.Show();
+                Window window = Activator.CreateInstance(windowType) as Window;
 
+                //Bugfix: Verhindert dass zwei gleiche FensterTypen gleichzeitig laufen
+                if (!Windows.ContainsKey(windowType))
+                {
+                    Windows.Add(windowType, window);
+                    window.DataContext = viewModel;
+                    window.Show();
+                }
                 return window;
             }
 

@@ -68,7 +68,7 @@
         <!--Button, der den verbleibenden Platz einnimmt-->
         <Button Command="{Binding CashInCommand}" 
                 Grid.Row="3" 
-                Content="Kunden abschließen" 
+                Content="finish transaction" 
                 VerticalAlignment="Stretch" 
                 HorizontalAlignment="Stretch"
                 Foreground="#fff4e6"

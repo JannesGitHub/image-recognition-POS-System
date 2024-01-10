@@ -124,7 +124,7 @@
 
                                 <GridViewColumn 
                                 DisplayMemberBinding="{Binding TotalPrice}" 
-                                Header="Preis" Width="100"/>
+                                Header="Price" Width="100"/>
 
                             </GridView>
                         </ListView.View>
