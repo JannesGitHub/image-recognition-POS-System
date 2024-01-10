@@ -32,14 +32,23 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Search:" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-            <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Background=" 	#be9b7b" Grid.Column="1" FontSize="20"/>
+            <TextBox Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" FontSize="20" Foreground="White" Background="#4b3832" VerticalAlignment="Center" HorizontalAlignment="Left" Width="175"/>
         </Grid>
 
-        <ListView ItemsSource="{Binding FilteredLineOfGoods}" Background="#4b3832" SelectedItem="{Binding SelectedProduct}" Margin="0,49,0,0" Grid.RowSpan="2">
+        <ListView ItemsSource="{Binding FilteredLineOfGoods}" SelectedItem="{Binding SelectedProduct}" Margin="0,49,0,0"  BorderThickness="1"
+                    BorderBrush="#854442"
+                    Background="#fff4e6"  Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
-                <GridViewColumn DisplayMemberBinding = "{Binding Name}" Header="Name" Width="200"/>
-                <GridViewColumn DisplayMemberBinding = "{Binding Articlenumber}" Header="ID" Width="100"/>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="Background" Value="#854442"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn DisplayMemberBinding = "{Binding Name}" Header="Name" Width="200"/>
+                <GridViewColumn DisplayMemberBinding = "{Binding Articlenumber}" Header="ID" Width="75"/>
             </GridView>
             </ListView.View>
         </ListView>
@@ -49,11 +58,10 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                
             </Grid.ColumnDefinitions>
-            <Button Content = "Delete" Command="{Binding DeleteCommand}" Grid.Column="0" Background=" 	#be9b7b"/>
-            <Button Content = "Edit" Command="{Binding EditCommand}" Grid.Column="1" Background=" 	#be9b7b"/>
-            <Button Content = "Add" Command="{Binding AddCommand}" Grid.Column="2" Background=" 	#be9b7b"/>
+            <Button Content = "Delete" Command="{Binding DeleteCommand}" Grid.Column="0" Background=" #be9b7b" Foreground="#38220f" FontSize="20" FontWeight="Bold"/>
+            <Button Content = "Edit" Command="{Binding EditCommand}" Grid.Column="1" Background="#dbc1ac" Foreground="#634832" FontSize="20" FontWeight="Bold"/>
+            <Button Content = "Add" Command="{Binding AddCommand}" Grid.Column="2" Background="#be9b7b" Foreground="#38220f" FontSize="20" FontWeight="Bold"/>
         </Grid>
         
     </Grid>
