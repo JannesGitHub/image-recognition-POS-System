@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:GUI"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="PayWindow" Height="155" Width="300"
-        WindowStyle="ToolWindow"
-        ResizeMode="NoResize"
+        Title="Pay" Height="165" Width="300"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize" 
         Foreground="#fff4e6"
-        Background=" 	#3c2f2f">
+        Background="#3c2f2f">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -30,12 +30,12 @@
         <!--Gesamtpreis-->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Total Price:" FontSize="20"/>
+            <TextBlock Grid.Column="0" Text="Total Price:" FontSize="20" FontWeight="Bold"/>
             <TextBlock Grid.Column="1" Text="{Binding TotalPrice}" FontSize="20"/>
             <TextBlock Grid.Column="2" Text="€" FontSize="20"/>
         </Grid>
@@ -48,7 +48,7 @@
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Paid Amount:" FontSize="20"/>
+            <TextBlock Grid.Column="0" Text="Paid Amount:" FontSize="20" FontWeight="Bold" Foreground="#be9b7b"/>
             <TextBox Grid.Column="1" Text="{Binding PaidAmount, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Background=" 	#fff4e6"/>
             <TextBlock Grid.Column="2" Text="€" FontSize="20"/>
         </Grid>
@@ -60,7 +60,7 @@
                 <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Change:" FontSize="20"/>
+            <TextBlock Grid.Column="0" Text="Change:" FontSize="20" FontWeight="Bold"/>
             <TextBlock Grid.Column="1" Text="{Binding Change}" FontSize="20"/>
             <TextBlock Grid.Column="2" Text="€" FontSize="20"/>
         </Grid>
@@ -71,6 +71,9 @@
                 Content="Kunden abschließen" 
                 VerticalAlignment="Stretch" 
                 HorizontalAlignment="Stretch"
-                Background="#fff4e6"/>
+                Foreground="#fff4e6"
+                FontSize="20"
+                FontWeight="Bold"
+                Background="#854442"/>
     </Grid>
 </Window>

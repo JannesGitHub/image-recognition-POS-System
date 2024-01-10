@@ -50,15 +50,16 @@
                 <TextBlock 
                     Text="{Binding ScanStatus}" 
                     x:Name="statusTextBox"
-                    Foreground="White"
+                    FontSize="20" FontWeight="Bold" Foreground="#fff4e6"
                     />
 
                 <Border 
                     Margin="5,0,0,0"
                     Grid.Row="1" 
                     CornerRadius="10" 
-                    BorderThickness="5" 
+                    BorderThickness="7" 
                     BorderBrush="#854442">
+                    
 
                     <Image 
                         x:Name="anzeigeBild" 

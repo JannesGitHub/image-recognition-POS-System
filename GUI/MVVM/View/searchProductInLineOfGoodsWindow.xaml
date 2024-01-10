@@ -7,6 +7,8 @@
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d"
         Title="Search Product" Height="450" Width="300"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize" 
         Background="#4b3832"
         Foreground="#fff4e6">
 
