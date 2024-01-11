@@ -36,7 +36,7 @@ namespace GUI.MVVM.ViewModel
 
             ScanCommand = new DelegateCommand(execute: async (o) =>
             {
-                /*
+				
                 List<Bitmap> bitmapsToScan = new List<Bitmap>();
 
                 ScanStatus = "Scanning process is running.";
@@ -48,8 +48,8 @@ namespace GUI.MVVM.ViewModel
                     if(CurrentBitmap != null)
                     bitmapsToScan.Add(CurrentBitmap);
                 }
-
-				(SortedDictionary<double, Product>, Product?) input = Detection.getDetectionOutput(EditLineOfGoodsService.LineOfGoods,bitmapsToScan);
+                IDetection detectionObj = new Detection();
+				(SortedDictionary<double, Product>, Product?) input = detectionObj.getDetectionOutput(EditLineOfGoodsService.LineOfGoods,bitmapsToScan);
 
 				addManuallyService.ScanData = input.Item1;
 
@@ -63,10 +63,10 @@ namespace GUI.MVVM.ViewModel
                     _notDetectedSound.Play();
                 }
 
-				ScanStatus = "Press Space to scan your product!";*/
-                
-                
-                SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
+				ScanStatus = "Press Space to scan your product!";
+
+
+				SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
                 testInput.Add(0.5, new Product("Banane", 123, 1.2, true, null));
 
