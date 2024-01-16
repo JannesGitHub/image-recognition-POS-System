@@ -18,6 +18,7 @@ internal class Program
     }
     public static List<CLIPVector> GetProductVectorsFromFolder(string Ordnername)
     {
+        IDetection detectionObj = new Detection();
         List<CLIPVector> resultList = new List<CLIPVector>();
         string DateipfadmitBildern = Path.Combine(AppDomain.CurrentDomain.BaseDirectory); // geht warsch. nur auf Windows - ".." - Befehl für directory auf hörer Ebene
         DateipfadmitBildern = DateipfadmitBildern.Substring(0, DateipfadmitBildern.IndexOf("j-kassenscanner"));
@@ -29,7 +30,7 @@ internal class Program
             foreach (string d in Directory.GetFiles(DateipfadmitBildern, "*.jpg"))
             {
                 Bitmap bmp = new Bitmap(d);
-                resultList.Add(Detection.GetCLIPVector(bmp));
+                resultList.Add(detectionObj.GetCLIPVector(bmp));
             }
             // Alle Dateipfade im Zielordner abrufen, die Bitmaps enthalten können
             string[] filePaths = Directory.GetFiles(DateipfadmitBildern, "*.bmp"); // Sie können die Dateierweiterungen entsprechend ändern
@@ -39,7 +40,7 @@ internal class Program
                 Bitmap Test = new Bitmap(filePath);
 
                 // Test-Methode auf jede Bitmap anwenden
-                CLIPVector result = Detection.GetCLIPVector(Test);
+                CLIPVector result = detectionObj.GetCLIPVector(Test);
 
                 // Das Ergebnis zur Liste hinzufügen
                 resultList.Add(result);

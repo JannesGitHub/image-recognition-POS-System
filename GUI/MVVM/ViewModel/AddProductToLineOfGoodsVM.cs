@@ -38,9 +38,9 @@ namespace GUI.MVVM.ViewModel
                 VectorUpdateStatus = "Images are converted to vectors";
 
                 List<Task> allTasks = new List<Task>(); // List of tasks to asynchronously transform multiple bitmaps into vectors.
-
+                IDetection detectionObj = new Detection();
                 foreach (Bitmap bitmap in bitmaps)
-                    allTasks.Add(Task.Run(() => ClipVectors.Add(Detection.GetCLIPVector(bitmap))));
+                    allTasks.Add(Task.Run(() => ClipVectors.Add(detectionObj.GetCLIPVector(bitmap))));
 
                 await Task.WhenAll(allTasks); // Waits until all tasks are completed.*/
 

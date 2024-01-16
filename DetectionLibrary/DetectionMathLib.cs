@@ -9,7 +9,14 @@ namespace DetectionLibrary
 {
     internal static class DetectionMathLib
     {
-        public static SortedDictionary<double, Product> Softmax(Dictionary<double, Product> list, double factor = 6)
+		#region Softmax Funktion
+		/// <summary>
+		/// Projeziert die Distanzwerte auf Warscheinlichkeitswerte und erzeugt einen resultienden Vektor mit Betrag 1
+		/// </summary>
+		/// <param name="list">Liste von Distanzen</param>
+		/// <param name="factor">zusätzlicher Faktor der die Funktion verändert</param>
+		/// <returns></returns>
+		public static SortedDictionary<double, Product> Softmax(Dictionary<double, Product> list, double factor = 6)
         {
             double divider = 0;
             SortedDictionary<double, Product> result = new SortedDictionary<double, Product>();
@@ -23,13 +30,27 @@ namespace DetectionLibrary
             }
             return result;
         }
+        #endregion
+        #region SmallesValueOf: findet den kleinsten Wert in einer Liste
+        /// <summary>
+        /// Findet den kleinsten Wert in einer Liste - speziell für Distanzen, gibt ansonsten 0 zurück
+        /// </summary>
+        /// <param name="list">Liste, die überprüft werden soll</param>
+        /// <returns></returns>
         public static double SmallestValueOf(List<double> list)
         {
             if (list.Count == 0) return 0;
             return list.Min();
         }
-
-        public static bool IsInDict(Dictionary<Product, double> dict, Product prod)
+		#endregion
+		#region IsIndict: gibt zurück ob sich ein Product in einem Dictionary befindet
+		/// <summary>
+		/// gibt zurück ob sich ein Product in einem Dictionary befindet
+		/// </summary>
+		/// <param name="dict">zu durchsuchendes Dictionary</param>
+		/// <param name="prod">gesuchtes Produkt</param>
+		/// <returns></returns>
+		public static bool IsInDict(Dictionary<Product, double> dict, Product prod)
         {
             bool solution = false;
             foreach (Product p in dict.Keys)
@@ -39,12 +60,19 @@ namespace DetectionLibrary
             }
             return solution;
         }
+        #endregion
+        #region Average: durchschnittlicher Wert pro Produkt
+        /// <summary>
+        /// bildet den durchschnittlichen Warscheinlichkeitswet von jedem Produkt
+        /// </summary>
+        /// <param name="lastResults">Liste von (Produkt,Warscheinlichkeits) Dictionaries</param>
+        /// <returns></returns>
         public static SortedDictionary<double, Product> Average(List<SortedDictionary<double, Product>> lastResults)
         {
             if (lastResults != null)
             {
                 Dictionary<Product, double> solution = new Dictionary<Product, double>();
-                //LINQ ausruck für Dictionary finden
+
                 foreach (SortedDictionary<double, Product> d in lastResults)
                 {
                     foreach (KeyValuePair<double, Product> kvp in d)
@@ -52,7 +80,7 @@ namespace DetectionLibrary
                         double probability = kvp.Key;
                         Product product = kvp.Value;
 
-                        if (DetectionMathLib.IsInDict(solution, product)) // evtl. auch für die eigene Classification Klasse geeignet
+                        if (DetectionMathLib.IsInDict(solution, product))
                         {
                             solution[product] += probability;
                         }
@@ -71,9 +99,10 @@ namespace DetectionLibrary
             }
             // leeres Dictionary Object
             return (new SortedDictionary<double, Product>());
-
         }
-        public static Product? MostLikelyProduct(List<Product?> productList, int mindestErkennungsAnzahl = 3)
+		#endregion
+		#region 
+		public static Product? MostLikelyProduct(List<Product?> productList, int mindestErkennungsAnzahl = 3)
         {
             Product result = null;
             Dictionary<Product, int> counter = new Dictionary<Product, int>();

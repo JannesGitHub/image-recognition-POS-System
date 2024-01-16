@@ -8,10 +8,10 @@ using KassenmanagementLibrary;
 
 namespace DetectionLibrary
 {
-    internal interface IDetection
+    public interface IDetection
     {
         //Trennen vom Dictionary und Produkt?
         (SortedDictionary<double, Product>, Product?) getDetectionOutput(LineOfGoods sortiment, List<Bitmap> frames);
-        public static CLIPVector GetCLIPVector(Bitmap frame) { return ZeroShot.GetCLIPVector(frame); }
+        CLIPVector GetCLIPVector(Bitmap frame);
     }
 }
