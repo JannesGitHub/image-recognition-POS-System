@@ -25,6 +25,7 @@ namespace GUI.Services
             RegisterMapping<AddProductToLineOfGoodsVM, addProductToLineOfGoodsWindow>();
             RegisterMapping<SearchProductInLineOfGoodsVM, searchProductInLineOfGoodsWindow>();
             RegisterMapping<PayVM, PayWindow>();
+            RegisterMapping<ChangeWeightVM, ChangeWeightWindow>();
         }
 
         public void RegisterMapping<TViewModel, TWindow>() where TViewModel : ViewModelBase where TWindow : Window
@@ -37,6 +38,5 @@ namespace GUI.Services
             _mappings.TryGetValue(viewModelType, out var windowType);
             return windowType;
         }
-
     }
 }

@@ -46,7 +46,6 @@ namespace GUI.Services
                 }
                 return window;
             }
-
             return null;
         }
 

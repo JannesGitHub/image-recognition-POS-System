@@ -33,5 +33,7 @@ namespace GUI.Services
 
         public PayVM PayVM => _provider.GetRequiredService<PayVM>();
 
+        public ChangeWeightVM ChangeWeightVM => _provider.GetRequiredService<ChangeWeightVM>();
+
     }
 }

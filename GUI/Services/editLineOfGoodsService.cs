@@ -10,7 +10,7 @@ using System.Windows;
 namespace GUI.Services
 {
 
-    public interface IEditLineOfGoods //VIELLEICHT static für MainVM
+    public interface IEditLineOfGoods
     {
         public static LineOfGoods LineOfGoods { get; set; }
 
@@ -45,7 +45,6 @@ namespace GUI.Services
             int indexToChange = LineOfGoods.lineOfGoods.FindIndex(p => p.Articlenumber == product.Articlenumber);
             LineOfGoods.lineOfGoods[indexToChange] = product; 
         }
-
 
         public void AddProduct(Product product)
         {

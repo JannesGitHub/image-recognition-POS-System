@@ -18,8 +18,6 @@ namespace KassenmanagementLibrary
 
         private double totalPrice;
 
-        public Article() { }
-
         public Article(Product _product)
         {
             Name = _product.Name;

@@ -31,6 +31,7 @@ namespace GUI
             services.AddSingleton<AddProductToLineOfGoodsVM>();
             services.AddSingleton<SearchProductInLineOfGoodsVM>();
             services.AddSingleton<PayVM>();
+            services.AddSingleton<ChangeWeightVM>();
 
             //Services
             services.AddSingleton<ViewModelLocator>();
@@ -39,6 +40,7 @@ namespace GUI
             services.AddSingleton<IAddManuallyService, AddManuallyService>();
             services.AddSingleton<IEditLineOfGoods, EditLineOfGoodsService>();
             services.AddSingleton<IPayService, PayService>();
+            services.AddSingleton<IChangeWeightService, ChangeWeightService>();
 
             _serviceProvider = services.BuildServiceProvider();
         }

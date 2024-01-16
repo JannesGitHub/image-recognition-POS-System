@@ -138,6 +138,7 @@ namespace KassenmanagementLibrary
         public void NewQuantity(Article article, double quantity) //for change in wheigths
         {
             _ShoppingBasket[_ShoppingBasket.IndexOf(article)].Quantity = quantity;
+            _ShoppingBasket[_ShoppingBasket.IndexOf(article)].TotalPrice = article.Quantity * article.Price; 
             UpdateSumPrice();
         }
 

@@ -30,5 +30,8 @@
             <view:PayWindow/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type TypeName=viewModel:ChangeWeightVM}">
+            <view:ChangeWeightWindow/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -26,7 +26,7 @@ namespace GUI.MVVM.ViewModel
 {
     public class MainVM : ViewModelBase
     {
-        public MainVM(IAddManuallyService addManuallyService, IPayService payService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
+        public MainVM(IAddManuallyService addManuallyService, IPayService payService, IChangeWeightService changeWeightService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
             addManuallyService.ShoppingBasket = ShoppingBasket;
 
@@ -78,26 +78,58 @@ namespace GUI.MVVM.ViewModel
 
                 _detectedSound.Play();
 
-                ShoppingBasket.AddArticle(new Product("TestCase", 1, 1, true, null));
+                ShoppingBasket.AddArticle(new Product("QuantityBased", 1, 1, true, null));
 
-                ShoppingBasket.AddArticle(new Product("TestCas2", 1, 1, true, null));
+                ShoppingBasket.AddArticle(new Product("WeightBased", 1, 1, false, null));
                 
                 
             }, canExecute: (o) => CurrentBitmap != null);    
 
 
+
+
             DownQuantityCommand = new DelegateCommand(execute: (o) => 
             {
+                if (SelectedArticle.Source.Quantityarticle)
+                {
                     ShoppingBasket.DownQuantity(SelectedArticle);
 
                     if (ShoppingBasket._ShoppingBasket[ShoppingBasket._ShoppingBasket.IndexOf(SelectedArticle)].Quantity == 0)
                         ShoppingBasket._ShoppingBasket.Remove(SelectedArticle);
+                }
+                else
+                {
+                    changeWeightService.NewWeight = SelectedArticle.Quantity;
+
+                    windowManager.ShowWindow(viewModelLocator.ChangeWeightVM);
+
+                    ChangeWeightEvent?.Invoke(this, EventArgs.Empty);
+                }
             }, canExecute: (o) => SelectedArticle != null);
 
-            UpQuantityCommand = new DelegateCommand(execute: (o) => {ShoppingBasket.UpQuantity(SelectedArticle); },  canExecute: (o) => SelectedArticle != null);
+            UpQuantityCommand = new DelegateCommand(execute: (o) =>
+            {
+                if (SelectedArticle.Source.Quantityarticle)
+                {
+                    ShoppingBasket.UpQuantity(SelectedArticle);
+                }
+                else
+                {
+                    changeWeightService.NewWeight = SelectedArticle.Quantity;
+
+                    windowManager.ShowWindow(viewModelLocator.ChangeWeightVM);
+
+                    ChangeWeightEvent?.Invoke(this, EventArgs.Empty);
+                }
+            },  canExecute: (o) => SelectedArticle != null);
+
+
 
 
             ClearCommand = new DelegateCommand(execute: (o) => { ShoppingBasket.Clear(); }, canExecute: (o) => ShoppingBasket._ShoppingBasket.Count >= 0);
+
+
+
 
             PayWindowCommand = new DelegateCommand((o) =>
             {
@@ -107,6 +139,9 @@ namespace GUI.MVVM.ViewModel
 
                 PayEvent?.Invoke(this, EventArgs.Empty);
             });
+
+
+
 
             AddManuallyWindowCommand = new DelegateCommand((o) =>
             {
@@ -122,7 +157,7 @@ namespace GUI.MVVM.ViewModel
 
             EditLineOfGoodsWindowCommand = new DelegateCommand((o) => { windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsVM); });
 
-            CloseCommand = new DelegateCommand((o) => {EditLineOfGoodsService.LineOfGoods.Safe(); Environment.Exit(0); });
+            CloseCommand = new DelegateCommand((o) => {EditLineOfGoodsService.LineOfGoods.Safe(); Environment.Exit(0);});
 
             /////////////////////////////////////////////////////SOUND INITIALIZING//////////////////////////////////////////////////
             string fileNameDetected = "Detected.wav";
@@ -263,5 +298,7 @@ namespace GUI.MVVM.ViewModel
         ////////////////////////////////////////////////////////////////EVENTS/////////////////////////////////////////////////////////////////////
 
         public event EventHandler PayEvent = delegate { };
+
+        public event EventHandler ChangeWeightEvent = delegate { };
     }
 }
