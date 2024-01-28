@@ -61,9 +61,9 @@ namespace DetectionLibrary
             return solution;
         }
         #endregion
-        #region Average: durchschnittlicher Wert pro Produkt
+        #region Average: durchschnittlicher Warscheinlichkeitswert pro Produkt auf Basis von einer Liste aus Warscheinlichkeiten
         /// <summary>
-        /// bildet den durchschnittlichen Warscheinlichkeitswet von jedem Produkt
+        /// bildet den durchschnittlichen Warscheinlichkeitswert von jedem Produkt auf Basis von einer Liste an Warscheinlichkeiten
         /// </summary>
         /// <param name="lastResults">Liste von (Produkt,Warscheinlichkeits) Dictionaries</param>
         /// <returns></returns>
@@ -101,7 +101,13 @@ namespace DetectionLibrary
             return (new SortedDictionary<double, Product>());
         }
 		#endregion
-		#region 
+		#region Findet das "warscheinlichste Produkt" basierend darauf in wie vielen Frames pro Scanvorgang ein Produkt erkannt werden soll
+		/// <summary>
+		/// Findet das "warscheinlichste Produkt" basierend darauf in wie vielen Frames pro Scanvorgang ein Produkt erkannt werden soll
+		/// </summary>
+		/// <param name="productList"> Liste der zuletzt erkannten Produkte</param>
+		/// <param name="mindestErkennungsAnzahl">Wie oft ein Produkt pro Frame erkannt werden muss um am Ende auch für den gesamten Vorgang als erkannt zu gelten</param>
+		/// <returns></returns>
 		public static Product? MostLikelyProduct(List<Product?> productList, int mindestErkennungsAnzahl = 3)
         {
             Product result = null;
@@ -134,5 +140,6 @@ namespace DetectionLibrary
             }
             return result;
         }
-    }
+		#endregion
+	}
 }

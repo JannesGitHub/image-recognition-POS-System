@@ -65,7 +65,7 @@ namespace GUI.MVVM.ViewModel
 
 				ScanStatus = "Press Space to scan your product!";
 
-
+                /*
 				SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
 
                 testInput.Add(0.5, new Product("Banane", 123, 1.2, true, null));
@@ -75,12 +75,13 @@ namespace GUI.MVVM.ViewModel
                 testInput.Add(0.7, new Product("Khaki", 345, 3.4, true, null));
 
                 addManuallyService.ScanData = testInput;
+                */
 
                 _detectedSound.Play();
 
-                ShoppingBasket.AddArticle(new Product("QuantityBased", 1, 1, true, null));
+                //ShoppingBasket.AddArticle(new Product("QuantityBased", 1, 1, true, null));
 
-                ShoppingBasket.AddArticle(new Product("WeightBased", 1, 1, false, null));
+                //ShoppingBasket.AddArticle(new Product("WeightBased", 1, 1, false, null));
                 
                 
             }, canExecute: (o) => CurrentBitmap != null);    
