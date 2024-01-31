@@ -36,7 +36,6 @@ namespace GUI.MVVM.ViewModel
 
             ScanCommand = new DelegateCommand(execute: async (o) =>
             {
-				
                 List<Bitmap> bitmapsToScan = new List<Bitmap>();
 
                 ScanStatus = "Scanning process is running.";
@@ -55,34 +54,15 @@ namespace GUI.MVVM.ViewModel
 
                 if (input.Item2 != null)
                 {
-                    _detectedSound.Play();
+                    _detectedSound.Play(); //sound for detected
                     ShoppingBasket.AddArticle(input.Item2);
                 }
                 else
                 {
-                    _notDetectedSound.Play();
+                    _notDetectedSound.Play(); //sound for not detected
                 }
 
 				ScanStatus = "Press Space to scan your product!";
-
-                /*
-				SortedDictionary<double, Product> testInput = new SortedDictionary<double, Product>();
-
-                testInput.Add(0.5, new Product("Banane", 123, 1.2, true, null));
-
-                testInput.Add(0.2, new Product("Apfel", 234, 2.2, true, null));
-
-                testInput.Add(0.7, new Product("Khaki", 345, 3.4, true, null));
-
-                addManuallyService.ScanData = testInput;
-                */
-
-                _detectedSound.Play();
-
-                //ShoppingBasket.AddArticle(new Product("QuantityBased", 1, 1, true, null));
-
-                //ShoppingBasket.AddArticle(new Product("WeightBased", 1, 1, false, null));
-                
                 
             }, canExecute: (o) => CurrentBitmap != null);    
 
@@ -149,6 +129,8 @@ namespace GUI.MVVM.ViewModel
                 if (addManuallyService.ScanData != null)
                 {
                     windowManager.ShowWindow(viewModelLocator.AddManuallyVM);
+
+                    AddManuallyEvent?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
@@ -156,7 +138,13 @@ namespace GUI.MVVM.ViewModel
                 }
             });
 
+
+
+
             EditLineOfGoodsWindowCommand = new DelegateCommand((o) => { windowManager.ShowWindow(viewModelLocator.SearchProductInLineOfGoodsVM); });
+
+
+
 
             CloseCommand = new DelegateCommand((o) => {EditLineOfGoodsService.LineOfGoods.Safe(); Environment.Exit(0);});
 
@@ -301,5 +289,7 @@ namespace GUI.MVVM.ViewModel
         public event EventHandler PayEvent = delegate { };
 
         public event EventHandler ChangeWeightEvent = delegate { };
+
+        public event EventHandler AddManuallyEvent = delegate { };
     }
 }

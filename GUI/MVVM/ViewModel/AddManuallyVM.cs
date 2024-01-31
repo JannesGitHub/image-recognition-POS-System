@@ -19,7 +19,10 @@ namespace GUI.MVVM.ViewModel
     {
         public AddManuallyVM(IAddManuallyService addManuallyService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
         {
-            ScanData = addManuallyService.ScanData;
+            //Registering for the event to update products and probabilities for this VM.
+            MainVM mainVM = viewModelLocator.MainVM;
+
+            mainVM.AddManuallyEvent += (sender, args) => { ScanData = addManuallyService.ScanData; DoFiltering();};
 
             this.AddCommand = new DelegateCommand(execute: (o) =>{ addManuallyService.AddArticleManually(SelectedProduct.Value);
                                                                       windowManager.CloseWindow(viewModelLocator.AddManuallyVM);},
@@ -62,19 +65,19 @@ namespace GUI.MVVM.ViewModel
             }
         }
 
-        private void DoFiltering()
+        private void DoFiltering() //Filters ScanData to ObservableCollection -> bindable to ListView in WPF
         {
             FilteredScanData.Clear();
 
             string value = Filter.ToLower();
 
-            foreach (KeyValuePair<double, Product> item in ScanData)
+            foreach (KeyValuePair<double, Product> item in ScanData.Reverse()) //Articles with highest probabilities are on top
             {
                 if (String.IsNullOrEmpty(Filter) ||
                    item.Value.Name.ToLower().Contains(value) ||
                    item.Value.Articlenumber.ToString().Contains(value))
                 {
-                    this.FilteredScanData.Add(new KeyValuePair<double, Product>(item.Key, item.Value));
+                    this.FilteredScanData.Add(new KeyValuePair<double, Product>(Math.Round(item.Key,2), item.Value));
                 }
             }
         }

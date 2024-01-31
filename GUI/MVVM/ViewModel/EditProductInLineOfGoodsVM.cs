@@ -196,6 +196,7 @@ namespace GUI.MVVM.ViewModel
             Price = product.Price;
             QuantityBased = product.Quantityarticle;
             ClipVectors = product.Allproductvectors;
+            VectorUpdateStatus = "Add Images to Product";
         }
 
         /////////////////////////////////////////////////////COMMANDS///////////////////////////////////////////////////////////
