@@ -36,19 +36,20 @@ namespace GUI.MVVM.ViewModel
 
             ScanCommand = new DelegateCommand(execute: async (o) =>
             {
-                List<Bitmap> bitmapsToScan = new List<Bitmap>();
+            List<Bitmap> bitmapsToScan = new List<Bitmap>();
 
-                ScanStatus = "Scanning process is running.";
+            ScanStatus = "Scanning process is running.";
 
-                for (int i = 0; i < 15; i++) 
-                {
-                    await Task.Delay(50); 
-                    
-                    if(CurrentBitmap != null)
+            for (int i = 0; i < 15; i++)
+            {
+                await Task.Delay(50);
+
+                if (CurrentBitmap != null)
                     bitmapsToScan.Add(CurrentBitmap);
-                }
-                IDetection detectionObj = new Detection();
-				(SortedDictionary<double, Product>, Product?) input = detectionObj.getDetectionOutput(EditLineOfGoodsService.LineOfGoods,bitmapsToScan);
+            }
+            IDetection detectionObj = new Detection();
+
+            (SortedDictionary<double, Product>, Product ?) input = await Task.Run(() => detectionObj.getDetectionOutput(EditLineOfGoodsService.LineOfGoods, bitmapsToScan)); //asynchron 
 
 				addManuallyService.ScanData = input.Item1;
 
