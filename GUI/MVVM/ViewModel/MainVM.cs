@@ -152,15 +152,15 @@ namespace GUI.MVVM.ViewModel
             /////////////////////////////////////////////////////SOUND INITIALIZING//////////////////////////////////////////////////
             string fileNameDetected = "Detected.wav";
             string filePathDetected = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
-            filePathDetected = filePathDetected.Substring(0, filePathDetected.IndexOf("j-kassenscanner"));
-            filePathDetected += "j-kassenscanner\\Sounds\\" + fileNameDetected;
+            filePathDetected = filePathDetected.Substring(0, filePathDetected.IndexOf("image-recognition-POS-System"));
+            filePathDetected += "image-recognition-POS-System\\Sounds\\" + fileNameDetected;
 
             _detectedSound = new SoundPlayer(filePathDetected);
 
             string fileNameNotDetected = "NotDetected.wav";
             string filePathNotDetected = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
-            filePathNotDetected = filePathNotDetected.Substring(0, filePathNotDetected.IndexOf("j-kassenscanner"));
-            filePathNotDetected += "j-kassenscanner\\Sounds\\" + fileNameNotDetected;
+            filePathNotDetected = filePathNotDetected.Substring(0, filePathNotDetected.IndexOf("image-recognition-POS-System"));
+            filePathNotDetected += "image-recognition-POS-System\\Sounds\\" + fileNameNotDetected;
 
             _notDetectedSound = new SoundPlayer(filePathNotDetected);
         }
