@@ -32,8 +32,8 @@ namespace GUI.MVVM.ViewModel
             /////////////////////////////////////////////////////SOUND INITIALIZING//////////////////////////////////////////////////
             string fileName = "ChaChing.wav";
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
-            filePath = filePath.Substring(0, filePath.IndexOf("j-kassenscanner"));
-            filePath += "j-kassenscanner\\Sounds\\" + fileName;
+            filePath = filePath.Substring(0, filePath.IndexOf("image-recognition-POS-System"));
+            filePath += "image-recognition-POS-System\\Sounds\\" + fileName;
 
             _soundPlayer = new SoundPlayer(filePath);
         }
