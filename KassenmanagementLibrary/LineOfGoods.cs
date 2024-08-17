@@ -114,8 +114,8 @@ namespace KassenmanagementLibrary
         {
             string fileName = "LineOfGoods.xml";
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
-            filePath = filePath.Substring(0, filePath.IndexOf("j-kassenscanner"));
-            filePath += "j-kassenscanner\\" + fileName;
+            filePath = filePath.Substring(0, filePath.IndexOf("image-recognition-POS-System"));
+            filePath += "image-recognition-POS-System\\" + fileName;
 
             //Prüft ob der Dateipfad existiert. Falls nicht wirft er eine Exception
 
@@ -146,8 +146,8 @@ namespace KassenmanagementLibrary
 
             string fileName = "LineOfGoods.xml";
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
-            filePath = filePath.Substring(0, filePath.IndexOf("j-kassenscanner"));
-            filePath += "j-kassenscanner\\" + fileName;
+            filePath = filePath.Substring(0, filePath.IndexOf("image-recognition-POS-System"));
+            filePath += "image-recognition-POS-System\\" + fileName;
             if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("Ungültiger Dateipfad.", nameof(filePath));
